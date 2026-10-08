@@ -1,260 +1,7 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>56之路：苏维埃</title>
-<style>
-:root{
-  --paper:#EFE8DC;
-  --paper-d:#E4DAC7;
-  --ink:#211E1B;
-  --ink2:#4A423A;
-  --red:#9E1B1B;
-  --red-d:#751313;
-  --steel:#3B4A5A;
-  --mut:#8A7E70;
-  --line:#D2C6B2;
-  --serif:"Songti SC","Noto Serif SC",Georgia,serif;
-  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
-  --mono:"SF Mono",Menlo,Consolas,"Courier New",monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:var(--paper);
-  background-image:
-    repeating-linear-gradient(0deg,rgba(120,105,85,.045) 0 1px,transparent 1px 4px),
-    radial-gradient(ellipse at 12% 0%,rgba(158,27,27,.05),transparent 55%);
-  color:var(--ink);
-  font-family:var(--sans);
-  font-size:15px;
-  line-height:1.75;
-  -webkit-font-smoothing:antialiased;
-  min-height:100vh;
-}
+/* 《56之路：苏维埃》游戏脚本
+   状态机 / 数值结算 / 战役判定 / 结局判定
+   玩家扮演：国家意志本身 */
 
-/* ---------- HUD ---------- */
-#hud{
-  position:sticky;top:0;z-index:50;
-  background:#211E1B;
-  color:#E8E0D2;
-  border-bottom:2px solid var(--red);
-  box-shadow:0 6px 22px rgba(35,28,20,.28);
-}
-.hud-in{max-width:860px;margin:0 auto;padding:9px 22px 11px}
-.hud-top{display:flex;align-items:baseline;gap:14px;margin-bottom:9px}
-.hud-title{font-family:var(--serif);font-size:15px;letter-spacing:.14em;color:#F0E7D8}
-.hud-title b{color:var(--red);font-weight:600}
-.hud-act{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:#9C9182}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
-.stat{
-  position:relative;background:rgba(255,255,255,.055);
-  border-left:2px solid #463F37;padding:5px 8px 6px;
-}
-.stat .k{font-size:10px;letter-spacing:.16em;color:#94897A;display:block}
-.stat .v{font-family:var(--mono);font-size:15px;font-weight:600;color:#EFE7D9;line-height:1.3}
-.stat.warn{border-left-color:#C8A03C}
-.stat.warn .v{color:#E9C463}
-.stat.crit{border-left-color:#D24A4A}
-.stat.crit .v{color:#FF7D7D}
-.fly{
-  position:absolute;right:5px;top:2px;font-family:var(--mono);font-size:12px;
-  font-weight:700;pointer-events:none;animation:fly 1.15s ease-out forwards;
-}
-@keyframes fly{0%{opacity:0;transform:translateY(6px)}18%{opacity:1}100%{opacity:0;transform:translateY(-17px)}}
-.fly.up{color:#7FD08A}.fly.dn{color:#FF8A8A}
-
-.factions{display:flex;gap:5px;align-items:center;margin-top:8px}
-.fac{flex:1;display:flex;align-items:center;gap:6px}
-.fac .n{font-size:10px;color:#94897A;letter-spacing:.08em;white-space:nowrap}
-.fac .bar{flex:1;height:4px;background:rgba(255,255,255,.09);position:relative;overflow:hidden}
-.fac .bar i{position:absolute;left:0;top:0;bottom:0;display:block;transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.fac .num{font-family:var(--mono);font-size:10px;color:#B8AD9C;width:22px;text-align:right}
-.f-stal i{background:#E8E0D2}
-.f-left i{background:#D24A4A}
-.f-right i{background:#5B8FB9}
-
-/* ---------- Layout ---------- */
-.wrap{max-width:860px;margin:0 auto;padding:34px 22px 110px}
-
-/* ---------- Scene card ---------- */
-.tag{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
-  color:var(--red);text-transform:uppercase;margin-bottom:11px;
-}
-.tag:before{content:"";width:26px;height:2px;background:var(--red)}
-h1.scene{
-  font-family:var(--serif);font-size:30px;line-height:1.28;
-  font-weight:600;letter-spacing:.01em;margin-bottom:8px;
-}
-.sub{font-size:12px;color:var(--mut);font-family:var(--mono);letter-spacing:.06em;margin-bottom:22px}
-.brief{
-  border-left:3px solid var(--line);padding:2px 0 2px 18px;margin-bottom:26px;
-}
-.brief p{margin-bottom:13px;color:var(--ink2);line-height:1.92}
-.brief p:last-child{margin-bottom:0}
-.brief em{font-style:normal;color:var(--red);font-weight:600}
-
-.prompt{
-  font-size:12px;letter-spacing:.18em;color:var(--mut);
-  border-top:1px solid var(--line);padding-top:14px;margin-bottom:14px;
-}
-
-/* ---------- Options ---------- */
-.opts{display:flex;flex-direction:column;gap:9px}
-.opt{
-  position:relative;display:block;width:100%;text-align:left;
-  background:#F6F1E7;border:1px solid var(--line);border-left:3px solid #C9BCA6;
-  padding:13px 16px 14px;cursor:pointer;font-family:inherit;font-size:15px;
-  color:var(--ink);transition:border-color .16s,background .16s,transform .16s;
-  overflow:hidden;
-}
-.opt:hover{background:#FFFCF5;border-left-color:var(--red);transform:translateX(3px)}
-.opt:hover:after{
-  content:"";position:absolute;right:-24px;top:-14px;width:74px;height:120px;
-  background:var(--red);opacity:.055;transform:rotate(24deg);
-}
-.opt.locked{opacity:.42;cursor:not-allowed;transform:none}
-.opt.locked:hover{border-left-color:#C9BCA6;background:#F6F1E7}
-.opt.locked:hover:after{display:none}
-.opt .row1{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
-.opt .key{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--red);flex:none}
-.opt .lb{font-weight:600;line-height:1.5}
-.opt .fl{font-family:var(--mono);font-size:10.5px;color:var(--mut);font-style:italic;letter-spacing:.03em}
-.opt .lock{font-size:11px;color:var(--red-d);font-family:var(--mono)}
-.opt .fx{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.opt .fx span{
-  font-family:var(--mono);font-size:10.5px;padding:1px 6px;background:rgba(33,30,27,.055);
-  color:var(--ink2);letter-spacing:.02em;
-}
-.opt .fx span.p{color:#2C6B3A;background:rgba(44,107,58,.09)}
-.opt .fx span.n{color:#9E1B1B;background:rgba(158,27,27,.085)}
-.opt .fx span.h{color:var(--mut);font-style:italic}
-
-/* ---------- Result ---------- */
-.res{margin-top:6px}
-.verdict{
-  font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.04em;
-  margin-bottom:14px;padding-left:14px;border-left:3px solid var(--red);
-}
-.verdict.good{border-left-color:#2C6B3A}
-.verdict.bad{border-left-color:#9E1B1B}
-.deltas{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 4px}
-.deltas span{
-  font-family:var(--mono);font-size:11.5px;padding:2px 8px;border:1px solid var(--line);background:#F6F1E7;
-}
-.deltas span.up{color:#2C6B3A;border-color:#B4CFB8;background:rgba(44,107,58,.07)}
-.deltas span.dn{color:#9E1B1B;border-color:#DCB6B6;background:rgba(158,27,27,.07)}
-
-/* ---------- Battle ---------- */
-.battle{
-  background:#211E1B;color:#E8E0D2;padding:16px 18px;margin:18px 0;
-  border-left:3px solid var(--red);
-}
-.battle .bt{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:#94897A;margin-bottom:9px}
-.battle .br{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:9px}
-.battle .rr{font-family:var(--mono);font-size:24px;font-weight:700;color:#E9C463}
-.battle .rl{font-family:var(--serif);font-size:17px;font-weight:600}
-.battle .rl.cat{color:#FF7D7D}.battle .rl.lose{color:#E9A05C}
-.battle .rl.hold{color:#7FD08A}.battle .rl.counter{color:#8FD6FF}
-.battle .bd{font-family:var(--mono);font-size:11px;color:#9C9182;line-height:1.8}
-
-/* ---------- Buttons ---------- */
-.acts{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
-.btn{
-  font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.04em;
-  padding:10px 22px;border:1px solid var(--ink);background:var(--ink);color:#F2EBDD;
-  cursor:pointer;transition:background .16s,border-color .16s;
-}
-.btn:hover{background:var(--red);border-color:var(--red)}
-.btn.ghost{background:transparent;color:var(--ink2);border-color:var(--line)}
-.btn.ghost:hover{background:rgba(33,30,27,.05);color:var(--ink);border-color:var(--ink2)}
-.btn:disabled{opacity:.35;cursor:not-allowed}
-.btn:disabled:hover{background:var(--ink);border-color:var(--ink)}
-
-/* ---------- Decisions ---------- */
-.dpanel{border:1px solid var(--line);background:#F6F1E7;padding:0 0 4px;margin-top:6px}
-.dhead{
-  background:#211E1B;color:#E8E0D2;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-}
-.dhead .dt{font-family:var(--serif);font-size:15px;letter-spacing:.1em}
-.dhead .db{margin-left:auto;display:flex;gap:14px;font-family:var(--mono);font-size:11.5px}
-.dhead .db b{color:#E9C463}
-.dlist{padding:4px 0}
-.di{
-  display:flex;align-items:center;gap:14px;padding:9px 16px;
-  border-bottom:1px solid var(--line);
-}
-.di:last-child{border-bottom:none}
-.di .dn{flex:1;font-size:14px;font-weight:600}
-.di .df{font-family:var(--mono);font-size:10.5px;color:var(--mut);display:block;margin-top:2px;font-weight:400}
-.di .dc{font-family:var(--mono);font-size:11px;color:var(--ink2);white-space:nowrap}
-.di .db2{
-  font-family:inherit;font-size:12.5px;font-weight:600;padding:5px 13px;
-  border:1px solid var(--ink2);background:transparent;color:var(--ink);cursor:pointer;
-  white-space:nowrap;
-}
-.di .db2:hover{background:var(--red);border-color:var(--red);color:#F2EBDD}
-.di .db2:disabled{opacity:.3;cursor:not-allowed}
-.di .db2:disabled:hover{background:transparent;border-color:var(--ink2);color:var(--ink)}
-
-/* ---------- Ending ---------- */
-.ending{
-  background:#211E1B;color:#E8E0D2;padding:44px 38px;margin-top:8px;
-  border-top:5px solid var(--red);position:relative;overflow:hidden;
-}
-.ending:before{
-  content:"";position:absolute;right:-90px;top:-70px;width:290px;height:420px;
-  background:var(--red);opacity:.16;transform:rotate(22deg);
-}
-.ending .ey{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:#94897A;position:relative}
-.ending h2{
-  font-family:var(--serif);font-size:38px;font-weight:600;letter-spacing:.02em;
-  margin:14px 0 20px;color:#F4EDDF;position:relative;line-height:1.25;
-}
-.ending .etxt{position:relative;color:#C6BBA9;line-height:1.95;max-width:600px}
-.report{margin-top:30px;border-top:1px solid #463F37;padding-top:22px;position:relative}
-.report .rrow{display:flex;gap:16px;padding:9px 0;border-bottom:1px solid #2E2924;align-items:baseline}
-.report .rk{font-family:var(--mono);font-size:11px;color:#94897A;letter-spacing:.14em;width:64px;flex:none}
-.report .rv{font-family:var(--mono);font-size:13px;color:#E9C463;width:74px;flex:none}
-.report .rd{font-size:13.5px;color:#C6BBA9;line-height:1.7}
-
-/* ---------- Misc ---------- */
-.hint{font-size:12.5px;color:var(--mut);line-height:1.8;margin-top:12px}
-.fade{animation:fade .42s ease both}
-@keyframes fade{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
-.divider{height:1px;background:var(--line);margin:28px 0}
-.log{margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
-.log .lt{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--mut);margin-bottom:9px}
-.log .li{font-size:13px;color:var(--ink2);padding:3px 0 3px 14px;position:relative;line-height:1.7}
-.log .li:before{content:"";position:absolute;left:0;top:11px;width:6px;height:1px;background:var(--mut)}
-
-@media(max-width:640px){
-  .stats{grid-template-columns:repeat(3,1fr)}
-  h1.scene{font-size:23px}
-  .ending{padding:32px 22px}
-  .ending h2{font-size:27px}
-  .hud-in,.wrap{padding-left:15px;padding-right:15px}
-  .di{flex-wrap:wrap;gap:8px}
-  .di .dn{flex-basis:100%}
-}
-</style>
-</head>
-<body>
-<header id="hud">
-  <div class="hud-in">
-    <div class="hud-top">
-      <span class="hud-title">56 之路 · <b>苏维埃</b></span>
-      <span class="hud-act" id="hud-act">序幕</span>
-    </div>
-    <div class="stats" id="hud-stats"></div>
-    <div class="factions" id="hud-fac"></div>
-  </div>
-</header>
-<div class="wrap" id="stage"></div>
-<script>
 /* ============================================================
    《56之路：苏维埃》 —— 状态机 / 数值 / 战役判定
    玩家扮演：国家意志本身
@@ -276,6 +23,57 @@ const NAMES = {PP:'政治资本',PAR:'偏执',IND:'工业',ARMY:'红军',MOR:'�
 const ADD_NAMES = {fort:'防线', enemyMod:'敌军强度', nationalQ:'民族问题',
                    nuclear:'核进度', beria:'贝利亚势力', zhukov:'朱可夫威望'};
 
+/* ============================================================
+   图版素材（assets/images/<key>.jpg）
+   同一场景族共用一张图，重复使用是设计的一部分。
+   含"同一位男性"的三张图（leader-map / leader-corridor / leader-night）
+   使用完全一致的人物锚点，保证跨图形象相同。
+   ============================================================ */
+const ART = {
+  'p0-intro':'cover',        '0-1':'leader-map',     '0-2':'steel',
+  '0-3':'hall',              'dec-prologue':'desk',
+  'a1-intro':'steel',        '1-1':'military-court', '1-2':'village',
+  '1-3':'leader-corridor',   '1-4':'lab',            '1-5':'map-arrows',
+  'a1-end':'archive',        'dec-act1':'desk',
+  'a2-intro':'port',         '2-1':'summit-table',   '2-2':'winter',
+  '2-3':'port',              '2-4':'formation',      '2-5':'formation',
+  'a2-end':'leader-night',
+  'a3-intro':'ruins',        '3-1':'advance',        'dec-mid3':'desk',
+  '3-2':'ruins',             '3-3a':'redsquare',     '3-3b':'redsquare',
+  '3-5':'port',              '3-6':'tankfield',      '3-7':'tankfield',
+  'dec-mid3b':'desk',        '3-9':'summit-table',   '3-10':'advance',
+  '3-11':'ruins',            '3-12':'advance',       '3-13':'conference',
+  'a3-end':'conference',     'dec-act3':'housing',
+  'x-left':'leader-corridor','x-napoleon':'military-court', 'x-right':'leader-corridor',
+  'a4-intro':'housing',      '4-1':'housing',        '4-2':'curtain',
+  '4-3':'bomb',              '4-4':'curtain',        '4-5':'curtain',
+  '4-6':'archive',           'a4-end':'leader-map',  'dec-act4':'desk',
+  'a5-intro':'leader-night', '5-0':'leader-night',   '5-1':'hall',
+  '5-2':'hall',              '5-3':'hungary',        '5-4':'eternal-flame'
+};
+const ART_CAPTION = {
+  cover:'卷首', archive:'档案', steel:'工业', hall:'会场', desk:'决议',
+  'leader-map':'在地图前', 'leader-corridor':'走廊', 'leader-night':'夜半',
+  'military-court':'军事法庭', village:'农庄', nkvd:'内务部', lab:'实验室',
+  'map-arrows':'作战图', 'summit-table':'会谈', winter:'冬季', formation:'列队',
+  ruins:'废墟', redsquare:'红场', port:'港运', tankfield:'装甲原野',
+  advance:'推进', conference:'波茨坦', housing:'重建', curtain:'铁幕',
+  bomb:'蘑菇云', hungary:'布达佩斯', 'eternal-flame':'长明火'
+};
+const ENDING_ART = 'eternal-flame';
+
+/* 图版：返回一段 <figure>；文件缺失时由 CSS 降级为构成主义色块 */
+function artHTML(key){
+  if (!key) return '';
+  const cap = ART_CAPTION[key] || key;
+  return `<figure class="scene-art" data-art="${key}">
+    <img src="assets/images/${key}.jpg" alt="" loading="lazy"
+      onerror="this.closest('.scene-art').classList.add('is-missing');this.remove()">
+    <span class="art-stamp">${cap}</span>
+  </figure>`;
+}
+function artForCurrent(){ return artHTML(S.curId ? ART[S.curId] : null); }
+
 /* ---------- 初始状态 ---------- */
 let S, i, LOG, ENDED;
 
@@ -288,7 +86,7 @@ function fresh(){
     collapses:0, loses:0, holds:0, reverses:0,
     warOutcome:null, act:0, year:1936,
   };
-  i = -1; LOG = []; ENDED = false;
+  i = -1; LOG = []; ENDED = false; S.curId = null;
   document.getElementById('stage').innerHTML = '';
 }
 
@@ -460,7 +258,7 @@ function renderScene(sc){
     <div class="tag">${esc(sc.chapter||'')} · ${esc(sc.year||'')}</div>
     <h1 class="scene">${esc(sc.title)}</h1>
     <div class="sub">${esc(sc.sub||'')}</div>
-    <div class="brief">${briefArr.map(p=>`<p>${p}</p>`).join('')}</div>${ex}`;
+    ${artForCurrent()}<div class="brief">${briefArr.map(p=>`<p>${p}</p>`).join('')}</div>${ex}`;
   if (sc.options && sc.options.length){
     const vis = sc.options.filter(o => !(o.only && o.when && !o.when(S)));
     html += `<div class="prompt">国 家 机 器 的 选 择</div>
@@ -488,6 +286,7 @@ function renderResult(sc, o, deltas, battles, extra){
     <div class="tag">${esc(sc.chapter||'')} · 选择已执行</div>
     <h1 class="scene">${esc(o.label)}</h1>
     ${o.flavor?`<div class="sub">${esc(o.flavor)}</div>`:'<div class="sub"></div>'}
+    ${artForCurrent()}
     <div class="verdict ${tone}">${esc(o.verdict||'')}</div>
     <div class="brief">${(o.res||[]).map(p=>`<p>${p}</p>`).join('')}</div>
     ${(battles||[]).map(battleHTML).join('')}
@@ -519,6 +318,7 @@ function renderDecisions(phase){
     <div class="tag">${esc(phase.chapter)} · ${esc(phase.year)}</div>
     <h1 class="scene">${esc(phase.title)}</h1>
     <div class="sub">${esc(phase.sub||'')}</div>
+    ${artForCurrent()}
     <div class="brief">${(phase.brief||[]).map(p=>`<p>${p}</p>`).join('')}</div>
     <div class="dpanel">
       <div class="dhead">
@@ -567,6 +367,7 @@ function advance(){
   i++;
   while (i < FLOW.length){
     const id = FLOW[i];
+    S.curId = id;
     const sc = SCENES[id];
     if (sc && sc.decisions) { renderDecisions(sc); return; }
     if (sc && (!sc.when || sc.when(S))) { renderScene(sc); return; }
@@ -2036,6 +1837,7 @@ function renderEnding(){
   const e = decideEnding();
   const st = document.getElementById('stage');
   st.innerHTML = `<div class="ending fade">
+    ${artHTML(ENDING_ART)}
     <div class="ey">1 9 5 6 年 1 2 月 · 结 算</div>
     <h2>${e.heads[0].t}</h2>
     <div class="etxt">${e.heads[0].b}</div>
@@ -2059,7 +1861,3 @@ function renderEnding(){
 document.addEventListener('DOMContentLoaded', () => {
   fresh(); renderHUD(); advance();
 });
-
-</script>
-</body>
-</html>
