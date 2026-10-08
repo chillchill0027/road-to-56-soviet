@@ -268,14 +268,37 @@ h1.scene{
   color:#F2EADB;
   text-shadow:0 1px 4px rgba(20,16,12,.85);
 }
-/* 图片缺失时的降级：构成主义斜块 + 图版编号 */
-.scene-art.is-missing{
+/* ---------- 图版底色分四族：浅 / 中 / 深 / 夜 ---------- */
+.scene-art.art-light{
   background:
     repeating-linear-gradient(135deg,
-      rgba(158,27,27,.075) 0 14px,
-      rgba(158,27,27,0)    14px 58px),
-    linear-gradient(155deg, #E9E0D0 0%, #DCD1BC 58%, #CFC3AD 100%);
+      rgba(158,27,27,.07) 0 14px,
+      rgba(158,27,27,0)   14px 58px),
+    linear-gradient(155deg, #EBE3D4 0%, #E0D6C4 58%, #D2C7B1 100%);
 }
+.scene-art.art-mid{
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(158,27,27,.10) 0 14px,
+      rgba(158,27,27,0)   14px 58px),
+    linear-gradient(155deg, #E4DAC7 0%, #D5C9B2 58%, #C6B9A0 100%);
+}
+.scene-art.art-dark{
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(242,235,227,.05) 0 14px,
+      rgba(242,235,227,0)   14px 58px),
+    linear-gradient(155deg, #4E463D 0%, #3A332B 60%, #2C2721 100%);
+}
+.scene-art.art-night{
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(242,235,227,.035) 0 12px,
+      rgba(242,235,227,0)    12px 64px),
+    linear-gradient(155deg, #27231F 0%, #1C1916 70%, #141211 100%);
+}
+
+/* ---------- 构成主义斜楔：按族宽窄不同 ---------- */
 .scene-art.is-missing::before{
   content:"";
   position:absolute; right:-9%; top:-26%;
@@ -283,14 +306,31 @@ h1.scene{
   background:rgba(158,27,27,.92);
   transform:rotate(26deg);
 }
+.scene-art.art-light.is-missing::before{ width:28%; right:-7%;  background:rgba(158,27,27,.86); }
+.scene-art.art-mid.is-missing::before  { width:34%; right:-9%;  background:rgba(158,27,27,.92); }
+.scene-art.art-dark.is-missing::before { width:41%; right:-13%; background:rgba(158,27,27,.80); }
+.scene-art.art-night.is-missing::before{ width:22%; right:-5%;  background:rgba(178,32,32,.95); }
+
+/* ---------- 缺图时的暗角（关闭 multiply，否则深色族看不见） ---------- */
 .scene-art.is-missing::after{
+  mix-blend-mode:normal;
   background:
     linear-gradient(180deg, rgba(33,30,27,0) 62%, rgba(33,30,27,.34) 100%),
     linear-gradient(90deg, rgba(33,30,27,.10), rgba(33,30,27,0) 42%);
 }
+.scene-art.art-dark.is-missing::after{
+  background:
+    linear-gradient(180deg, rgba(15,13,11,0) 56%, rgba(15,13,11,.52) 100%),
+    linear-gradient(90deg, rgba(15,13,11,.32), rgba(15,13,11,0) 50%);
+}
+.scene-art.art-night.is-missing::after{
+  background:
+    linear-gradient(180deg, rgba(8,7,6,0) 52%, rgba(8,7,6,.6) 100%),
+    linear-gradient(90deg, rgba(8,7,6,.34), rgba(8,7,6,0) 46%);
+}
 .scene-art.is-missing .art-stamp{
   color:#F6EFE3;
-  text-shadow:0 1px 4px rgba(20,16,12,.7);
+  text-shadow:0 1px 4px rgba(20,16,12,.75);
 }
 
 /* 结局页里的图版：暗底适配 */
@@ -298,14 +338,7 @@ h1.scene{
   margin:0 0 28px; max-width:660px;
   border-color:#463F37; border-top-color:var(--red);
 }
-.ending .scene-art.is-missing{
-  background:
-    repeating-linear-gradient(135deg,
-      rgba(255,255,255,.05) 0 16px,
-      rgba(255,255,255,0)   16px 46px),
-    linear-gradient(155deg, #2C2724 0%, #211E1B 100%);
-}
-.ending .scene-art.is-missing::before{ background:rgba(158,27,27,.95); }
+.ending .scene-art{ border-top-color:#B22020; }
 
 /* 结果页沿用同一张图，加一个轻微的进场 */
 .scene-art{ animation:artIn .5s ease both; }
@@ -316,4 +349,23 @@ h1.scene{
 
 @media(max-width:640px){
   .scene-art{ aspect-ratio:16/9; margin-bottom:18px; }
+}
+
+/* ---------- 图版大字：场景年份，让 55 个图版彼此不同 ---------- */
+.scene-art{ --plate:rgba(33,30,27,.30); --rule:rgba(33,30,27,.16); }
+.scene-art.art-dark{  --plate:rgba(242,235,227,.24); --rule:rgba(242,235,227,.16); }
+.scene-art.art-night{ --plate:rgba(242,235,227,.20); --rule:rgba(242,235,227,.14); }
+.art-plate{
+  position:absolute; left:16px; top:14px; z-index:2;
+  font-family:var(--mono); font-size:clamp(34px,7vw,58px);
+  font-weight:200; line-height:1;
+  letter-spacing:.08em;
+  color:var(--plate);
+  pointer-events:none;
+}
+.art-plate::after{
+  content:""; display:block;
+  width:2.4em; height:1px;
+  margin-top:.42em;
+  background:var(--rule);
 }

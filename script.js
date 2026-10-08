@@ -60,19 +60,34 @@ const ART_CAPTION = {
   advance:'推进', conference:'波茨坦', housing:'重建', curtain:'铁幕',
   bomb:'蘑菇云', hungary:'布达佩斯', 'eternal-flame':'长明火'
 };
+/* 图版调色分族：同一族内视觉一致，跨族区分幕次气氛 */
+const ART_TONE = {
+  cover:'mid',      archive:'light', steel:'mid',        hall:'mid',
+  desk:'light',     lab:'light',     'map-arrows':'light','summit-table':'light',
+  conference:'light',curtain:'light',
+  'leader-map':'night','leader-corridor':'night','leader-night':'night',
+  nkvd:'night',     bomb:'night',    'eternal-flame':'night',
+  'military-court':'dark',village:'mid',winter:'mid',formation:'mid',
+  housing:'mid',
+  ruins:'dark',     redsquare:'dark',port:'dark',        tankfield:'dark',
+  advance:'dark',   hungary:'dark'
+};
 const ENDING_ART = 'eternal-flame';
 
 /* 图版：返回一段 <figure>；文件缺失时由 CSS 降级为构成主义色块 */
-function artHTML(key){
+function artHTML(key, year){
   if (!key) return '';
   const cap = ART_CAPTION[key] || key;
-  return `<figure class="scene-art" data-art="${key}">
+  const tone = ART_TONE[key] || 'mid';
+  const y = String(year || S.year || '');
+  return `<figure class="scene-art art-${tone}" data-art="${key}">
     <img src="assets/images/${key}.jpg" alt="" loading="lazy"
       onerror="this.closest('.scene-art').classList.add('is-missing');this.remove()">
+    <span class="art-plate">${y}</span>
     <span class="art-stamp">${cap}</span>
   </figure>`;
 }
-function artForCurrent(){ return artHTML(S.curId ? ART[S.curId] : null); }
+function artForCurrent(){ return artHTML(S.curId ? ART[S.curId] : null, S.year); }
 
 /* ---------- 初始状态 ---------- */
 let S, i, LOG, ENDED;
@@ -1837,7 +1852,7 @@ function renderEnding(){
   const e = decideEnding();
   const st = document.getElementById('stage');
   st.innerHTML = `<div class="ending fade">
-    ${artHTML(ENDING_ART)}
+    ${artHTML(ENDING_ART, 1956)}
     <div class="ey">1 9 5 6 年 1 2 月 · 结 算</div>
     <h2>${e.heads[0].t}</h2>
     <div class="etxt">${e.heads[0].b}</div>
