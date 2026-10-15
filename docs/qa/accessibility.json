@@ -1,0 +1,83 @@
+{
+  "engine": "axe-core 4.14.0",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21aa"
+  ],
+  "checks": [
+    {
+      "state": "title",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "choice",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "guide",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "gallery",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "title",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "choice",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "guide",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violationCount": 0,
+      "violations": []
+    },
+    {
+      "state": "gallery",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "violationCount": 0,
+      "violations": []
+    }
+  ],
+  "passed": true
+}
