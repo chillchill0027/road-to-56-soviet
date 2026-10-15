@@ -289,6 +289,7 @@ function renderScene(sc){
   });
   const nb = document.getElementById('next');
   if (nb) nb.addEventListener('click', advance);
+  saveGame();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -374,7 +375,74 @@ function renderDecisions(phase){
     });
   });
   document.getElementById('next').addEventListener('click', advance);
+  saveGame();
   window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ---------- 标题页 ---------- */
+const ACT_LINE = ['序幕 · 遗产与偏执','第一幕 · 钢铁与血','第二幕 · 魔鬼的交易',
+                  '第三幕 · 伟大的卫国战争','第四幕 · 胜利的代价','第五幕 · 走向 56'];
+function menuMode(on){
+  document.body.classList.toggle('is-menu', !!on);
+  const w = document.querySelector('.wrap');
+  if (w) w.classList.toggle('is-menu', !!on);
+}
+function renderTitle(){
+  menuMode(true);
+  const g = unlocked();
+  const st = document.getElementById('stage');
+  st.innerHTML = `<div class="title-screen fade">
+    <div class="ts-kicker">1 9 3 6 &nbsp;—&nbsp; 1 9 5 6 &nbsp;·&nbsp; 五 幕 &nbsp;·&nbsp; 1 4 个 结 局</div>
+    <h1 class="ts-title">5 6 之 路<b>苏 维 埃</b></h1>
+    <p class="ts-lede">你扮演的不是斯大林，是<em>国家意志本身</em>。一台没有姓名、没有面孔的机器，
+    从基洛夫死后开始运转，要走过五年计划、大清洗、卫国战争和冷战的头十年。</p>
+    <p class="ts-lede">每一个抉择都会写死数值。战争用一条统一的公式结算：<span class="ts-f">R =（红军 × 工事 × 民心）÷（敌军 × 预警）</span>。
+    偏执是全作唯一一个越用力越糟的属性。</p>
+    <div class="ts-acts">${ACT_LINE.map(a=>`<span>${a}</span>`).join('')}</div>
+    <div class="ts-actions">
+      <button class="btn" id="ts-new">开 始 新 游 戏</button>
+      ${hasSave()?`<button class="btn ghost" id="ts-continue">继 续 上 次 进 度</button>`:''}
+      <button class="btn ghost" id="ts-gallery">结 局 图 鉴 &nbsp;${g.length} / ${ENDINGS.length}</button>
+    </div>
+    <div class="ts-note">键盘：按 <b>A–E</b> 或 <b>1–5</b> 选项，<b>Enter</b> / <b>空格</b> 继续。进度自动存在这台设备上。</div>
+  </div>`;
+  const nw = document.getElementById('ts-new');
+  if (nw) nw.addEventListener('click', () => { clearSave(); fresh(); menuMode(false); renderHUD(); advance(); });
+  const cc = document.getElementById('ts-continue');
+  if (cc) cc.addEventListener('click', resume);
+  const gg = document.getElementById('ts-gallery');
+  if (gg) gg.addEventListener('click', renderGallery);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function renderGallery(){
+  menuMode(true);
+  const g = unlocked();
+  const st = document.getElementById('stage');
+  st.innerHTML = `<div class="gallery fade">
+    <div class="ts-kicker">已 解 锁 &nbsp;${g.length} / ${ENDINGS.length}</div>
+    <h1 class="gal-title">结 局 图 鉴</h1>
+    <div class="gal-grid">
+      ${ENDINGS.map(e => {
+        const got = g.indexOf(e.id) >= 0;
+        return `<div class="gal-item${got?' got':''}">
+          <div class="gal-name">${got ? e.t : '？ ？ ？'}</div>
+          <div class="gal-hint">${got ? esc(e.h) : '未 解 锁'}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="ts-note">同一个主结局会因为战争结果与冷战选择读起来完全不同。想收全，前三幕就得开始偏离历史。</div>
+    <div class="acts"><button class="btn" id="gal-back">返 回</button></div>
+  </div>`;
+  document.getElementById('gal-back').addEventListener('click', renderTitle);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function resume(){
+  if (!loadGame()){ renderTitle(); return; }
+  menuMode(false); renderHUD();
+  const id = FLOW[i], sc = SCENES[id];
+  if (!sc){ renderEnding(); return; }
+  S.curId = id;
+  if (sc.decisions) renderDecisions(sc); else renderScene(sc);
 }
 
 /* ---------- 主推进 ---------- */
@@ -1750,62 +1818,110 @@ const DECISIONS = [
 ];
 
 /* ============================================================
+   结局名录（图鉴用；顺序即图鉴顺序）
+   ============================================================ */
+const ENDINGS = [
+  {id:'khrushchev', t:'伟 大 的 继 承 人', h:'集体领导 + 全面批判个人崇拜'},
+  {id:'beria',      t:'技 术 官 僚 的 秩 序', h:'秘密警察换成了规划委员会的图表'},
+  {id:'military',   t:'红 色 拿 破 仑',   h:'军队走进了克里姆林宫'},
+  {id:'right',      t:'新 经 济 道 路',   h:'市场被政权自己请了回来'},
+  {id:'left',       t:'永 久 的 革 命',   h:'这个国家不再是一个国家，而是一场运动'},
+  {id:'soviet',     t:'全 权 苏 维 埃',   h:'最高苏维埃第一次真正投票'},
+  {id:'stalin-quiet',t:'无 声 的 独 裁',  h:'路线未变，但批判了个人崇拜'},
+  {id:'eternal',    t:'钢 铁 的 永 恒',   h:'画像还挂在那里'},
+  {id:'dusk',       t:'苏 维 埃 的 黄 昏', h:'联盟开始一块一块地掉下来'},
+  {id:'rome',       t:'第 三 罗 马',      h:'旧王朝在废墟上复辟'},
+  {id:'island',     t:'孤 岛',           h:'没有人愿意来莫斯科了'},
+  {id:'comecon',    t:'共 同 经 济 体',   h:'经互会变成了一个真正的经济体'},
+  {id:'detente',    t:'缓 和',           h:'两个阵营改用开会解决问题'},
+  {id:'mediocre',   t:'平 庸 的 延 续',   h:'1956 年和 1936 年没有区别'}
+];
+
+/* ============================================================
+   本地存档 + 结局图鉴
+   ============================================================ */
+const SAVE_KEY = 'r56sov.save.v1';
+const GALLERY_KEY = 'r56sov.gallery.v1';
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
+  del(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+function saveGame(){
+  if (ENDED) return;
+  store.set(SAVE_KEY, { v:1, i:i, LOG:LOG, S:S });
+}
+function loadGame(){
+  const d = store.get(SAVE_KEY);
+  if (!d || !d.S || typeof d.i !== 'number') return false;
+  S = d.S; i = d.i; LOG = d.LOG || []; ENDED = false;
+  return true;
+}
+function hasSave(){ const d = store.get(SAVE_KEY); return !!(d && d.S); }
+function clearSave(){ store.del(SAVE_KEY); }
+function unlocked(){ const g = store.get(GALLERY_KEY); return Array.isArray(g) ? g : []; }
+function unlockEnding(id){
+  const g = unlocked();
+  if (g.indexOf(id) < 0){ g.push(id); store.set(GALLERY_KEY, g); }
+}
+
+/* ============================================================
    结局判定
    ============================================================ */
 function decideEnding(){
   const heads = [], mods = [];
-  const push = (t,b)=>heads.push({t,b});
+  const push = (id,t,b)=>heads.push({id,t,b});
 
   if (S.collapses >= 3 || (S.MOR <= 15 && !S.defeat)){
-    push('苏 维 埃 的 黄 昏',
+    push('dusk', '苏 维 埃 的 黄 昏',
       '联盟开始一块一块地掉下来。波罗的海、高加索、中亚——每一个地方都在同一周里宣布自己不再属于这里。没有人下令，也没有人阻止。这台机器第一次发现，它没有可以按压的按钮。');
   } else if (S.defeat && (S.religion||0) >= 2 && S.MOR <= 35){
-    push('第 三 罗 马',
+    push('rome', '第 三 罗 马',
       '诸圣大教堂重新点亮。一个自称来自旧王朝的人在莫斯科加冕，称这是恢复而不是革命。军队保持沉默，因为他们不知道该向谁敬礼。七十年被压缩成一段插曲。');
   } else if (S.COM <= 20 && (S.nationalQ||0) >= 50){
-    push('孤 岛',
+    push('island', '孤 岛',
       '没有人愿意来莫斯科了。盟友是负担，邻国是威胁，而边境另一侧的世界正在忙着做别的事。这台机器仍然庞大，仍然危险，但它只能对自己说话。');
   } else if (S.disarm && (S.westTrust||0) >= 20){
-    push('缓 和',
+    push('detente', '缓 和',
       '一份不首先使用的草案被对方接了。此后的十年里，两个阵营在维也纳、日内瓦和纽约反复开会，而不是在柏林和布达佩斯。没有人赢，但也没有人按按钮。');
   } else if (S.comecon && S.IND >= 190){
-    push('共 同 经 济 体',
+    push('comecon', '共 同 经 济 体',
       '经济互助委员会变成了一个真正的经济体：统一的电网、统一的轨距、统一的计价单位。经互会的卡车开到了伏尔加河边的新城，那里的人不知道柏林在哪里。');
   } else if (S.assassinated || (S.route === 'stalin' && S.PAR >= 80)){
-    push('钢 铁 的 永 恒',
+    push('eternal', '钢 铁 的 永 恒',
       '画像还挂在那里。上面的人已经不在很久了，但没有人敢把它取下来。这台机器继续以他的名义运转，像一台没有人敢关掉的机器。');
   } else {
     switch (S.route) {
       case 'khrushchev':
-        push('伟 大 的 继 承 人',
+        push('khrushchev', '伟 大 的 继 承 人',
           '秘密报告念完的那一刻，大厅里有人晕倒。二十年的账第一次被拿到桌面上。这台机器开始试着承认自己做过什么——这是它二十年来最难的一个动作。');
         break;
       case 'beria':
-        push('技 术 官 僚 的 秩 序',
+        push('beria', '技 术 官 僚 的 秩 序',
           '秘密警察的档案柜换成了规划委员会的图表。效率提高了，指标完成了，没有人在乎人怎么想。这可能是最危险的一种结局，因为它看起来很正常。');
         break;
       case 'military':
-        push('红 色 拿 破 仑',
+        push('military', '红 色 拿 破 仑',
           '军装走进了克里姆林宫。勋章代替了意识形态，地图代替了纲领。这个国家会变得很有力量，也会变得很少问自己为什么。');
         break;
       case 'right':
-        push('新 经 济 道 路',
+        push('right', '新 经 济 道 路',
           '市场回来了，富农的孙子成了拖拉机厂的经理。商店里有东西了，监狱里的人少了。老布尔什维克坐在角落里不说话，因为他们不知道该说什么。');
         break;
       case 'left':
-        push('永 久 的 革 命',
+        push('left', '永 久 的 革 命',
           '第四国际的旗帜在亚洲和非洲升起来。这个国家不再只是一个国家，它是一场运动。它不再需要保卫自己，因为它不再有边界。');
         break;
       case 'soviet':
-        push('全 权 苏 维 埃',
+        push('soviet', '全 权 苏 维 埃',
           '最高苏维埃第一次真正投票。表决结果出乎所有人意料，包括被否决的那个人。他接受了这个结果——这是这二十年里最难做到的一件事。');
         break;
       case 'stalin':
-        push('无 声 的 独 裁',
+        push('stalin-quiet', '无 声 的 独 裁',
           '一切照旧。没有恐怖，也没有变化。二十年里这个国家学会了一件事：只要不提问，生活是可以继续下去的。');
         break;
       default:
-        push('平 庸 的 延 续',
+        push('mediocre', '平 庸 的 延 续',
           '1956 年和 1936 年几乎没有区别。档案柜里那个名字早就没有人提了，包括当初把它写上去的人。');
     }
   }
@@ -1850,6 +1966,10 @@ function decideEnding(){
 
 function renderEnding(){
   const e = decideEnding();
+  ENDED = true;
+  unlockEnding(e.heads[0].id);
+  clearSave();
+  menuMode(false); renderHUD();
   const st = document.getElementById('stage');
   st.innerHTML = `<div class="ending fade">
     ${artHTML(ENDING_ART, 1956)}
@@ -1865,14 +1985,33 @@ function renderEnding(){
     </div>
     <div class="acts" style="margin-top:30px">
       <button class="btn" id="again" style="background:#9E1B1B;border-color:#9E1B1B">再 走 一 次</button>
+      <button class="btn ghost" id="to-menu" style="background:transparent;color:#C6BBA9;border-color:#463F37">回 到 标 题</button>
     </div>
   </div>`;
   document.getElementById('again').addEventListener('click', () => {
     fresh(); renderHUD(); advance();
   });
+  document.getElementById('to-menu').addEventListener('click', renderTitle);
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+/* ---------- 键盘 ---------- */
+document.addEventListener('keydown', (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const opts = Array.from(document.querySelectorAll('.opt')).filter(b => !b.disabled);
+  let idx = -1;
+  if (/^[1-9]$/.test(e.key)) idx = parseInt(e.key,10) - 1;
+  else if (/^[a-eA-E]$/.test(e.key)) idx = e.key.toUpperCase().charCodeAt(0) - 65;
+  if (idx >= 0 && idx < opts.length){
+    e.preventDefault(); opts[idx].click(); return;
+  }
+  if (e.key === 'Enter' || e.key === ' '){
+    const nx = document.getElementById('next');
+    if (nx){ e.preventDefault(); nx.click(); }
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
-  fresh(); renderHUD(); advance();
+  fresh();
+  renderTitle();
 });
