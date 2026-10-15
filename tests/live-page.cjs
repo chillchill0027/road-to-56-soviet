@@ -1,4 +1,4 @@
-// Runs in GitHub Actions after GitHub Pages has deployed the same commit.
+// Waits for Pages assets to match this checkout, then tests the public game.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -14,6 +14,19 @@ const output = path.resolve(__dirname, '../docs/qa/live');
   try {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
+    const root = path.resolve(__dirname, '..');
+    const expected = ['script.js', 'presentation.js', 'style.css'].map(file => ({file, body:fs.readFileSync(path.join(root, file))}));
+    let current = false;
+    for (let attempt = 0; attempt < 24; attempt++) {
+      const checks = await Promise.all(expected.map(async asset => {
+        const response = await context.request.get(new URL(asset.file, target).href, {headers:{'Cache-Control':'no-cache'}});
+        return response.status() === 200 && (await response.body()).equals(asset.body);
+      }));
+      if (checks.every(Boolean)) { current = true; break; }
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+    assert.equal(current, true, 'published game code and styles match the checked-out version');
+    report.checks.push('published code and styles match this checkout byte for byte');
     const errors = [], failures = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('response', r => { if (r.status() >= 400 && r.url().startsWith(target)) failures.push({url:r.url(), status:r.status()}); });
