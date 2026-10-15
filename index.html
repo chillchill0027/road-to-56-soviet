@@ -1,36 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>56之路：苏维埃 —— 苏联国策抉择 RPG</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>56之路：苏维埃 —— 苏联国策抉择 RPG</title>
 
-<meta name="description" content="扮演国家意志本身，从 1936 年执掌苏联到 1956 年。五幕、55 个场景、123 个抉择、14 种结局。基于《钢铁雄心4》Road to 56 的苏联国策树与核心决议。">
-<meta name="theme-color" content="#211E1B">
-<meta name="color-scheme" content="light">
-<meta name="author" content="chillchill0027">
+    <meta
+      name="description"
+      content="扮演国家意志本身，从 1936 年执掌苏联到 1956 年。五幕、55 个场景、123 个抉择、14 种结局。基于《钢铁雄心4》Road to 56 的苏联国策树与核心决议。"
+    />
+    <meta name="theme-color" content="#211E1B" />
+    <meta name="color-scheme" content="light" />
+    <meta name="author" content="chillchill0027" />
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="56之路：苏维埃">
-<meta property="og:description" content="从 1936 到 1956，五幕 123 个抉择，14 种结局。你扮演的不是斯大林，是国家意志本身。">
-<meta property="og:locale" content="zh_CN">
-<meta name="twitter:card" content="summary">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="56之路：苏维埃" />
+    <meta
+      property="og:description"
+      content="从 1936 到 1956，五幕 123 个抉择，14 种结局。你扮演的不是斯大林，是国家意志本身。"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
 
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header id="hud">
-  <div class="hud-in">
-    <div class="hud-top">
-      <span class="hud-title">56 之路 · <b>苏维埃</b></span>
-      <span class="hud-act" id="hud-act">序幕</span>
-    </div>
-    <div class="stats" id="hud-stats"></div>
-    <div class="factions" id="hud-fac"></div>
-  </div>
-</header>
-<div class="wrap" id="stage"></div>
-<script src="script.js"></script>
-</body>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preload" as="image" href="assets/images/cover.webp" />
+  </head>
+  <body>
+    <a class="skip-link" href="#stage">跳到正文</a>
+    <nav class="masthead" aria-label="游戏导航">
+      <button class="wordmark" id="nav-home" aria-label="返回标题">
+        <span>56</span
+        ><span>之路 <b>·</b> 苏维埃<small>ROAD TO 56 / SOVIET</small></span>
+      </button>
+      <span class="nav-edition">历史抉择 RPG <span>1936 — 1956</span></span>
+      <div class="nav-actions">
+        <span id="save-status" role="status"></span
+        ><button class="nav-button" id="nav-help">游玩指南</button
+        ><button class="nav-button" id="nav-gallery">结局图鉴</button>
+      </div>
+    </nav>
+    <header id="hud">
+      <div class="hud-in">
+        <div class="hud-top">
+          <span class="hud-title">56 之路 · <b>苏维埃</b></span>
+          <span class="hud-act" id="hud-act">序幕</span>
+        </div>
+        <div class="stats" id="hud-stats"></div>
+        <div class="factions" id="hud-fac"></div>
+      </div>
+    </header>
+    <main class="wrap" id="stage" tabindex="-1"></main>
+    <footer class="site-footer">
+      <span
+        >56 之路：苏维埃
+        <span class="footer-slash">/</span> 一部由你书写的历史</span
+      ><span>基于 Road to 56 的架空历史 · 非官方同人作品</span>
+    </footer>
+    <dialog id="help-dialog" aria-labelledby="help-title">
+      <form method="dialog">
+        <button class="dialog-close" aria-label="关闭游玩指南">关闭</button>
+      </form>
+      <div class="eyebrow">FIELD GUIDE / 游玩指南</div>
+      <h2 id="help-title">每一次抉择，都有代价。</h2>
+      <p>
+        你扮演的是国家意志。从 1936 年到 1956
+        年，在工业、民心、军队与政治之间寻找平衡。
+      </p>
+      <dl class="guide-stats">
+        <div>
+          <dt>政治资本</dt>
+          <dd>执行决议的资源，留意每项决议的成本。</dd>
+        </div>
+        <div>
+          <dt>偏执</dt>
+          <dd>数值越高，清洗风险越大。这项属性越低越好。</dd>
+        </div>
+        <div>
+          <dt>工业 / 红军</dt>
+          <dd>工业支撑长期发展，红军决定战役表现。</dd>
+        </div>
+        <div>
+          <dt>民心 / 阵营影响</dt>
+          <dd>影响战争韧性，以及战后的道路。</dd>
+        </div>
+      </dl>
+      <p>
+        战力比 R = 红军 × 工事系数 × 民心系数 ÷（敌军 ×
+        预警系数）。选项下的标签会提前说明属性变化。
+      </p>
+      <div class="guide-keys">
+        <kbd>A–G</kbd> 或 <kbd>1–7</kbd> 选择 · <kbd>Enter</kbd> 继续 ·
+        <kbd>Esc</kbd> 关闭指南
+      </div>
+      <p class="guide-note">
+        进度自动保存在当前浏览器。返回标题可继续上次进度；清除浏览器数据会移除存档。所有配图均为
+        AI 生成的历史场景演绎，并非真实史料照片。
+      </p>
+    </dialog>
+    <dialog id="restart-dialog" aria-labelledby="restart-title">
+      <div class="eyebrow">NEW JOURNEY / 重新开始</div>
+      <h2 id="restart-title">开启一段新的历史？</h2>
+      <p>当前进度将被替换，已解锁的结局会保留。</p>
+      <div class="acts">
+        <button class="btn" id="restart-confirm">开始新游戏</button
+        ><button class="btn ghost" id="restart-cancel">保留当前进度</button>
+      </div>
+    </dialog>
+    <script src="script.js"></script>
+    <script src="presentation.js"></script>
+  </body>
 </html>

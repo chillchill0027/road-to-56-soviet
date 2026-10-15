@@ -49,7 +49,8 @@ const ART = {
   '4-3':'bomb',              '4-4':'curtain',        '4-5':'curtain',
   '4-6':'archive',           'a4-end':'leader-map',  'dec-act4':'desk',
   'a5-intro':'leader-night', '5-0':'leader-night',   '5-1':'hall',
-  '5-2':'hall',              '5-3':'hungary',        '5-4':'eternal-flame'
+  '5-2':'hall',              '5-3':'hungary',        '5-4':'eternal-flame',
+  'dec-act5':'desk'
 };
 const ART_CAPTION = {
   cover:'卷首', archive:'档案', steel:'工业', hall:'会场', desk:'决议',
@@ -74,17 +75,29 @@ const ART_TONE = {
 };
 const ENDING_ART = 'eternal-flame';
 
+const ART_SOURCE = {
+  cover:['cover',-1], steel:['industry-sheet',0], village:['industry-sheet',1],
+  lab:['industry-sheet',2], archive:['industry-sheet',3],
+  'leader-map':['leader-sheet',0], 'leader-corridor':['leader-sheet',1],
+  'leader-night':['leader-sheet',2], desk:['leader-sheet',3],
+  winter:['war-sheet',0], ruins:['war-sheet',1], tankfield:['war-sheet',2], advance:['war-sheet',3],
+  hall:['state-sheet',0], conference:['state-sheet',1], housing:['state-sheet',2], port:['state-sheet',3],
+  'summit-table':['state-sheet',1], curtain:['history-sheet',0], bomb:['history-sheet',1],
+  hungary:['history-sheet',2], 'eternal-flame':['history-sheet',3],
+  'military-court':['military-sheet',0], 'map-arrows':['military-sheet',1],
+  formation:['military-sheet',2], redsquare:['military-sheet',3]
+};
+
 /* 图版：返回一段 <figure>；文件缺失时由 CSS 降级为构成主义色块 */
 function artHTML(key, year){
   if (!key) return '';
   const cap = ART_CAPTION[key] || key;
   const tone = ART_TONE[key] || 'mid';
   const y = String(year || S.year || '');
+  const [file, cell] = ART_SOURCE[key] || ART_SOURCE.archive;
   return `<figure class="scene-art art-${tone}" data-art="${key}">
-    <img src="assets/images/${key}.jpg" alt="" loading="lazy"
-      onerror="this.closest('.scene-art').classList.add('is-missing');this.remove()">
-    <span class="art-plate">${y}</span>
-    <span class="art-stamp">${cap}</span>
+    <div class="art-window${cell < 0 ? ' single' : ''}"><div class="art-cell"><img src="assets/images/${file}.webp" alt="${cap} · AI 生成的历史场景演绎" decoding="async" style="${cell < 0 ? '' : `left:-${cell%2*100}%;top:-${Math.floor(cell/2)*100}%`}"></div></div>
+    <figcaption><span>${cap} <span class="art-fiction">/ 历史场景演绎</span></span><span>${y}</span></figcaption>
   </figure>`;
 }
 function artForCurrent(){ return artHTML(S.curId ? ART[S.curId] : null, S.year); }
@@ -96,7 +109,7 @@ function fresh(){
   S = {
     PP:140, PAR:10, IND:95, ARMY:62, MOR:68, COM:45,
     STAL:60, LEFT:25, RIGHT:25,
-    purgeCount:0, beria:0, zhukov:0, napoleon:false,
+    purgeCount:0, _purgeAccounting:2, beria:0, zhukov:0, napoleon:false,
     fort:0, warning:1.0, enemyMod:0, nationalQ:0, nuclear:0,
     collapses:0, loses:0, holds:0, reverses:0,
     warOutcome:null, act:0, year:1936,
@@ -121,7 +134,10 @@ function apply(fx){
   return out;
 }
 function setFlags(f){ if (f) for (const k in f) S[k] = f[k]; }
-function addRaw(k,v){ S[k] = Math.max(0, Math.min(k==='nuclear'?100:999, (S[k]||0)+v)); }
+function addRaw(k,v){
+  const floor = k === 'enemyMod' ? -999 : 0;
+  S[k] = Math.max(floor, Math.min(k==='nuclear'?100:999, (S[k]||0)+v));
+}
 
 /* ---------- HUD ---------- */
 function hudAct(){
@@ -181,10 +197,12 @@ function battle(name, enemy, o){
   const mor  = 0.65 + S.MOR/200;
   const warn = S.warning || 1.0;
   const raw  = (S.ARMY * fort * mor) / (enemy * warn);
-  const rc   = raw / (o.hold || 1);
+  const tactic = o.hold || 1;
+  const rc   = raw / tactic;
   const idx  = rc < 0.4 ? 0 : rc < 0.7 ? 1 : rc < 1.0 ? 2 : rc < 1.35 ? 3 : 4;
   const tier = TIERS[idx];
-  const res  = {name, enemy, R:raw.toFixed(2), tier:tier.t, cls:tier.cls, fx:{...tier.fx}};
+  const res  = {name, enemy, R:rc.toFixed(2), baseR:raw.toFixed(2), tier:tier.t, cls:tier.cls, fx:{...tier.fx},
+    factors:{army:S.ARMY, fortValue:S.fort, fort, morale:S.MOR, mor, warning:warn, tactic}};
   if (o.fx) for (const k in o.fx) res.fx[k] = (res.fx[k]||0) + o.fx[k];
   if (idx===0) S.collapses++;
   else if (idx===1) S.loses++;
@@ -193,11 +211,13 @@ function battle(name, enemy, o){
   return res;
 }
 function battleHTML(b){
-  const wn = (S.warning||1.0) >= 1.0 ? '无预警 ×1.00' : (S.warning >= 0.8 ? '部分预警 ×0.85' : '完整预警 ×0.70');
+  const f = b.factors;
+  const warningLabel = f.warning >= 1.0 ? '无预警' : f.warning >= 0.8 ? '部分预警' : '完整预警';
+  const wn = warningLabel + ' ×' + f.warning.toFixed(2);
   return `<div class="battle">
     <div class="bt">战 役 判 定 · ${b.name}</div>
     <div class="br"><span class="rr">R = ${b.R}</span><span class="rl ${b.cls}">${b.tier}</span></div>
-    <div class="bd">红军 ${S.ARMY}　·　工事系数 ${(1+Math.min(S.fort,48)/160).toFixed(2)}（防线 ${S.fort}）　·　民心系数 ${(0.65+S.MOR/200).toFixed(2)}<br>敌军强度 ${b.enemy}　·　${wn}　→　战力比 R = 红军 × 工事 × 民心 ÷（敌军 × 预警）</div>
+    <div class="bd">结算前：红军 ${f.army}　·　工事系数 ${f.fort.toFixed(2)}（防线 ${f.fortValue}）　·　民心系数 ${f.mor.toFixed(2)}（民心 ${f.morale}）<br>敌军强度 ${b.enemy}　·　${wn}　·　战术系数 ×${f.tactic.toFixed(2)}<br>战力比 R = 红军 × 工事 × 民心 ÷（敌军 × 预警 × 战术）</div>
   </div>`;
 }
 /* 战时动员底线：新组建的师不断补充到前线 */
@@ -220,12 +240,10 @@ function interlude(){
   const out = [];
   if (S.PAR >= 75){
     const p = PURGE_TARGETS[Math.floor(Math.random()*PURGE_TARGETS.length)];
-    const d = apply(p.fx);
     S.purgeCount++;
-    out.push({k:'purge', title:'偏执 > 75：幕间清洗自动发生', text:'清洗了'+p.n+'。'+p.t, deltas:d});
+    out.push({k:'purge', title:'偏执 > 75：幕间清洗自动发生', text:'清洗了'+p.n+'。'+p.t, fx:p.fx});
   } else if (S.PAR >= 50 && Math.random() < 0.5){
-    const d = apply({PAR:-3, MOR:-3});
-    out.push({k:'purge', title:'偏执 > 50：内务部自行其是', text:'没有人下达命令，但昨晚又有两辆黑色轿车开进了院子。', deltas:d});
+    out.push({k:'purge', title:'偏执 > 50：内务部自行其是', text:'没有人下达命令，但昨晚又有两辆黑色轿车开进了院子。', fx:{PAR:-3, MOR:-3}});
   }
   return out;
 }
@@ -250,22 +268,34 @@ function optionHTML(sc, o, idx){
       <span class="key">${o.k}</span>
       <span class="lb">${esc(o.label)}</span>
       ${o.flavor?`<span class="fl">${esc(o.flavor)}</span>`:''}
-      ${ok?'':`<span class="lock">✕ ${esc(o.lock||'条件不足')}</span>`}
+      ${ok?'':`<span class="lock">条件：${esc(o.lock||'条件不足')}</span>`}
     </div>
     ${fx.length?`<div class="fx">${fx.join('')}</div>`:''}
   </button>`;
 }
 
-function renderScene(sc){
+function renderScene(sc, options = {}){
   S.act = sc.act !== undefined ? sc.act : S.act;
   S.year = sc.year || S.year;
-  const briefArr = typeof sc.brief === 'function' ? sc.brief(S) : (sc.brief||[]);
   let ex = '', dl = [];
-  if (sc.onEnter){
-    const r = sc.onEnter(S) || {};
-    if (r.deltas) dl = apply(r.deltas);
-    ex = r.html || '';
+  const entered = S._enteredScene === S.curId;
+  if (!options.restoring && !entered){
+    if (sc.onEnter){
+      const r = sc.onEnter(S) || {};
+      if (r.deltas) {
+        dl = apply(r.deltas);
+        for (const k in r.deltas) if (!(k in META) && !(k in FACTION)) addRaw(k, r.deltas[k]);
+      }
+      ex = r.html || '';
+    }
+    S._enteredScene = S.curId;
+    S._entryHTML = ex;
+  } else {
+    ex = entered ? S._entryHTML || '' : '';
+    S._enteredScene = S.curId;
+    S._entryHTML = ex;
   }
+  const briefArr = typeof sc.brief === 'function' ? sc.brief(S) : (sc.brief||[]);
   renderHUD();
   if (dl.length) showDeltas(dl);
   const st = document.getElementById('stage');
@@ -323,6 +353,8 @@ function logHTML(){
 
 /* ---------- 渲染：决议台 ---------- */
 function renderDecisions(phase){
+  S.act = phase.act !== undefined ? phase.act : S.act;
+  S.year = phase.year || S.year;
   renderHUD();
   const st = document.getElementById('stage');
   const avail = DECISIONS.filter(d =>
@@ -362,12 +394,8 @@ function renderDecisions(phase){
     if (b.disabled) return;
     b.addEventListener('click', () => {
       const d = DECISIONS.find(x=>x.id===b.dataset.id);
-      const cost = {};
-      for (const k in (d.cost||{})) cost[k] = -(d.cost[k]);
-      const d2 = apply(cost).concat(apply(d.fx||{}));
-      if (d.raw) for (const k in d.raw) addRaw(k, d.raw[k]);
-      S['_c_'+d.id] = (S['_c_'+d.id]||0) + 1;
-      LOG.push(d.name);
+      const d2 = executeDecision(d);
+      if (!d2) return;
       renderHUD(); showDeltas(d2);
       renderDecisions(phase);
       const box = document.getElementById('dlist');
@@ -377,6 +405,20 @@ function renderDecisions(phase){
   document.getElementById('next').addEventListener('click', advance);
   saveGame();
   window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function executeDecision(d){
+  if (ENDED || !d || (d.act && !d.act.includes(S.act)) || (d.when && !d.when(S)) ||
+      (d.max !== undefined && (S['_c_'+d.id]||0) >= d.max) ||
+      !Object.keys(d.cost||{}).every(k => S[k] >= d.cost[k])) return null;
+  const cost = {};
+  for (const k in (d.cost||{})) cost[k] = -d.cost[k];
+  const deltas = apply(cost).concat(apply(d.fx||{}));
+  if (d.raw) for (const k in d.raw) addRaw(k, d.raw[k]);
+  S['_c_'+d.id] = (S['_c_'+d.id]||0) + 1;
+  if (d.purge) S.purgeCount = (S.purgeCount||0) + 1;
+  LOG.push(d.name);
+  return deltas;
 }
 
 /* ---------- 标题页 ---------- */
@@ -392,22 +434,23 @@ function renderTitle(){
   const g = unlocked();
   const st = document.getElementById('stage');
   st.innerHTML = `<div class="title-screen fade">
-    <div class="ts-kicker">1 9 3 6 &nbsp;—&nbsp; 1 9 5 6 &nbsp;·&nbsp; 五 幕 &nbsp;·&nbsp; 1 4 个 结 局</div>
-    <h1 class="ts-title">5 6 之 路<b>苏 维 埃</b></h1>
-    <p class="ts-lede">你扮演的不是斯大林，是<em>国家意志本身</em>。一台没有姓名、没有面孔的机器，
-    从基洛夫死后开始运转，要走过五年计划、大清洗、卫国战争和冷战的头十年。</p>
-    <p class="ts-lede">每一个抉择都会写死数值。战争用一条统一的公式结算：<span class="ts-f">R =（红军 × 工事 × 民心）÷（敌军 × 预警）</span>。
-    偏执是全作唯一一个越用力越糟的属性。</p>
-    <div class="ts-acts">${ACT_LINE.map(a=>`<span>${a}</span>`).join('')}</div>
-    <div class="ts-actions">
-      <button class="btn" id="ts-new">开 始 新 游 戏</button>
-      ${hasSave()?`<button class="btn ghost" id="ts-continue">继 续 上 次 进 度</button>`:''}
-      <button class="btn ghost" id="ts-gallery">结 局 图 鉴 &nbsp;${g.length} / ${ENDINGS.length}</button>
-    </div>
-    <div class="ts-note">键盘：按 <b>A–E</b> 或 <b>1–5</b> 选项，<b>Enter</b> / <b>空格</b> 继续。进度自动存在这台设备上。</div>
+    <section class="title-hero">
+      <div class="hero-copy"><div class="eyebrow">一部可交互的国家编年史</div>
+        <div class="hero-years">1936 <span>—</span> 1956</div>
+        <h1 class="ts-title">56之路<b>苏维埃</b></h1>
+        <p class="hero-quote">历史没有如果。<br>直到你做出选择。</p>
+        <p class="ts-lede">你将成为国家意志本身。在钢铁、战争与理想之间，<br class="desktop-break">为一个国家写下二十年的命运。</p>
+        <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span>继续</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span>开始</span></button>`}</div>
+        <div class="hero-small">五幕叙事 <span>/</span> 14 种结局 <span>/</span> 每一个抉择皆有回响</div>
+      </div>
+      <div class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><div class="hero-image-top"><span>苏维埃 / 国家档案</span><span>卷 001</span></div><div class="hero-image-bottom"><span>莫斯科，1936 年</span><span>历史场景演绎</span></div></div>
+    </section>
+    <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><span class="chapter-num">0${n+1}</span><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
+    <section class="title-bottom"><p><span class="eyebrow">你的决定，组成历史</span><br>发展工业，平衡派系，迎战时代。每一项选择都将改变结局。</p><button class="archive-link" id="ts-gallery"><span>结局档案</span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span>查阅</span></button></section>
+    <div class="ts-note"><span><kbd>A–G</kbd> / <kbd>1–7</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>
   </div>`;
   const nw = document.getElementById('ts-new');
-  if (nw) nw.addEventListener('click', () => { clearSave(); fresh(); menuMode(false); renderHUD(); advance(); });
+  if (nw) nw.addEventListener('click', requestNewGame);
   const cc = document.getElementById('ts-continue');
   if (cc) cc.addEventListener('click', resume);
   const gg = document.getElementById('ts-gallery');
@@ -439,14 +482,26 @@ function renderGallery(){
 function resume(){
   if (!loadGame()){ renderTitle(); return; }
   menuMode(false); renderHUD();
+  const pending = S._pendingResult;
+  const resultScene = pending && SCENES[pending.sceneId];
+  const resultOption = resultScene && resultScene.options && resultScene.options[pending.optionIndex];
+  if (resultOption && Array.isArray(pending.deltas) && Array.isArray(pending.battles) &&
+      Number.isInteger(pending.nextIndex) && pending.nextIndex >= 0 && pending.nextIndex < FLOW.length){
+    i = pending.nextIndex;
+    S.curId = pending.sceneId;
+    renderResult(resultScene, resultOption, pending.deltas, pending.battles, pending.extra || '');
+    return;
+  }
+  delete S._pendingResult;
   const id = FLOW[i], sc = SCENES[id];
   if (!sc){ renderEnding(); return; }
   S.curId = id;
-  if (sc.decisions) renderDecisions(sc); else renderScene(sc);
+  if (sc.decisions) renderDecisions(sc); else renderScene(sc, {restoring:true});
 }
 
 /* ---------- 主推进 ---------- */
 function advance(){
+  delete S._pendingResult;
   i++;
   while (i < FLOW.length){
     const id = FLOW[i];
@@ -459,6 +514,9 @@ function advance(){
   renderEnding();
 }
 function choose(sc, o){
+  if (ENDED || !o || (o.when && !o.when(S)) || S._resolvedScene === S.curId) return;
+  S._resolvedScene = S.curId;
+  if (o.purge) S.purgeCount = (S.purgeCount||0) + 1;
   const deltas = apply(o.fx || {});
   if (o.add) for (const k in o.add) addRaw(k, o.add[k]);
   setFlags(o.flags);
@@ -477,6 +535,8 @@ function choose(sc, o){
     const j = FLOW.indexOf(target);
     if (j >= 0){ i = j - 1; }
   }
+  S._pendingResult = {sceneId:S.curId, optionIndex:sc.options.indexOf(o), deltas, battles, extra, nextIndex:i};
+  saveGame();
   renderResult(sc, o, deltas, battles, extra);
 }
 
@@ -492,7 +552,7 @@ const FLOW = [
   'a3-end','dec-act3',
   'x-left','x-napoleon','x-right',
   'a4-intro','4-1','4-2','4-3','4-4','4-5','4-6','a4-end','dec-act4',
-  'a5-intro','5-0','5-1','5-2','5-3','5-4'
+  'a5-intro','5-0','5-1','dec-act5','5-2','5-3','5-4'
 ];
 
 /* ============================================================
@@ -520,7 +580,7 @@ const SCENES = {
     '名单下面压着一张空白表格，填的是处理方式。'
   ],
   options:[
-    {k:'A', label:'铁腕 —— 两个纵队一起划掉', flavor:'THE GREAT PURGE',
+    {k:'A', label:'铁腕 —— 两个纵队一起划掉', flavor:'THE GREAT PURGE', purge:true,
      fx:{PAR:20, LEFT:-40, RIGHT:-30, ARMY:-8, IND:-5, MOR:-5},
      flags:{purgeStart:true},
      verdict:'名单被退回内务部，附一句话：加快。',
@@ -622,7 +682,7 @@ const SCENES = {
     '这台机器现在要决定：是让它是真的，还是让它是假的。'
   ],
   options:[
-    {k:'A', label:'批准 —— 清洗军方高层', flavor:'THE MILITARY CONSPIRACY',
+    {k:'A', label:'批准 —— 清洗军方高层', flavor:'THE MILITARY CONSPIRACY', purge:true,
      fx:{ARMY:-22, PAR:-15, STAL:8, MOR:-6},
      flags:{napoleon:false, tukh:false},
      verdict:'图哈切夫斯基、乌博列维奇、叶戈罗夫、布柳赫尔，在同一天被带走。',
@@ -636,7 +696,7 @@ const SCENES = {
      res:['这条路打开纵深作战与大机械化的学说线，也让总参谋部第一次握住了实权。',
           '代价是这个国家里多了一个有军队支持、并且知道这一点的人。'],
      tone:''},
-    {k:'C', label:'拖延 —— 只清理边缘', flavor:'—',
+    {k:'C', label:'拖延 —— 只清理边缘', flavor:'—', purge:true,
      fx:{PAR:12, ARMY:-6},
      flags:{napoleon:false, tukh:false},
      verdict:'三个人被带走，都是副职。元帅们的名字一个没动。',
@@ -677,7 +737,7 @@ const SCENES = {
     '贝利亚站在走廊另一头，手里拿着一份更薄的名单。他的方案是：只清洗该清洗的人，并且由他来决定谁该清洗。'
   ],
   options:[
-    {k:'A', label:'让叶若夫继续', flavor:'NKVD PRIMACY',
+    {k:'A', label:'让叶若夫继续', flavor:'NKVD PRIMACY', purge:true,
      fx:{PAR:20, MOR:-6},
      flags:{yezhov:true},
      verdict:'配额指标照旧下达到各州。',
@@ -688,7 +748,7 @@ const SCENES = {
      verdict:'叶若夫调任农业人民委员部。他很清楚那意味着什么。',
      res:['清洗变得可以点名。副作用是贝利亚本人的人事网开始铺满全国。'],
      tone:''},
-    {k:'C', label:'清算叶若夫', flavor:'—',
+    {k:'C', label:'清算叶若夫', flavor:'—', purge:true,
      fx:{PAR:-20, MOR:-10}, flags:{beria:0},
      verdict:'叶若夫被自己建立的程序处理掉了。',
      res:['内务部一时虚弱。此后清洗的规模会小一个档次。'],
@@ -762,8 +822,7 @@ const SCENES = {
     if (S.PAR >= 75){ parts.push('<p>偏执已经越过临界。内务部开始不需要命令了。</p>'); }
     const purges = interlude();
     purges.forEach(p => {
-      Object.keys(p.deltas||{}).length;
-      for (const d of p.deltas) deltas[d.k] = (deltas[d.k]||0) + d.d;
+      for (const k in p.fx) deltas[k] = (deltas[k]||0) + p.fx[k];
       parts.push('<p><em>' + p.text + '</em></p>');
     });
     return { deltas, html: parts.length ? '<div class="brief">' + parts.join('') + '</div>' : '' };
@@ -935,7 +994,7 @@ const SCENES = {
     const stalin = S.fortStalin || 0;
     const molotov = S.fortMolotov || 0;
     const built = mol >= 3;
-    S.fort = stalin + (built ? molotov : 0);
+    S.fort = (S.fort || 0) + stalin + (built ? molotov : 0);
     const parts = [];
     if (molotov > 0 && !built){
       parts.push('<p><em>莫洛托夫防线只完成了三分之一。浇筑到一半的碉堡停在原野上——它们的位置在新边界，而红军的仓库和铁路全在旧边界。这些工事一点用都没有。</em></p>');
@@ -1354,7 +1413,7 @@ const SCENES = {
     '这台机器的某一部分正在决定要不要换掉它的核心。'
   ],
   options:[
-    {k:'A', label:'镇压 —— 提前动手', flavor:'ELIMINATE THE LEFT',
+    {k:'A', label:'镇压 —— 提前动手', flavor:'ELIMINATE THE LEFT', purge:true,
      fx:{LEFT:-35, PAR:10, ARMY:-8, MOR:-10}, flags:{leftCoupFailed:true},
      verdict:'名单上的人在同一天被捕。图哈切夫斯基没有被牵连，但也没有再被信任。',
      res:['政变失败。这台机器保住了它的核心，代价是又一批有经验的人。'],
@@ -1570,7 +1629,7 @@ const SCENES = {
   brief:['一份名单送上来，上面是几个战时在列宁格勒任职的干部。名单下面还有一份，涉及克里姆林宫的几位医生。',
          '战时被放松的那部分，现在要收回去。'],
   options:[
-    {k:'A', label:'继续清洗', flavor:'THE DOCTORS PLOT',
+    {k:'A', label:'继续清洗', flavor:'THE DOCTORS PLOT', purge:true,
      fx:{PAR:-15, ARMY:-8, MOR:-15}, add:{nuclear:-20},
      verdict:'两份名单都被批准。',
      res:['偏执得到了宣泄。战后本该用来重建的那部分人，又少了一批。'],
@@ -1580,7 +1639,7 @@ const SCENES = {
      verdict:'调查被终止，几份已经签发的逮捕令被撤回。',
      res:['军队和科研机构第一次感到不用再提防背后。代价是偏执没有出口。'],
      tone:'good'},
-    {k:'C', label:'交给贝利亚去处理', flavor:'—',
+    {k:'C', label:'交给贝利亚去处理', flavor:'—', purge:true,
      when:S=>S.beria>=40, lock:'需要贝利亚势力 ≥ 40',
      fx:{PAR:-20}, add:{beria:25},
      verdict:'贝利亚拿到名单之后，只逮捕了名单上的人。',
@@ -1597,7 +1656,7 @@ const SCENES = {
     if (S.PAR >= 75){ parts.push('<p>偏执一直处在高位。幕间清洗仍在继续。</p>'); }
     const purges = interlude();
     const deltas = {};
-    purges.forEach(p => { for (const d of p.deltas) deltas[d.k]=(deltas[d.k]||0)+d.d; parts.push('<p><em>'+p.text+'</em></p>'); });
+    purges.forEach(p => { for (const k in p.fx) deltas[k]=(deltas[k]||0)+p.fx[k]; parts.push('<p><em>'+p.text+'</em></p>'); });
     return { deltas, html: parts.length?'<div class="brief">'+parts.join('')+'</div>':'' };
   },
   brief:['七年过去了。这个国家重建了一半，另一半还在原地。','然后是一个电话没有响的夜晚。']
@@ -1695,6 +1754,12 @@ const SCENES = {
   ]
 },
 
+'dec-act5': {
+  decisions:true, act:5, year:1953, chapter:'第五幕', title:'决 议 台',
+  sub:'新的领导层 · 最后的三年',
+  brief:['继承人的席位已经确定。重建、民生与个人崇拜的遗产，仍需要在有限的资源中作出取舍。']
+},
+
 '5-2': {
   act:5, year:1956, chapter:'第五幕', title:'去 斯 大 林 化 与 否',
   sub:'1956 年 2 月 · 第二十次代表大会',
@@ -1773,11 +1838,11 @@ const SCENES = {
    决议表
    ============================================================ */
 const DECISIONS = [
-  {id:'purge-army', name:'清洗军队', note:'随机损失一名军官', cost:{PP:30}, max:3, act:[0,1,2],
+  {id:'purge-army', name:'清洗军队', note:'随机损失一名军官', purge:true, cost:{PP:30}, max:3, act:[0,1,2],
    fx:{ARMY:-5, PAR:-10, MOR:-3}},
-  {id:'purge-party', name:'清洗党', note:'老布尔什维克又少一批', cost:{PP:25}, max:4, act:[0,1,2],
+  {id:'purge-party', name:'清洗党', note:'老布尔什维克又少一批', purge:true, cost:{PP:25}, max:4, act:[0,1,2],
    fx:{STAL:3, LEFT:-4, RIGHT:-4, PAR:-8}},
-  {id:'purge-nkvd', name:'清洗内务部', note:'让内务部审查内务部', cost:{PP:40}, max:2, act:[1,2,3],
+  {id:'purge-nkvd', name:'清洗内务部', note:'让内务部审查内务部', purge:true, cost:{PP:40}, max:2, act:[1,2,3],
    fx:{PAR:-15, MOR:-2}},
   {id:'collectivize', name:'集体化推进', note:'农业再压缩一轮', cost:{PP:20}, max:2, act:[0,1,2],
    fx:{IND:8, MOR:-6}},
@@ -1851,13 +1916,26 @@ function saveGame(){
   if (ENDED) return;
   store.set(SAVE_KEY, { v:1, i:i, LOG:LOG, S:S });
 }
+function validSave(d){
+  return !!(d && d.v === 1 && d.S && typeof d.S === 'object' && !Array.isArray(d.S) &&
+    Number.isInteger(d.i) && d.i >= 0 && d.i < FLOW.length &&
+    [...KEYS, ...Object.keys(FACTION)].every(k => Number.isFinite(d.S[k])));
+}
 function loadGame(){
   const d = store.get(SAVE_KEY);
-  if (!d || !d.S || typeof d.i !== 'number') return false;
-  S = d.S; i = d.i; LOG = d.LOG || []; ENDED = false;
+  if (!validSave(d)){ clearSave(); return false; }
+  S = d.S; i = d.i; LOG = Array.isArray(d.LOG) ? d.LOG.filter(l => typeof l === 'string') : []; ENDED = false;
+  const savedScene = FLOW.indexOf(S.curId);
+  if (savedScene >= 0) i = savedScene;
+  if (S._purgeAccounting !== 2){
+    const purgeNames = new Set(DECISIONS.filter(d => d.purge).map(d => d.name));
+    for (const scene of Object.values(SCENES)) for (const option of scene.options||[]) if (option.purge) purgeNames.add(option.label);
+    S.purgeCount = (S.purgeCount||0) + LOG.filter(label => purgeNames.has(label)).length;
+    S._purgeAccounting = 2;
+  }
   return true;
 }
-function hasSave(){ const d = store.get(SAVE_KEY); return !!(d && d.S); }
+function hasSave(){ return validSave(store.get(SAVE_KEY)); }
 function clearSave(){ store.del(SAVE_KEY); }
 function unlocked(){ const g = store.get(GALLERY_KEY); return Array.isArray(g) ? g : []; }
 function unlockEnding(id){
@@ -1997,13 +2075,21 @@ function renderEnding(){
 
 /* ---------- 键盘 ---------- */
 document.addEventListener('keydown', (e) => {
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
-  const opts = Array.from(document.querySelectorAll('.opt')).filter(b => !b.disabled);
-  let idx = -1;
-  if (/^[1-9]$/.test(e.key)) idx = parseInt(e.key,10) - 1;
-  else if (/^[a-eA-E]$/.test(e.key)) idx = e.key.toUpperCase().charCodeAt(0) - 65;
-  if (idx >= 0 && idx < opts.length){
-    e.preventDefault(); opts[idx].click(); return;
+  if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+  if (document.querySelector('dialog[open]')) return;
+  if (e.target && (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable)) return;
+  if ((e.key === 'Enter' || e.key === ' ') && e.target?.closest?.('button,a,summary')) return;
+  const opts = Array.from(document.querySelectorAll('.opt'));
+  let choice;
+  if (/^[1-9]$/.test(e.key)) choice = opts[parseInt(e.key,10) - 1];
+  else if (/^[a-zA-Z]$/.test(e.key)) {
+    const matches = b => b.querySelector('.key')?.textContent.trim().toUpperCase() === e.key.toUpperCase();
+    choice = opts.find(b => !b.disabled && matches(b)) || opts.find(matches);
+  }
+  if (choice){
+    e.preventDefault();
+    if (!choice.disabled) choice.click();
+    return;
   }
   if (e.key === 'Enter' || e.key === ' '){
     const nx = document.getElementById('next');

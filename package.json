@@ -1,0 +1,17 @@
+{
+  "name": "road-to-56-soviet",
+  "version": "1.1.0",
+  "private": true,
+  "description": "《56之路：苏维埃》历史抉择 RPG",
+  "scripts": {
+    "dev": "node dev-server.cjs",
+    "test": "node --test tests/game-logic.cjs",
+    "test:browser": "node tests/browser-smoke.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

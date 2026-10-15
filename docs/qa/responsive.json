@@ -1,0 +1,62 @@
+{
+  "mobileCTA": {
+    "top": 683.5625,
+    "bottom": 731.0625,
+    "viewportHeight": 844
+  },
+  "checks": [
+    {
+      "width": 320,
+      "state": "choice",
+      "overflow": 0
+    },
+    {
+      "width": 320,
+      "state": "title",
+      "overflow": 0
+    },
+    {
+      "width": 390,
+      "state": "choice",
+      "overflow": 0
+    },
+    {
+      "width": 390,
+      "state": "title",
+      "overflow": 0
+    },
+    {
+      "width": 768,
+      "state": "choice",
+      "overflow": 0
+    },
+    {
+      "width": 768,
+      "state": "title",
+      "overflow": 0
+    },
+    {
+      "width": 1024,
+      "state": "choice",
+      "overflow": 0
+    },
+    {
+      "width": 1024,
+      "state": "title",
+      "overflow": 0
+    },
+    {
+      "width": 1440,
+      "state": "choice",
+      "overflow": 0
+    },
+    {
+      "width": 1440,
+      "state": "title",
+      "overflow": 0
+    }
+  ],
+  "restartConfirm": "passed",
+  "restartCancel": "passed",
+  "passed": true
+}
