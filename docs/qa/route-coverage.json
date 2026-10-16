@@ -1,0 +1,598 @@
+{
+  "passed": true,
+  "rulesVersion": 2,
+  "routeCount": 24,
+  "required": 250,
+  "covered": 250,
+  "categories": {
+    "scene": 56,
+    "option": 124,
+    "decision": 23,
+    "ending": 14,
+    "death": 4,
+    "war": 5,
+    "battle": 5,
+    "purge": 6,
+    "border": 2,
+    "calendar": 2,
+    "path": 9
+  },
+  "endings": [
+    {
+      "id": "khrushchev",
+      "name": "伟大的继承人",
+      "reachable": true
+    },
+    {
+      "id": "beria",
+      "name": "技术官僚的秩序",
+      "reachable": true
+    },
+    {
+      "id": "military",
+      "name": "红色拿破仑",
+      "reachable": true
+    },
+    {
+      "id": "right",
+      "name": "新经济道路",
+      "reachable": true
+    },
+    {
+      "id": "left",
+      "name": "永久的革命",
+      "reachable": true
+    },
+    {
+      "id": "soviet",
+      "name": "全权苏维埃",
+      "reachable": true
+    },
+    {
+      "id": "stalin-quiet",
+      "name": "无声的独裁",
+      "reachable": true
+    },
+    {
+      "id": "eternal",
+      "name": "钢铁的永恒",
+      "reachable": true
+    },
+    {
+      "id": "dusk",
+      "name": "苏维埃的黄昏",
+      "reachable": true
+    },
+    {
+      "id": "rome",
+      "name": "第三罗马",
+      "reachable": true
+    },
+    {
+      "id": "island",
+      "name": "孤岛",
+      "reachable": true
+    },
+    {
+      "id": "comecon",
+      "name": "共同经济体",
+      "reachable": true
+    },
+    {
+      "id": "detente",
+      "name": "缓和",
+      "reachable": true
+    },
+    {
+      "id": "mediocre",
+      "name": "平庸的延续",
+      "reachable": true
+    }
+  ],
+  "routes": [
+    {
+      "id": "route-1",
+      "ending": "stalin-quiet",
+      "actions": 42,
+      "seed": 2654435768,
+      "state": {
+        "PP": 206,
+        "PAR": 9,
+        "IND": 103,
+        "ARMY": 19,
+        "MOR": 82,
+        "COM": 0,
+        "LEFT": 43,
+        "RIGHT": 36,
+        "beria": 0,
+        "purgeCount": 4,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "stalin"
+      }
+    },
+    {
+      "id": "route-2",
+      "ending": "rome",
+      "actions": 42,
+      "seed": 2654435771,
+      "state": {
+        "PP": 68,
+        "PAR": 5,
+        "IND": 163,
+        "ARMY": 68,
+        "MOR": 3,
+        "COM": 15,
+        "LEFT": 55,
+        "RIGHT": 20,
+        "beria": 0,
+        "purgeCount": 3,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "caretaker"
+      }
+    },
+    {
+      "id": "route-3",
+      "ending": "mediocre",
+      "actions": 54,
+      "seed": 2654435770,
+      "state": {
+        "PP": 10,
+        "PAR": 62,
+        "IND": 114,
+        "ARMY": 85,
+        "MOR": 73,
+        "COM": 100,
+        "LEFT": 51,
+        "RIGHT": 81,
+        "beria": 0,
+        "purgeCount": 4,
+        "deathMode": "natural",
+        "warOutcome": "great",
+        "route": "caretaker"
+      }
+    },
+    {
+      "id": "route-4",
+      "ending": "comecon",
+      "actions": 53,
+      "seed": 2654435773,
+      "state": {
+        "PP": 5,
+        "PAR": 0,
+        "IND": 220,
+        "ARMY": 81,
+        "MOR": 85,
+        "COM": 60,
+        "LEFT": 40,
+        "RIGHT": 35,
+        "beria": 70,
+        "purgeCount": 2,
+        "deathMode": "beria",
+        "warOutcome": "stalemate",
+        "route": "beria"
+      }
+    },
+    {
+      "id": "route-5",
+      "ending": "khrushchev",
+      "actions": 53,
+      "seed": 2654435772,
+      "state": {
+        "PP": 20,
+        "PAR": 0,
+        "IND": 33,
+        "ARMY": 48,
+        "MOR": 57,
+        "COM": 100,
+        "LEFT": 0,
+        "RIGHT": 25,
+        "beria": 0,
+        "purgeCount": 10,
+        "deathMode": "natural",
+        "warOutcome": "costly",
+        "route": "khrushchev"
+      }
+    },
+    {
+      "id": "route-6",
+      "ending": "right",
+      "actions": 42,
+      "seed": 2654435775,
+      "state": {
+        "PP": 470,
+        "PAR": 0,
+        "IND": 152,
+        "ARMY": 38,
+        "MOR": 47,
+        "COM": 54,
+        "LEFT": 25,
+        "RIGHT": 65,
+        "beria": 0,
+        "purgeCount": 2,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "right"
+      }
+    },
+    {
+      "id": "route-7",
+      "ending": "dusk",
+      "actions": 42,
+      "seed": 2654435774,
+      "state": {
+        "PP": 0,
+        "PAR": 14,
+        "IND": 109,
+        "ARMY": 40,
+        "MOR": 0,
+        "COM": 79,
+        "LEFT": 58,
+        "RIGHT": 51,
+        "beria": 30,
+        "purgeCount": 5,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "stalin"
+      }
+    },
+    {
+      "id": "route-12",
+      "ending": "beria",
+      "actions": 42,
+      "seed": 2654435765,
+      "state": {
+        "PP": 10,
+        "PAR": 0,
+        "IND": 164,
+        "ARMY": 48,
+        "MOR": 78,
+        "COM": 0,
+        "LEFT": 43,
+        "RIGHT": 0,
+        "beria": 45,
+        "purgeCount": 2,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "beria"
+      }
+    },
+    {
+      "id": "route-16",
+      "ending": "detente",
+      "actions": 54,
+      "seed": 2654435753,
+      "state": {
+        "PP": 20,
+        "PAR": 0,
+        "IND": 168,
+        "ARMY": 72,
+        "MOR": 100,
+        "COM": 80,
+        "LEFT": 36,
+        "RIGHT": 86,
+        "beria": 0,
+        "purgeCount": 5,
+        "deathMode": "natural",
+        "warOutcome": "great",
+        "route": "caretaker"
+      }
+    },
+    {
+      "id": "route-18",
+      "ending": "soviet",
+      "actions": 54,
+      "seed": 2654435755,
+      "state": {
+        "PP": 12,
+        "PAR": 0,
+        "IND": 120,
+        "ARMY": 84,
+        "MOR": 91,
+        "COM": 85,
+        "LEFT": 58,
+        "RIGHT": 81,
+        "beria": 0,
+        "purgeCount": 7,
+        "deathMode": "natural",
+        "warOutcome": "great",
+        "route": "soviet"
+      }
+    },
+    {
+      "id": "route-27",
+      "ending": "left",
+      "actions": 55,
+      "seed": 2654435746,
+      "state": {
+        "PP": 130,
+        "PAR": 74,
+        "IND": 47,
+        "ARMY": 100,
+        "MOR": 70,
+        "COM": 100,
+        "LEFT": 85,
+        "RIGHT": 60,
+        "beria": 0,
+        "purgeCount": 3,
+        "deathMode": "natural",
+        "warOutcome": "great",
+        "route": "left"
+      }
+    },
+    {
+      "id": "route-55",
+      "ending": "military",
+      "actions": 54,
+      "seed": 2654435726,
+      "state": {
+        "PP": 15,
+        "PAR": 0,
+        "IND": 133,
+        "ARMY": 100,
+        "MOR": 95,
+        "COM": 82,
+        "LEFT": 0,
+        "RIGHT": 25,
+        "beria": 45,
+        "purgeCount": 4,
+        "deathMode": "military",
+        "warOutcome": "great",
+        "route": "military"
+      }
+    },
+    {
+      "id": "route-162",
+      "ending": "island",
+      "actions": 53,
+      "seed": 2654435611,
+      "state": {
+        "PP": 15,
+        "PAR": 37,
+        "IND": 20,
+        "ARMY": 95,
+        "MOR": 100,
+        "COM": 17,
+        "LEFT": 64,
+        "RIGHT": 77,
+        "beria": 0,
+        "purgeCount": 6,
+        "deathMode": "natural",
+        "warOutcome": "held",
+        "route": "caretaker"
+      }
+    },
+    {
+      "id": "route-165",
+      "ending": "eternal",
+      "actions": 54,
+      "seed": 2654435612,
+      "state": {
+        "PP": 30,
+        "PAR": 89,
+        "IND": 136,
+        "ARMY": 89,
+        "MOR": 91,
+        "COM": 85,
+        "LEFT": 0,
+        "RIGHT": 50,
+        "beria": 0,
+        "purgeCount": 6,
+        "deathMode": "natural",
+        "warOutcome": "held",
+        "route": "stalin"
+      }
+    },
+    {
+      "id": "route-203",
+      "ending": "military",
+      "actions": 54,
+      "seed": 2654435698,
+      "state": {
+        "PP": 35,
+        "PAR": 73,
+        "IND": 72,
+        "ARMY": 97,
+        "MOR": 70,
+        "COM": 41,
+        "LEFT": 55,
+        "RIGHT": 85,
+        "beria": 0,
+        "purgeCount": 5,
+        "deathMode": "natural",
+        "warOutcome": "held",
+        "route": "military"
+      }
+    },
+    {
+      "id": "route-234",
+      "ending": "khrushchev",
+      "actions": 54,
+      "seed": 2654435667,
+      "state": {
+        "PP": 5,
+        "PAR": 0,
+        "IND": 118,
+        "ARMY": 52,
+        "MOR": 85,
+        "COM": 65,
+        "LEFT": 55,
+        "RIGHT": 35,
+        "beria": 70,
+        "purgeCount": 4,
+        "deathMode": "beria",
+        "warOutcome": "costly",
+        "route": "khrushchev"
+      }
+    },
+    {
+      "id": "route-795",
+      "ending": "eternal",
+      "actions": 55,
+      "seed": 2654436002,
+      "state": {
+        "PP": 170,
+        "PAR": 92,
+        "IND": 119,
+        "ARMY": 72,
+        "MOR": 81,
+        "COM": 100,
+        "LEFT": 20,
+        "RIGHT": 85,
+        "beria": 0,
+        "purgeCount": 6,
+        "deathMode": "assassinated",
+        "warOutcome": "held",
+        "route": "caretaker"
+      }
+    },
+    {
+      "id": "route-19",
+      "ending": "detente",
+      "actions": 55,
+      "seed": 2654435754,
+      "state": {
+        "PP": 5,
+        "PAR": 92,
+        "IND": 118,
+        "ARMY": 100,
+        "MOR": 91,
+        "COM": 85,
+        "LEFT": 45,
+        "RIGHT": 85,
+        "beria": 0,
+        "purgeCount": 4,
+        "deathMode": "natural",
+        "warOutcome": "great",
+        "route": "left"
+      }
+    },
+    {
+      "id": "route-26",
+      "ending": "stalin-quiet",
+      "actions": 54,
+      "seed": 2654435747,
+      "state": {
+        "PP": 34,
+        "PAR": 0,
+        "IND": 183,
+        "ARMY": 100,
+        "MOR": 95,
+        "COM": 100,
+        "LEFT": 50,
+        "RIGHT": 40,
+        "beria": 70,
+        "purgeCount": 3,
+        "deathMode": "military",
+        "warOutcome": "great",
+        "route": "stalin"
+      }
+    },
+    {
+      "id": "route-81",
+      "ending": "mediocre",
+      "actions": 42,
+      "seed": 2654435816,
+      "state": {
+        "PP": 25,
+        "PAR": 0,
+        "IND": 114,
+        "ARMY": 55,
+        "MOR": 44,
+        "COM": 0,
+        "LEFT": 31,
+        "RIGHT": 0,
+        "beria": 0,
+        "purgeCount": 3,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "caretaker"
+      }
+    },
+    {
+      "id": "route-82",
+      "ending": "left",
+      "actions": 42,
+      "seed": 2654435819,
+      "state": {
+        "PP": 0,
+        "PAR": 19,
+        "IND": 89,
+        "ARMY": 30,
+        "MOR": 91,
+        "COM": 72,
+        "LEFT": 81,
+        "RIGHT": 81,
+        "beria": 0,
+        "purgeCount": 5,
+        "deathMode": "natural",
+        "warOutcome": "defeat",
+        "route": "left"
+      }
+    },
+    {
+      "id": "route-88",
+      "ending": "detente",
+      "actions": 54,
+      "seed": 2654435809,
+      "state": {
+        "PP": 27,
+        "PAR": 0,
+        "IND": 132,
+        "ARMY": 100,
+        "MOR": 95,
+        "COM": 85,
+        "LEFT": 0,
+        "RIGHT": 25,
+        "beria": 45,
+        "purgeCount": 6,
+        "deathMode": "military",
+        "warOutcome": "held",
+        "route": "right"
+      }
+    },
+    {
+      "id": "route-733",
+      "ending": "military",
+      "actions": 53,
+      "seed": 2654436196,
+      "state": {
+        "PP": 20,
+        "PAR": 45,
+        "IND": 59,
+        "ARMY": 100,
+        "MOR": 85,
+        "COM": 82,
+        "LEFT": 0,
+        "RIGHT": 42,
+        "beria": 0,
+        "purgeCount": 10,
+        "deathMode": "military",
+        "warOutcome": "held",
+        "route": "military"
+      }
+    },
+    {
+      "id": "route-986",
+      "ending": "detente",
+      "actions": 54,
+      "seed": 2654435939,
+      "state": {
+        "PP": 75,
+        "PAR": 22,
+        "IND": 166,
+        "ARMY": 62,
+        "MOR": 95,
+        "COM": 37,
+        "LEFT": 52,
+        "RIGHT": 100,
+        "beria": 0,
+        "purgeCount": 4,
+        "deathMode": "natural",
+        "warOutcome": "stalemate",
+        "route": "stalin"
+      }
+    }
+  ]
+}

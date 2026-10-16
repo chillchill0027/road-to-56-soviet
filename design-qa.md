@@ -51,3 +51,12 @@ final result: passed
 - [x] 已发现P0/P1/P2修复并重新截图。
 - [x] 回归、完整周目、响应式及自动无障碍检查通过。
 - [x] 启动文档、字体许可、素材映射及CI检查已加入。
+
+
+## v1.2 交互与数值复验（2026-10-16）
+
+本次技术修复保留既有视觉结构，补充实际净变化、条件胜利奖励、决议效果和H选项。桌面与390px手机以真实点击跑通24条完整路线；覆盖全部56个场景、124个选项、23项决议，以及政治入口、交接、战争和随机清洗等共250项验收目标。结果页和决议页刷新后数值保持一致，无JS错误、无资源失败、无横向溢出。数字快捷键已支持同名A选项的冬季战争版本与第8项继承方案。
+
+关键截图：`docs/qa/all-endings-gallery.png`（正常游玩收集14/14）、`successor-beria.png`、`successor-left.png`、`successor-mediocre.png`、`decision-party-debate.png`、`decision-nkvd-delegate.png`、`battle-costs.png`。新截图已实际打开检查。手机和减少动态效果模式隐藏遮挡数字的HUD飞字；账本持续显示真实变化。
+
+全路线与数值规范见 `docs/routes-and-balance.md`。自动验收见 `docs/qa/route-coverage.json`、`docs/qa/browser-routes.json`。以上更新补充原验收，原版截图与记录保留用于历史对照。

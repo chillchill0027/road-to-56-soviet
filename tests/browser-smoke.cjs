@@ -234,7 +234,11 @@ async function scenario(browser, url, config) {
       if (result.failure) console.error(result.failure.split('\n').slice(0, 3).join('\n'));
     }
     report.passed = report.scenarios.every(result => result.passed);
-    fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+    const summary = {...report, scenarios:report.scenarios.map(({snapshots,...scenario})=>({
+      ...scenario, snapshotCount:snapshots.length,
+      trace:snapshots.map(({scene,action,ended,overflow})=>({scene,action,ended,overflow}))
+    }))};
+    fs.writeFileSync(output, JSON.stringify(summary, null, 2) + '\n');
     console.log(`Report: ${output}`);
     if (!report.passed) process.exitCode = 1;
   } finally {

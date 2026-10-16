@@ -1,61 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
-const vm = require('node:vm');
-
-// Run the shipped, dependency-free engine with only its DOM surface replaced.
-function runtime() {
-  const listeners = new Map();
-  const storage = new Map();
-  const nodes = new Map();
-  const node = () => ({
-    innerHTML: '', children: [], textContent: '', style: {},
-    classList: { toggle() {}, add() {}, remove() {} },
-    addEventListener() {}, querySelectorAll() { return []; },
-    querySelector() { return null; }, setAttribute() {}, appendChild() {},
-  });
-  const document = {
-    options: [], body: node(),
-    addEventListener(type, listener) { listeners.set(type, listener); },
-    getElementById(id) {
-      if (!nodes.has(id)) nodes.set(id, node());
-      return nodes.get(id);
-    },
-    querySelector(selector) { return selector === 'dialog[open]' ? (document.dialogOpen ? node() : null) : node(); },
-    querySelectorAll(selector) { return selector === '.opt' ? document.options : []; },
-    createElement: node,
-  };
-  const math = Object.assign(Object.create(Math), { random: () => 0 });
-  const context = vm.createContext({
-    document, window: { scrollTo() {} }, Math: math, console, requestNewGame() {},
-    localStorage: {
-      getItem: key => storage.get(key) ?? null,
-      setItem: (key, value) => storage.set(key, value),
-      removeItem: key => storage.delete(key),
-    },
-    setTimeout() {}, clearTimeout() {},
-  });
-  const source = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
-  vm.runInContext(source + `
-    renderHUD = () => {};
-    showDeltas = () => {};
-    globalThis.resultCalls = [];
-    renderResult = (...args) => globalThis.resultCalls.push(args);
-    globalThis.game = {
-      fresh, advance, choose, renderScene, renderDecisions, renderTitle, resume,
-      saveGame, loadGame, hasSave, addRaw, battle, battleHTML, apply, executeDecision,
-      scenes: SCENES, flow: FLOW, decisions: DECISIONS,
-      saveKey: SAVE_KEY, galleryKey: GALLERY_KEY,
-      state: () => S, ended: () => ENDED, index: () => i,
-      results: () => globalThis.resultCalls,
-      cursor(id) { i = FLOW.indexOf(id); S.curId = id; },
-    };
-  `, context);
-  const game = context.game;
-  game.fresh();
-  return { game, document, storage, listeners, nodes, math };
-}
+const { runtime } = require('./helpers/runtime.cjs');
 
 test('scene entry is applied once across redraws and continue-game', () => {
   const { game } = runtime();
@@ -244,10 +189,10 @@ test('unfinished new-border defenses contribute nothing', () => {
 
 test('partisans reduce enemy strength below its baseline and improve the battle ratio', () => {
   const { game } = runtime();
-  const before = Number(game.battle('test', 80 + game.state().enemyMod).R);
+  const before = Number(game.battle('test', 80).R);
   game.addRaw('enemyMod', -8);
   assert.equal(game.state().enemyMod, -8);
-  const after = Number(game.battle('test', 80 + game.state().enemyMod).R);
+  const after = Number(game.battle('test', 80).R);
   assert.ok(after > before);
 });
 
@@ -274,6 +219,8 @@ test('manual purge decisions, story purges and automatic purges each count once'
   game.choose(game.scenes['0-1'], game.scenes['0-1'].options[0]);
   assert.equal(game.state().purgeCount, 1);
   const decision = game.decisions.find(d => d.id === 'purge-party');
+  game.cursor('dec-prologue');
+  game.renderDecisions(game.scenes['dec-prologue']);
   game.executeDecision(decision);
   assert.equal(game.state().purgeCount, 2);
   game.state().PAR = 80;
@@ -287,6 +234,8 @@ test('manual purge decisions, story purges and automatic purges each count once'
 test('the assassination condition can be reached with six actual purge actions', () => {
   const { game } = runtime();
   Object.assign(game.state(), { act: 1, PP: 999 });
+  game.cursor('dec-act1');
+  game.renderDecisions(game.scenes['dec-act1']);
   const party = game.decisions.find(d => d.id === 'purge-party');
   const army = game.decisions.find(d => d.id === 'purge-army');
   for (let n = 0; n < 4; n++) game.executeDecision(party);

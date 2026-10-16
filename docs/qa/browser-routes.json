@@ -1,0 +1,251 @@
+{
+  "url": "http://127.0.0.1:46129/",
+  "passed": true,
+  "routes": [
+    {
+      "id": "route-1",
+      "ending": "stalin-quiet",
+      "width": 1440,
+      "steps": 42,
+      "paidDecisions": 14,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-2",
+      "ending": "rome",
+      "width": 390,
+      "steps": 42,
+      "paidDecisions": 17,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-3",
+      "ending": "mediocre",
+      "width": 1440,
+      "steps": 54,
+      "paidDecisions": 21,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-4",
+      "ending": "comecon",
+      "width": 390,
+      "steps": 53,
+      "paidDecisions": 21,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-5",
+      "ending": "khrushchev",
+      "width": 1440,
+      "steps": 53,
+      "paidDecisions": 19,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-6",
+      "ending": "right",
+      "width": 390,
+      "steps": 42,
+      "paidDecisions": 0,
+      "resultRestored": true,
+      "decisionRestored": false,
+      "passed": true
+    },
+    {
+      "id": "route-7",
+      "ending": "dusk",
+      "width": 1440,
+      "steps": 42,
+      "paidDecisions": 18,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-12",
+      "ending": "beria",
+      "width": 390,
+      "steps": 42,
+      "paidDecisions": 17,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-16",
+      "ending": "detente",
+      "width": 1440,
+      "steps": 54,
+      "paidDecisions": 17,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-18",
+      "ending": "soviet",
+      "width": 390,
+      "steps": 54,
+      "paidDecisions": 21,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-27",
+      "ending": "left",
+      "width": 1440,
+      "steps": 55,
+      "paidDecisions": 17,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-55",
+      "ending": "military",
+      "width": 390,
+      "steps": 54,
+      "paidDecisions": 19,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-162",
+      "ending": "island",
+      "width": 1440,
+      "steps": 53,
+      "paidDecisions": 19,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-165",
+      "ending": "eternal",
+      "width": 390,
+      "steps": 54,
+      "paidDecisions": 19,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-203",
+      "ending": "military",
+      "width": 1440,
+      "steps": 54,
+      "paidDecisions": 23,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-234",
+      "ending": "khrushchev",
+      "width": 390,
+      "steps": 54,
+      "paidDecisions": 20,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-795",
+      "ending": "eternal",
+      "width": 1440,
+      "steps": 55,
+      "paidDecisions": 13,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-19",
+      "ending": "detente",
+      "width": 390,
+      "steps": 55,
+      "paidDecisions": 22,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-26",
+      "ending": "stalin-quiet",
+      "width": 1440,
+      "steps": 54,
+      "paidDecisions": 22,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-81",
+      "ending": "mediocre",
+      "width": 390,
+      "steps": 42,
+      "paidDecisions": 19,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-82",
+      "ending": "left",
+      "width": 1440,
+      "steps": 42,
+      "paidDecisions": 17,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-88",
+      "ending": "detente",
+      "width": 390,
+      "steps": 54,
+      "paidDecisions": 20,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-733",
+      "ending": "military",
+      "width": 1440,
+      "steps": 53,
+      "paidDecisions": 18,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    },
+    {
+      "id": "route-986",
+      "ending": "detente",
+      "width": 390,
+      "steps": 54,
+      "paidDecisions": 16,
+      "resultRestored": true,
+      "decisionRestored": true,
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "missing": [],
+  "covered": 250,
+  "galleryUnlocked": 14
+}

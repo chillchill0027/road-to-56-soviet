@@ -40,7 +40,7 @@ function enhanceStage() {
     root.classList.add("play-layout");
     root.append(rail, copy);
   }
-  const heading = root.querySelector("h1,h2");
+  const heading = root.querySelector("h1") || root.querySelector("h2");
   if (heading) {
     heading.tabIndex = -1;
     heading.focus({ preventScroll: true });

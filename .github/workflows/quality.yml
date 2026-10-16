@@ -17,8 +17,16 @@ jobs:
       - run: npm test
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
+      - run: npm run test:browser:routes
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: browser-acceptance
-          path: docs/qa/browser-smoke.json
+          path: |
+            docs/qa/browser-smoke.json
+            docs/qa/browser-routes.json
+            docs/qa/route-coverage.json
+            docs/qa/all-endings-gallery.png
+            docs/qa/successor-*.png
+            docs/qa/decision-*.png
+            docs/qa/battle-costs.png
