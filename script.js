@@ -22,6 +22,40 @@ const NAMES = {PP:'政治资本',PAR:'偏执',IND:'工业',ARMY:'红军',MOR:'�
                STAL:'斯大林派',LEFT:'左翼',RIGHT:'右翼'};
 const ADD_NAMES = {fort:'防线', enemyMod:'敌军强度', nationalQ:'民族问题',
                    nuclear:'核进度', beria:'贝利亚势力', zhukov:'朱可夫威望'};
+const EFFECT_NAMES = {...NAMES, ...ADD_NAMES, fortStalin:'旧边界工事', fortMolotov:'新边界工事',
+  indSaved:'已转移工业', westTrust:'西方信任', destalinUnrest:'阵营动荡', religion:'宗教和解',
+  purgeCount:'清洗次数', warning:'预警系数'};
+const RAW_LIMITS = {nuclear:100, beria:100, zhukov:100, westTrust:100, nationalQ:100};
+const EFFECT_DIRECTION = {PAR:-1, enemyMod:-1, nationalQ:-1, destalinUnrest:-1, warning:-1,
+  STAL:0, LEFT:0, RIGHT:0, beria:0, zhukov:0, religion:0, purgeCount:0};
+function effectTone(k, d){
+  const direction = EFFECT_DIRECTION[k] ?? 1;
+  return !direction || !d ? '' : d * direction > 0 ? 'up' : 'dn';
+}
+function effectNumber(n){ return Number(n.toFixed(2)); }
+function effectSnapshot(){
+  return Object.fromEntries(Object.keys(EFFECT_NAMES).map(k => [k, Number(S[k]) || 0]));
+}
+function effectChanges(before){
+  return Object.keys(EFFECT_NAMES).map(k => ({k, d:effectNumber((Number(S[k])||0)-(before[k]||0))})).filter(x => x.d);
+}
+function effectsHTML(deltas){
+  return deltas.map(({k,d}) => `<span class="${effectTone(k,d)}">${EFFECT_NAMES[k]} ${d>0?'+':''}${effectNumber(d)}</span>`).join('');
+}
+function boundedValue(k, value){
+  const floor = k==='enemyMod' ? -999 : k==='westTrust' ? -100 : 0;
+  return Math.max(floor, Math.min(META[k]?.cap ?? (k in FACTION ? 100 : RAW_LIMITS[k] ?? 999), value));
+}
+function previewEffects(o){
+  const values = effectSnapshot();
+  const before = {...values};
+  for (const fx of [o.fx, o.add, o.raw]) for (const k in fx||{}){
+    if (k in EFFECT_NAMES) values[k] = boundedValue(k, (values[k]||0)+fx[k]);
+  }
+  for (const k in o.flags||{}) if (k in EFFECT_NAMES && typeof o.flags[k]==='number') values[k]=o.flags[k];
+  if (o.purge) values.purgeCount++;
+  return Object.keys(EFFECT_NAMES).map(k=>({k,d:effectNumber(values[k]-before[k])})).filter(x=>x.d);
+}
 
 /* ============================================================
    图版素材（assets/images/<key>.jpg）
@@ -106,12 +140,14 @@ function artForCurrent(){ return artHTML(S.curId ? ART[S.curId] : null, S.year);
 let S, i, LOG, ENDED;
 
 function fresh(){
+  FLOW = FLOW_V2;
   S = {
     PP:140, PAR:10, IND:95, ARMY:62, MOR:68, COM:45,
     STAL:60, LEFT:25, RIGHT:25,
     purgeCount:0, _purgeAccounting:2, beria:0, zhukov:0, napoleon:false,
-    fort:0, warning:1.0, enemyMod:0, nationalQ:0, nuclear:0,
-    collapses:0, loses:0, holds:0, reverses:0,
+    fort:0, warning:1.0, enemyMod:0, nationalQ:0, nuclear:0, westTrust:0,
+    collapses:0, loses:0, holds:0, reverses:0, standoffs:0,
+    rulesVersion:2, flowVersion:2,
     warOutcome:null, act:0, year:1936,
   };
   i = -1; LOG = []; ENDED = false; S.curId = null;
@@ -135,8 +171,7 @@ function apply(fx){
 }
 function setFlags(f){ if (f) for (const k in f) S[k] = f[k]; }
 function addRaw(k,v){
-  const floor = k === 'enemyMod' ? -999 : 0;
-  S[k] = Math.max(floor, Math.min(k==='nuclear'?100:999, (S[k]||0)+v));
+  S[k] = boundedValue(k, (S[k]||0)+v);
 }
 
 /* ---------- HUD ---------- */
@@ -174,8 +209,8 @@ function fly(k, d){
   const el = document.getElementById('st-'+k);
   if (!el || !d) return;
   const s = document.createElement('span');
-  s.className = 'fly ' + (d>0 ? 'up' : 'dn');
-  s.textContent = (d>0?'+':'') + d;
+  s.className = 'fly ' + effectTone(k,d);
+  s.textContent = (d>0?'+':'') + effectNumber(d);
   el.appendChild(s);
   setTimeout(()=>s.remove(), 1200);
 }
@@ -193,19 +228,25 @@ const TIERS = [
 ];
 function battle(name, enemy, o){
   o = o || {};
+  const baseEnemy = enemy;
+  enemy = Math.max(20, baseEnemy + (S.enemyMod||0));
   const fort = 1 + Math.min(S.fort, 48)/160;
   const mor  = 0.65 + S.MOR/200;
   const warn = S.warning || 1.0;
   const raw  = (S.ARMY * fort * mor) / (enemy * warn);
-  const tactic = o.hold || 1;
+  const discipline = S.harsh && o.defensive ? 1.25 : 1;
+  const tactic = (o.hold || 1) / discipline;
   const rc   = raw / tactic;
   const idx  = rc < 0.4 ? 0 : rc < 0.7 ? 1 : rc < 1.0 ? 2 : rc < 1.35 ? 3 : 4;
   const tier = TIERS[idx];
-  const res  = {name, enemy, R:rc.toFixed(2), baseR:raw.toFixed(2), tier:tier.t, cls:tier.cls, fx:{...tier.fx},
-    factors:{army:S.ARMY, fortValue:S.fort, fort, morale:S.MOR, mor, warning:warn, tactic}};
-  if (o.fx) for (const k in o.fx) res.fx[k] = (res.fx[k]||0) + o.fx[k];
+  const res  = {name, enemy, baseEnemy, enemyMod:S.enemyMod||0, level:idx, success:idx>=3,
+    R:rc.toFixed(2), baseR:raw.toFixed(2), tier:tier.t, cls:tier.cls, fx:{...tier.fx},
+    factors:{army:S.ARMY, fortValue:S.fort, effectiveFort:Math.min(S.fort,48), fort, morale:S.MOR, mor, warning:warn, tactic, discipline}};
+  // Tactical costs apply to every outcome; victory rewards require an actual win.
+  if (o.fx) for (const k in o.fx) if (o.fx[k] < 0 || idx >= 3) res.fx[k] = (res.fx[k]||0) + o.fx[k];
   if (idx===0) S.collapses++;
   else if (idx===1) S.loses++;
+  else if (idx===2) S.standoffs = (S.standoffs||0)+1;
   else if (idx>=3) S.holds++;
   if (idx===4) S.reverses++;
   return res;
@@ -217,7 +258,7 @@ function battleHTML(b){
   return `<div class="battle">
     <div class="bt">战 役 判 定 · ${b.name}</div>
     <div class="br"><span class="rr">R = ${b.R}</span><span class="rl ${b.cls}">${b.tier}</span></div>
-    <div class="bd">结算前：红军 ${f.army}　·　工事系数 ${f.fort.toFixed(2)}（防线 ${f.fortValue}）　·　民心系数 ${f.mor.toFixed(2)}（民心 ${f.morale}）<br>敌军强度 ${b.enemy}　·　${wn}　·　战术系数 ×${f.tactic.toFixed(2)}<br>战力比 R = 红军 × 工事 × 民心 ÷（敌军 × 预警 × 战术）</div>
+    <div class="bd">结算前：红军 ${f.army}　·　工事系数 ${f.fort.toFixed(2)}（防线 ${f.fortValue}，有效上限 48）　·　民心系数 ${f.mor.toFixed(2)}（民心 ${f.morale}）<br>敌军强度 ${b.enemy}${b.baseEnemy!==undefined?`（基础 ${b.baseEnemy}，战场修正 ${b.enemyMod>0?'+':''}${b.enemyMod}，下限 20）`:''}　·　${wn}　·　战术系数 ×${f.tactic.toFixed(2)}${f.discipline>1?'（死守纪律加成 25%）':''}<br>战力比 R = 红军 × 工事 × 民心 ÷（敌军 × 预警 × 战术）。胜利奖励仅在守住或反攻时发放。</div>
   </div>`;
 }
 /* 战时动员底线：新组建的师不断补充到前线 */
@@ -243,6 +284,7 @@ function interlude(){
     S.purgeCount++;
     out.push({k:'purge', title:'偏执 > 75：幕间清洗自动发生', text:'清洗了'+p.n+'。'+p.t, fx:p.fx});
   } else if (S.PAR >= 50 && Math.random() < 0.5){
+    S.purgeCount++;
     out.push({k:'purge', title:'偏执 > 50：内务部自行其是', text:'没有人下达命令，但昨晚又有两辆黑色轿车开进了院子。', fx:{PAR:-3, MOR:-3}});
   }
   return out;
@@ -254,14 +296,12 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function optionHTML(sc, o, idx){
   const ok = !o.when || o.when(S);
   const fx = [];
-  if (o.fx) for (const k in o.fx){
-    const d = o.fx[k];
-    fx.push(`<span class="${d>0?'p':'n'}">${NAMES[k]||k} ${d>0?'+':''}${d}</span>`);
+  for (const {k,d} of previewEffects(o)){
+    const tone = effectTone(k,d);
+    fx.push(`<span class="${tone==='up'?'p':tone==='dn'?'n':''}">${EFFECT_NAMES[k]} ${d>0?'+':''}${d}</span>`);
   }
-  if (o.add) for (const k in o.add){
-    const d = o.add[k];
-    fx.push(`<span class="${d>0?'p':'n'}">${ADD_NAMES[k]||k} ${d>0?'+':''}${d}</span>`);
-  }
+  if (o.battle) fx.push('<span class="h">另按战力比结算战损；胜利后才发放奖励</span>');
+  for (const k in o.winAdd||{}) fx.push(`<span class="h">获胜后：${EFFECT_NAMES[k]} ${o.winAdd[k]>0?'+':''}${o.winAdd[k]}</span>`);
   if (o.hide) o.hide.forEach(h => fx.push(`<span class="h">${h}</span>`));
   return `<button class="opt${ok?'':' locked'}" data-i="${idx}" ${ok?'':'disabled'}>
     <div class="row1">
@@ -274,12 +314,23 @@ function optionHTML(sc, o, idx){
   </button>`;
 }
 
-function renderScene(sc, options = {}){
+function campaignScene(sc){
+  return sc.act===3 || ['2-5','a2-end','dec-act3'].includes(S.curId);
+}
+function sceneYear(sc){
+  return (sc.year||S.year) + (campaignScene(sc) && sc.year>=1941 && sc.year<=1945 ? (S.warYear||1941)-1941 : 0);
+}
+function sceneText(sc, value){
+  const text = typeof value==='function' ? value(S) : value||'';
+  return campaignScene(sc) && S.warYear===1942 ? String(text).replace(/194[1-5]/g,y=>String(Number(y)+1)) : String(text);
+}
+function enterScene(sc, options = {}){
   S.act = sc.act !== undefined ? sc.act : S.act;
-  S.year = sc.year || S.year;
+  S.year = sceneYear(sc);
   let ex = '', dl = [];
   const entered = S._enteredScene === S.curId;
   if (!options.restoring && !entered){
+    const before = effectSnapshot();
     if (sc.onEnter){
       const r = sc.onEnter(S) || {};
       if (r.deltas) {
@@ -290,20 +341,29 @@ function renderScene(sc, options = {}){
     }
     S._enteredScene = S.curId;
     S._entryHTML = ex;
+    dl = effectChanges(before);
+    S._entryDeltas = dl;
   } else {
     ex = entered ? S._entryHTML || '' : '';
     S._enteredScene = S.curId;
     S._entryHTML = ex;
   }
+  return {ex, deltas:S._entryDeltas||[], applied:!options.restoring && !entered};
+}
+function renderScene(sc, options = {}){
+  const entry = enterScene(sc,options);
+  const ex = entry.ex;
+  const dl = entry.deltas;
   const briefArr = typeof sc.brief === 'function' ? sc.brief(S) : (sc.brief||[]);
   renderHUD();
-  if (dl.length) showDeltas(dl);
+  if (entry.applied && dl.length) showDeltas(dl);
   const st = document.getElementById('stage');
   let html = `<div class="fade">
-    <div class="tag">${esc(sc.chapter||'')} · ${esc(sc.year||'')}</div>
-    <h1 class="scene">${esc(sc.title)}</h1>
-    <div class="sub">${esc(sc.sub||'')}</div>
-    ${artForCurrent()}<div class="brief">${briefArr.map(p=>`<p>${p}</p>`).join('')}</div>${ex}`;
+    <div class="tag">${esc(sc.chapter||'')} · ${esc(S.year)}</div>
+    <h1 class="scene">${esc(sceneText(sc,sc.title))}</h1>
+    <div class="sub">${esc(sceneText(sc,sc.sub))}</div>
+    ${artForCurrent()}<div class="brief">${briefArr.map(p=>`<p>${sceneText(sc,p)}</p>`).join('')}</div>${ex}
+    ${dl.length?`<div class="entry-effects"><div class="hint">阶段结算 · 已计入当前状态</div><div class="deltas">${effectsHTML(dl)}</div></div>`:''}`;
   if (sc.options && sc.options.length){
     const vis = sc.options.filter(o => !(o.only && o.when && !o.when(S)));
     html += `<div class="prompt">国 家 机 器 的 选 择</div>
@@ -320,7 +380,7 @@ function renderScene(sc, options = {}){
   const nb = document.getElementById('next');
   if (nb) nb.addEventListener('click', advance);
   saveGame();
-  window.scrollTo({top:0, behavior:'smooth'});
+  scrollToStart();
 }
 
 /* ---------- 渲染：结果 ---------- */
@@ -328,22 +388,25 @@ function renderResult(sc, o, deltas, battles, extra){
   renderHUD(); showDeltas(deltas);
   const st = document.getElementById('stage');
   const tone = o.tone || '';
+  const failed = (battles||[]).some(b=>!battleSucceeded(b));
+  const verdict = failed ? '作战结果：'+battles.map(b=>b.tier).join('、')+'，未达成计划目标' : o.verdict||'';
+  const paragraphs = failed ? ['部队执行了所选计划，但实际战力不足以取得预期胜利。伤亡和额外成本已结算；未发放胜利专属奖励。'] : o.res||[];
   let html = `<div class="fade">
     <div class="tag">${esc(sc.chapter||'')} · 选择已执行</div>
     <h1 class="scene">${esc(o.label)}</h1>
     ${o.flavor?`<div class="sub">${esc(o.flavor)}</div>`:'<div class="sub"></div>'}
     ${artForCurrent()}
-    <div class="verdict ${tone}">${esc(o.verdict||'')}</div>
-    <div class="brief">${(o.res||[]).map(p=>`<p>${p}</p>`).join('')}</div>
+    <div class="verdict ${failed?'bad':tone}">${esc(sceneText(sc,verdict))}</div>
+    <div class="brief">${paragraphs.map(p=>`<p>${sceneText(sc,p)}</p>`).join('')}</div>
     ${(battles||[]).map(battleHTML).join('')}
     ${extra||''}
-    <div class="deltas">${deltas.length?deltas.map(d=>`<span class="${d.d>0?'up':'dn'}">${NAMES[d.k]||d.k} ${d.d>0?'+':''}${d.d}</span>`).join(''):'<span>无变化</span>'}</div>
+    <div class="deltas">${deltas.length?effectsHTML(deltas):'<span>无数值变化</span>'}</div>
     <div class="acts"><button class="btn" id="next">继 续</button></div>
     ${logHTML()}
   </div>`;
   st.innerHTML = html;
   document.getElementById('next').addEventListener('click', advance);
-  window.scrollTo({top:0, behavior:'smooth'});
+  scrollToStart();
 }
 function logHTML(){
   if (!LOG.length) return '';
@@ -352,9 +415,12 @@ function logHTML(){
 }
 
 /* ---------- 渲染：决议台 ---------- */
-function renderDecisions(phase){
+function enterDecisionPhase(phase){
   S.act = phase.act !== undefined ? phase.act : S.act;
-  S.year = phase.year || S.year;
+  S.year = sceneYear(phase);
+}
+function renderDecisions(phase){
+  enterDecisionPhase(phase);
   renderHUD();
   const st = document.getElementById('stage');
   const avail = DECISIONS.filter(d =>
@@ -363,11 +429,12 @@ function renderDecisions(phase){
     (d.max === undefined || (S['_c_'+d.id]||0) < d.max)
   );
   st.innerHTML = `<div class="fade">
-    <div class="tag">${esc(phase.chapter)} · ${esc(phase.year)}</div>
+    <div class="tag">${esc(phase.chapter)} · ${esc(S.year)}</div>
     <h1 class="scene">${esc(phase.title)}</h1>
     <div class="sub">${esc(phase.sub||'')}</div>
     ${artForCurrent()}
-    <div class="brief">${(phase.brief||[]).map(p=>`<p>${p}</p>`).join('')}</div>
+    <div class="brief">${(phase.brief||[]).map(p=>`<p>${sceneText(phase,p)}</p>`).join('')}</div>
+    ${S._lastDecision?.sceneId===S.curId?`<div class="decision-result" role="status"><div class="hint">已执行：${esc(S._lastDecision.name)}</div><div class="deltas">${effectsHTML(S._lastDecision.deltas)}</div></div>`:''}
     <div class="dpanel">
       <div class="dhead">
         <span class="dt">决 议 台</span>
@@ -375,11 +442,11 @@ function renderDecisions(phase){
       </div>
       <div class="dlist" id="dlist">
         ${avail.length?avail.map(d=>{
-          const c = d.cost||{};
+          const c = decisionCost(d);
           const can = Object.keys(c).every(k=>S[k]>=c[k]);
           const left = d.max!==undefined ? `（剩余 ${d.max-(S['_c_'+d.id]||0)} 次）` : '';
           return `<div class="di">
-            <div class="dn">${esc(d.name)}<span class="df">${esc(d.note||'')}${left}</span></div>
+            <div class="dn">${esc(d.name)}<span class="df">${esc(d.note||'')}${left}${d.purge&&S.constitution?' · 宪法法理降低政治成本 20%':''}</span><span class="decision-effects">${effectsHTML(previewEffects(d))}</span></div>
             <div class="dc">${Object.keys(c).map(k=>`${META[k].n} −${c[k]}`).join(' · ')}</div>
             <button class="db2" data-id="${d.id}" ${can?'':'disabled'}>执 行</button>
           </div>`;
@@ -404,21 +471,36 @@ function renderDecisions(phase){
   });
   document.getElementById('next').addEventListener('click', advance);
   saveGame();
-  window.scrollTo({top:0, behavior:'smooth'});
+  scrollToStart();
 }
 
 function executeDecision(d){
-  if (ENDED || !d || (d.act && !d.act.includes(S.act)) || (d.when && !d.when(S)) ||
+  if (ENDED || !d || !DECISIONS.includes(d) || (d.act && !d.act.includes(S.act)) || (d.when && !d.when(S)) ||
       (d.max !== undefined && (S['_c_'+d.id]||0) >= d.max) ||
-      !Object.keys(d.cost||{}).every(k => S[k] >= d.cost[k])) return null;
+      !SCENES[S.curId]?.decisions ||
+      !Object.entries(decisionCost(d)).every(([k,c]) => S[k] >= c)) return null;
+  const before = effectSnapshot();
   const cost = {};
-  for (const k in (d.cost||{})) cost[k] = -d.cost[k];
-  const deltas = apply(cost).concat(apply(d.fx||{}));
+  for (const [k,c] of Object.entries(decisionCost(d))) cost[k] = -c;
+  apply(cost); apply(d.fx||{});
   if (d.raw) for (const k in d.raw) addRaw(k, d.raw[k]);
   S['_c_'+d.id] = (S['_c_'+d.id]||0) + 1;
   if (d.purge) S.purgeCount = (S.purgeCount||0) + 1;
   LOG.push(d.name);
+  const deltas = effectChanges(before);
+  S._lastDecision = {sceneId:S.curId, name:d.name, deltas};
+  saveGame();
   return deltas;
+}
+function decisionCost(d){
+  const cost = {...d.cost};
+  if (d.purge && S.constitution && cost.PP) cost.PP = Math.ceil(cost.PP*.8);
+  if (d.id==='lend' && S.cominternPath) cost.PP *= 2;
+  return cost;
+}
+function battleSucceeded(b){ return b.success ?? ['守住','反攻'].includes(b.tier); }
+function scrollToStart(){
+  window.scrollTo({top:0, behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
 
 /* ---------- 标题页 ---------- */
@@ -447,7 +529,7 @@ function renderTitle(){
     </section>
     <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><span class="chapter-num">0${n+1}</span><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
     <section class="title-bottom"><p><span class="eyebrow">你的决定，组成历史</span><br>发展工业，平衡派系，迎战时代。每一项选择都将改变结局。</p><button class="archive-link" id="ts-gallery"><span>结局档案</span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span>查阅</span></button></section>
-    <div class="ts-note"><span><kbd>A–G</kbd> / <kbd>1–7</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>
+    <div class="ts-note"><span><kbd>A–H</kbd> / <kbd>1–8</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>
   </div>`;
   const nw = document.getElementById('ts-new');
   if (nw) nw.addEventListener('click', requestNewGame);
@@ -455,7 +537,7 @@ function renderTitle(){
   if (cc) cc.addEventListener('click', resume);
   const gg = document.getElementById('ts-gallery');
   if (gg) gg.addEventListener('click', renderGallery);
-  window.scrollTo({top:0, behavior:'smooth'});
+  scrollToStart();
 }
 function renderGallery(){
   menuMode(true);
@@ -477,7 +559,7 @@ function renderGallery(){
     <div class="acts"><button class="btn" id="gal-back">返 回</button></div>
   </div>`;
   document.getElementById('gal-back').addEventListener('click', renderTitle);
-  window.scrollTo({top:0, behavior:'smooth'});
+  scrollToStart();
 }
 function resume(){
   if (!loadGame()){ renderTitle(); return; }
@@ -486,8 +568,9 @@ function resume(){
   const resultScene = pending && SCENES[pending.sceneId];
   const resultOption = resultScene && resultScene.options && resultScene.options[pending.optionIndex];
   if (resultOption && Array.isArray(pending.deltas) && Array.isArray(pending.battles) &&
-      Number.isInteger(pending.nextIndex) && pending.nextIndex >= 0 && pending.nextIndex < FLOW.length){
-    i = pending.nextIndex;
+      SCENES[pending.sceneId]){
+    const nextId = pending.nextSceneId || (resultOption.gotoFn ? resultOption.gotoFn(S) : resultOption.goto) || FLOW[FLOW.indexOf(pending.sceneId)+1];
+    i = nextId ? FLOW.indexOf(nextId)-1 : FLOW.length-1;
     S.curId = pending.sceneId;
     renderResult(resultScene, resultOption, pending.deltas, pending.battles, pending.extra || '');
     return;
@@ -502,6 +585,7 @@ function resume(){
 /* ---------- 主推进 ---------- */
 function advance(){
   delete S._pendingResult;
+  delete S._lastDecision;
   i++;
   while (i < FLOW.length){
     const id = FLOW[i];
@@ -514,10 +598,11 @@ function advance(){
   renderEnding();
 }
 function choose(sc, o){
-  if (ENDED || !o || (o.when && !o.when(S)) || S._resolvedScene === S.curId) return;
+  if (ENDED || SCENES[S.curId]!==sc || !sc.options?.includes(o) || (o.when && !o.when(S)) || S._resolvedScene === S.curId) return;
+  const before = effectSnapshot();
   S._resolvedScene = S.curId;
   if (o.purge) S.purgeCount = (S.purgeCount||0) + 1;
-  const deltas = apply(o.fx || {});
+  apply(o.fx || {});
   if (o.add) for (const k in o.add) addRaw(k, o.add[k]);
   setFlags(o.flags);
   LOG.push(o.label);
@@ -525,7 +610,11 @@ function choose(sc, o){
   if (o.battle){
     const spec = typeof o.battle === 'function' ? o.battle(S) : o.battle;
     const b = battle(spec.name, spec.enemy, spec);
-    deltas.push(...apply(b.fx));
+    apply(b.fx);
+    if (battleSucceeded(b)){
+      setFlags(o.winFlags);
+      for (const k in o.winAdd||{}) addRaw(k,o.winAdd[k]);
+    }
     battles.push(b);
   }
   let extra = '';
@@ -535,7 +624,8 @@ function choose(sc, o){
     const j = FLOW.indexOf(target);
     if (j >= 0){ i = j - 1; }
   }
-  S._pendingResult = {sceneId:S.curId, optionIndex:sc.options.indexOf(o), deltas, battles, extra, nextIndex:i};
+  const deltas = effectChanges(before);
+  S._pendingResult = {sceneId:S.curId, optionIndex:sc.options.indexOf(o), deltas, battles, extra, nextIndex:i, nextSceneId:FLOW[i+1]||null};
   saveGame();
   renderResult(sc, o, deltas, battles, extra);
 }
@@ -543,17 +633,28 @@ function choose(sc, o){
 /* ============================================================
    流程表
    ============================================================ */
-const FLOW = [
+const FLOW_V2 = [
   'p0-intro',
   '0-1','0-2','0-3','dec-prologue',
   'a1-intro','1-1','1-2','1-3','1-4','1-5','a1-end','dec-act1',
   'a2-intro','2-1','2-2','2-3','2-4','2-5','a2-end',
+  'a3-intro','3-1','dec-mid3','3-2','3-3a','3-3b','3-5','3-6','3-7','dec-mid3b','3-9','3-10','3-11','3-12',
+  'a3-end','3-13',
+  'x-left','x-napoleon','x-right','dec-act3',
+  'a4-intro','4-1','4-2','4-4','4-3','4-5','4-6','a4-end','dec-act4',
+  'a5-intro','5-0','5-1','dec-act5','5-2','5-3','5-4'
+];
+// Existing saves keep their original order, so no conference or decision is skipped.
+const FLOW_V1 = [
+  'p0-intro','0-1','0-2','0-3','dec-prologue',
+  'a1-intro','1-1','1-2','1-3','1-4','1-5','a1-end','dec-act1',
+  'a2-intro','2-1','2-2','2-3','2-4','2-5','a2-end',
   'a3-intro','3-1','dec-mid3','3-2','3-3a','3-3b','3-5','3-6','3-7','dec-mid3b','3-9','3-10','3-11','3-12','3-13',
-  'a3-end','dec-act3',
-  'x-left','x-napoleon','x-right',
+  'a3-end','dec-act3','x-left','x-napoleon','x-right',
   'a4-intro','4-1','4-2','4-3','4-4','4-5','4-6','a4-end','dec-act4',
   'a5-intro','5-0','5-1','dec-act5','5-2','5-3','5-4'
 ];
+let FLOW = FLOW_V2;
 
 /* ============================================================
    场景数据
@@ -584,19 +685,19 @@ const SCENES = {
      fx:{PAR:20, LEFT:-40, RIGHT:-30, ARMY:-8, IND:-5, MOR:-5},
      flags:{purgeStart:true},
      verdict:'名单被退回内务部，附一句话：加快。',
-     res:['前两幕的稳定度下限提高。代价写在红军的花名册上——五年后，那些被划掉的名字会以另一种方式回来。'],
+     res:['反对派的影响力被压低，政治控制更集中。代价写在红军、工业和民心的账本上。'],
      tone:'bad'},
     {k:'B', label:'分化 —— 拉一派，打一派', flavor:'DIVIDE ET IMPERA',
-     fx:{PP:50, PAR:5},
-     flags:{divide:true},
+     fx:{PP:50, PAR:5, LEFT:10, RIGHT:-10, STAL:-5},
+     flags:{divide:'left'},
      verdict:'名单被分成两份，一份加批注，一份退回。',
-     res:['内务部收到指示：把其中一个纵队当作盟友。这件事不写进任何文件。'],
+     res:['左翼被暂时吸纳，右翼受到排挤。政治资本增加，斯大林派对新的平衡并不放心。'],
      tone:''},
     {k:'C', label:'容忍 —— 让争论留在党内', flavor:'FREEDOM OF DEBATE',
      fx:{PAR:-10, LEFT:15, RIGHT:15, MOR:-10, STAL:-10},
      flags:{tolerance:true},
      verdict:'名单被锁进抽屉。有人松了口气，有人记住了这件事。',
-     res:['前两幕会舒服一些。但天平被亲手放平了，而斯大林派的人是最多的——这会在第二幕开始变成麻烦。'],
+     res:['偏执下降，两派获得发言空间；公开争论也让民众暂时担忧政策摇摆。后续可在决议台投入政治资本恢复党内讨论。'],
      tone:''}
   ]
 },
@@ -645,7 +746,7 @@ const SCENES = {
      fx:{PP:60, MOR:10, STAL:10},
      flags:{constitution:true},
      verdict:'最高苏维埃第一次开会时，全体起立鼓掌四十分钟。',
-     res:['清洗从此有法理外衣。后续每一次清洗的消耗降低。'],
+     res:['清洗从此有法理外衣。后续清洗决议的政治资本成本降低 20%，军力和民心等损失仍会发生。'],
      tone:''},
     {k:'B', label:'推迟 —— 再放一放', flavor:'—',
      fx:{PAR:15, MOR:-8},
@@ -698,7 +799,7 @@ const SCENES = {
      tone:''},
     {k:'C', label:'拖延 —— 只清理边缘', flavor:'—', purge:true,
      fx:{PAR:12, ARMY:-6},
-     flags:{napoleon:false, tukh:false},
+     flags:{napoleon:false, tukh:true, officerCorpsPurged:true},
      verdict:'三个人被带走，都是副职。元帅们的名字一个没动。',
      res:['折中方案。既没有完整的军官团，也没有完整的控制。'],
      tone:''}
@@ -746,7 +847,7 @@ const SCENES = {
     {k:'B', label:'换上贝利亚', flavor:'THE FAITHFUL SERVANT',
      fx:{PAR:-10}, flags:{beria:15},
      verdict:'叶若夫调任农业人民委员部。他很清楚那意味着什么。',
-     res:['清洗变得可以点名。副作用是贝利亚本人的人事网开始铺满全国。'],
+     res:['贝利亚获得初始势力 15。后续可在决议台给内务部专项授权，换取短期控制力，同时承担权力向他集中的代价。'],
      tone:''},
     {k:'C', label:'清算叶若夫', flavor:'—', purge:true,
      fx:{PAR:-20, MOR:-10}, flags:{beria:0},
@@ -765,11 +866,13 @@ const SCENES = {
   ],
   options:[
     {k:'A', label:'全力投入', flavor:'SOVIET ATOMIC BOMB PROJECT',
+     when:S=>S.IND>=30, lock:'需要工业 ≥ 30 才能承担完整项目',
      fx:{IND:-30}, flags:{nuclear:40},
      verdict:'三个新的研究所成立，代号保密。',
      res:['1949 年可以完成试爆。十年的账，现在开始记。'],
      tone:''},
     {k:'B', label:'小规模研究', flavor:'—',
+     when:S=>S.IND>=10, lock:'需要工业 ≥ 10',
      fx:{IND:-10}, flags:{nuclear:15},
      verdict:'保留一个实验室和一批理论物理学家。',
      res:['进度缓慢。1953 年之前不会开花结果。'],
@@ -788,8 +891,8 @@ const SCENES = {
   brief:['新的一批军事学说草案送上来。四份，互相不兼容。'],
   options:[
     {k:'A', label:'纵深作战 —— 大机械化突击群', flavor:'DEEP BATTLE',
-     fx:{ARMY:18, IND:-15}, when:S=>S.napoleon,
-     lock:'需要图哈切夫斯基活着',
+     fx:{ARMY:18, IND:-15}, when:S=>S.napoleon && S.IND>=15,
+     lock:'需要保住图哈切夫斯基 且 工业 ≥ 15',
      verdict:'三个坦克军、五个机械化军按新编制组建。',
      res:['红军在三幕之后会拥有一套能反攻的理论。在此之前，它需要时间。'],
      tone:'good'},
@@ -804,8 +907,8 @@ const SCENES = {
      res:['骑兵在现代战争里价值有限，但士气是真实的。'],
      tone:''},
     {k:'D', label:'炮兵至上 —— 大炮兵主义', flavor:'SOVIET ARTILLERY',
-     fx:{ARMY:12, IND:-10}, when:S=>S.guns,
-     lock:'需要第二个五年计划转向军工',
+     fx:{ARMY:12, IND:-10}, when:S=>S.guns && S.IND>=10,
+     lock:'需要第二个五年计划转向军工 且 工业 ≥ 10',
      verdict:'火炮产量提高到世界第一。',
      res:['突破时会有用。机动时不会有。'],
      tone:''}
@@ -855,27 +958,28 @@ const SCENES = {
   options:[
     {k:'A', label:'与德国签约 —— 那份附议定书', flavor:'APPROACH GERMANY',
      fx:{IND:25, COM:-30, MOR:-5},
-     flags:{warYear:1941, warning:1.0, pact:true}, add:{enemyMod:15},
+     flags:{warYear:1941, warning:1.0, pact:true}, add:{enemyMod:15, westTrust:-15},
      verdict:'克里姆林宫的走廊里出现了万字旗。合影时双方都笑得很自然。',
      res:['东波兰、波罗的海、比萨拉比亚进入势力范围，工业获得两年的喘息。',
           '代价是：1941 年 6 月 22 日那天，边境上不会有任何人提前告诉你。'],
      tone:''},
     {k:'B', label:'集体安全 —— 与英法结盟', flavor:'POLICY OF COLLECTIVE SECURITY',
      fx:{COM:25, IND:10, MOR:5},
-     flags:{warYear:1942, warning:0.7, allied:true},
+     flags:{warYear:1942, warning:0.7, allied:true}, add:{westTrust:10},
      verdict:'军事代表团终于上岸了。谈判进行了十一天。',
      res:['战争推后一年，而且这次有完整预警。',
           '但英法拖到最后一天才签，期间什么承诺都没兑现。'],
      tone:'good'},
     {k:'C', label:'共产国际输出革命', flavor:'THE COMINTERN',
      fx:{COM:30, LEFT:25, IND:-10, MOR:-5},
-     flags:{warYear:1942, warning:0.9, cominternPath:true},
+     flags:{warYear:1942, warning:0.9, cominternPath:true}, add:{westTrust:-20},
      when:S=>S.LEFT>=50, lock:'需要左翼 ≥ 50',
      verdict:'西班牙、中国、法国的支部都收到了新指示。',
      res:['德国先动手打西方。你有额外的一年。',
-          '但西方不会援助一个正在输出革命的国家——租借法案的代价会翻倍。'],
+          '输出革命损害西方信任；战时请求租借物资的政治成本会翻倍。'],
      tone:''},
     {k:'D', label:'单独安全 —— 谁也不靠，把墙砌高', flavor:'POLICY OF INDIVIDUAL SECURITY',
+     when:S=>S.IND>=20, lock:'需要工业 ≥ 20 修筑防线',
      fx:{IND:-20, PAR:-10, MOR:5},
      flags:{warYear:1941, warning:0.8, alone:true}, add:{fort:20},
      verdict:'没有签字，没有合影，没有盟友。',
@@ -903,6 +1007,7 @@ const SCENES = {
      res:['割地拿到了，代价高得不成比例。柏林由此得出了一个结论，并且写进了巴巴罗萨的作战计划里。'],
      tone:'bad'},
     {k:'B', label:'有限目标 —— 只要卡累利阿地峡', flavor:'SECURE LENINGRAD',
+     when:S=>S.IND>=10, lock:'需要工业 ≥ 10 承担交换与边防调整',
      fx:{IND:-10, MOR:3},
      flags:{finlandNeutral:true}, add:{fort:8, enemyMod:5},
      verdict:'谈判在莫斯科进行，条件比入侵温和得多。',
@@ -1047,24 +1152,24 @@ const SCENES = {
   onEnter: mobil(36),
   options:[
     {k:'A', label:'死守 —— 一步也不许后退', flavor:'ORDER 227',
-     battle:S=>({name:'边境战役', enemy:110 + S.enemyMod, hold:0.85,
-                 fx: S.harsh ? {ARMY:-11, MOR:-12} : {ARMY:-15, MOR:-16}}),
+     battle:S=>({name:'边境战役', enemy:110, hold:0.85, defensive:true,
+                 fx:{ARMY:-15, MOR:-16}}),
      verdict:'第 227 号命令在七月签发，比历史上早了十一个月。',
      res:['拖住了德军的推进节奏。代价是成建制的部队被合围在东欧的包围圈里，再没有走出来。'],
      tone:''},
     {k:'B', label:'弹性防御 —— 用空间换建制', flavor:'DEEP BATTLE',
      when:S=>S.napoleon, lock:'需要图哈切夫斯基活着',
-     battle:S=>({name:'边境战役', enemy:110 + S.enemyMod, hold:1.15, fx:{ARMY:-4, MOR:-6}}),
+     battle:S=>({name:'边境战役', enemy:110, hold:1.15, fx:{ARMY:-4, MOR:-6}}),
      verdict:'放弃白俄罗斯和乌克兰大部，把部队撤到能重新组织的地方。',
      res:['红军保住了骨架。地图上，丢掉的东西要到 1944 年才拿回来。'],
      tone:'good'},
     {k:'C', label:'全线反击 —— 把敌人赶回去', flavor:'—',
-     battle:S=>({name:'边境战役', enemy:110 + S.enemyMod, hold:1.65, fx:{ARMY:-18, MOR:-14}}),
+     battle:S=>({name:'边境战役', enemy:110, hold:1.65, fx:{ARMY:-18, MOR:-14}}),
      verdict:'反击在第三天开始，在第七天被切断。',
      res:['这不是一场战役的失败，是一次建制的消失。'],
      tone:'bad'},
     {k:'D', label:'焦土 —— 搬走能搬的，烧掉剩下的', flavor:'MOVE INDUSTRY TO THE URALS',
-     battle:S=>({name:'边境战役', enemy:116 + S.enemyMod, hold:1.05, fx:{MOR:-14}}),
+     battle:S=>({name:'边境战役', enemy:116, hold:1.05, fx:{MOR:-14}}),
      flags:{scorched:true}, add:{indSaved:25},
      verdict:'一千五百家工厂开始拆卸、装车、往东运。',
      res:['工业从此不再暴露在敌人面前。代价是撤退变成了迁徙，而迁徙是没有秩序的。'],
@@ -1074,11 +1179,17 @@ const SCENES = {
 
 '3-2': {
   act:3, year:1941, chapter:'第三幕', title:'列 宁 格 勒',
-  onEnter: mobil(38),
+  onEnter: S => {
+    const result = mobil(38)(S);
+    if (!S.leninRisk) return result;
+    return {deltas:{...(result.deltas||{}), MOR:-5, IND:-5},
+      html:(result.html||'')+'<div class="brief"><p><em>未取得北线缓冲区，近郊工厂提前停产，围城准备更为仓促：工业 −5、民心 −5。</em></p></div>'};
+  },
   sub:'1941 年 9 月 · 围城开始',
   brief:['北面的德军切断了最后一条铁路。城市里还有两百五十万人，和够吃四十天的粮食。'],
   options:[
     {k:'A', label:'拉多加湖「生命之路」', flavor:'THE ROAD OF LIFE',
+     when:S=>S.IND>=10, lock:'需要工业 ≥ 10 组织运输',
      fx:{IND:-10, MOR:8, ARMY:-3},
      verdict:'卡车在结冰的湖面上排成一条线，每天往返两次。',
      res:['城市活下来了，代价是用最脆弱的运输方式供养一座百万人口的城市。'],
@@ -1089,6 +1200,7 @@ const SCENES = {
      res:['工业产能保住了。城里的死亡人数要到战后才会公布。'],
      tone:''},
     {k:'C', label:'优先疏散平民', flavor:'—',
+     when:S=>S.IND>=15, lock:'需要工业 ≥ 15 组织大规模疏散',
      fx:{MOR:6, IND:-15},
      verdict:'七十万人被分批运过湖。',
      res:['数字上的人道主义。城市的工业基础随之流失。'],
@@ -1130,7 +1242,7 @@ const SCENES = {
   onEnter: mobil(42),
   options:[
     {k:'A', label:'留在莫斯科，红场阅兵', flavor:'THE DEFENSE OF MOSCOW',
-     battle:()=>({name:'莫斯科保卫战', enemy:78, hold:0.9, fx:{STAL:15}}),
+     battle:()=>({name:'莫斯科保卫战', enemy:78, hold:0.9, defensive:true, fx:{STAL:15}}),
      verdict:'十一月七日，阅兵照常举行，部队从红场直接开往前线。',
      res:['这件事被全世界看到，也被这座城市里的人看到。'],
      tone:'good'},
@@ -1141,7 +1253,7 @@ const SCENES = {
      tone:''},
     {k:'C', label:'交给朱可夫全权指挥', flavor:'—',
      battle:()=>({name:'莫斯科保卫战', enemy:78, hold:0.95, fx:{MOR:8, STAL:-8}}),
-     flags:{}, add:{zhukov:20},
+     winAdd:{zhukov:20},
      verdict:'作战全权交给总参谋长，一切电报不必抄送。',
      res:['反攻在十二月初开始。一个人因此获得了他在此后二十年里都不打算放弃的东西。'],
      tone:'good'}
@@ -1179,7 +1291,7 @@ const SCENES = {
   brief:['城市已经被炸成碎砖。双方都把师往同一个点上填，因为城市的名字本身就是筹码。'],
   options:[
     {k:'A', label:'巷战死守，同时准备两翼合围', flavor:'OPERATION URANUS',
-     battle:()=>({name:'斯大林格勒战役', enemy:95, hold:0.9, fx:{ARMY:15, MOR:15}}),
+     battle:()=>({name:'斯大林格勒战役', enemy:95, hold:0.9, defensive:true, fx:{ARMY:15, MOR:15}}),
      verdict:'第 62 集团军在城市里撑了三个月，两翼的兵力在同一时间集结完毕。',
      res:['包围圈在十一月合拢。二十二个德国师在里面。'],
      tone:'good'},
@@ -1204,9 +1316,10 @@ const SCENES = {
   options:[
     {k:'A', label:'相信情报 —— 先挖八道反坦克壕', flavor:'IMPROVE THE STALIN LINE',
      when:S=>S.holds>=1, lock:'需要在此前的战役中至少守住过一次',
-     battle:()=>({name:'库尔斯克战役', enemy:84, hold:0.85, fx:{MOR:8, STAL:5}}),
+     battle:()=>({name:'库尔斯克战役', enemy:84, hold:0.85, defensive:true, fx:{MOR:8, STAL:5}}),
+     winAdd:{zhukov:20},
      verdict:'八道防线，一百万颗地雷，在进攻开始前全部就位。',
-     res:['德军七天之内损失了在库尔斯克的全部进攻力量。红军第一次在战略上不再需要后撤。'],
+     res:['德军的突击力量被防线消耗。红军不再需要战略后撤，朱可夫先防后攻的主张获得承认，威望上升。'],
      tone:'good'},
     {k:'B', label:'抢先反攻 —— 在敌人准备好之前', flavor:'—',
      battle:()=>({name:'库尔斯克战役', enemy:60, hold:1.3, fx:{MOR:-6}}),
@@ -1222,9 +1335,9 @@ const SCENES = {
 },
 
 '3-9': {
-  act:3, year:1942, chapter:'第三幕', title:'第 二 战 场 的 外 交 战',
+  act:3, year:1943, chapter:'第三幕', title:'第 二 战 场 的 外 交 战',
   onEnter: mobil(56),
-  sub:'1942 – 1944',
+  sub:'1943 – 1944',
   brief:['莫洛托夫在伦敦和华盛顿之间来回飞。每一次会谈的结论都是同一个词：尽快。'],
   options:[
     {k:'A', label:'反复催促，保持耐心', flavor:'—',
@@ -1233,13 +1346,13 @@ const SCENES = {
      res:['丘吉尔承诺在 1944 年开辟第二战场，并且兑现了。'],
      tone:''},
     {k:'B', label:'威胁单独媾和', flavor:'—',
-     fx:{COM:-15, MOR:5}, add:{enemyMod:-15},
+     fx:{COM:-15, MOR:5}, add:{enemyMod:-15, westTrust:-15},
      verdict:'一份未经确认的私下备忘录被送到了伦敦和华盛顿。',
      res:['西线的压力提前到来。西方对莫斯科的信任则永久性地少了一格。'],
      tone:''},
     {k:'C', label:'用共产国际在欧洲制造压力', flavor:'IGNITE THE FLAMES',
      when:S=>S.LEFT>=50, lock:'需要左翼 ≥ 50',
-     fx:{COM:15}, add:{enemyMod:-10},
+     fx:{COM:15}, add:{enemyMod:-10, westTrust:-8},
      verdict:'意大利和法国的支部收到了新指示，内容包括罢工的时间表。',
      res:['德军的后方开始不稳定。这件事在战后会被西方反复拿出来讲。'],
      tone:''}
@@ -1299,7 +1412,7 @@ const SCENES = {
   options:[
     {k:'A', label:'全速抢在盟军之前', flavor:'—',
      battle:()=>({name:'柏林战役', enemy:84, hold:0.95, fx:{ARMY:-12, MOR:20, COM:12}}),
-     flags:{berlinSoviet:true},
+     winFlags:{berlinSoviet:true},
      verdict:'两个方面军之间的竞赛比对付德军还激烈。',
      res:['红旗插上国会大厦的照片传遍了世界。这张照片会在之后二十年里定义这场战争的意义。'],
      tone:'good'},
@@ -1343,7 +1456,7 @@ const SCENES = {
 
 'a3-end': {
   act:3, year:1945, chapter:'第三幕', title:'战 争 结 算',
-  sub:'1945 年 5 月 · 柏林的烟还没散',
+  sub:S=>S.warOutcome==='defeat'?'1945 年 · 战败与停战条款':'1945 年 · 战争结果与重建起点',
   onEnter: (S) => {
     let o;
     if (S.collapses >= 3 || S.MOR <= 15) o = 'defeat';
@@ -1352,11 +1465,12 @@ const SCENES = {
     else if (S.holds >= 3) o = 'held';
     else o = 'stalemate';
     S.warOutcome = o;
-    return { deltas:{} };
+    const recovered = Math.max(0, Math.min(META.IND.cap-S.IND, 15, Math.floor((S.indSaved||0)/5)));
+    return {deltas:recovered?{IND:recovered}:{}, html:recovered?'<div class="brief"><p><em>东迁厂房恢复产出：已转移工业 '+S.indSaved+'，本阶段工业恢复 +'+recovered+'。</em></p></div>':''};
   },
   brief: function(S){
     return [
-      '战争结束了。崩溃 ' + S.collapses + ' 次，失守 ' + S.loses + ' 次，僵持或守住 ' + S.holds + ' 次，反攻 ' + S.reverses + ' 次。',
+      '战争结束了。崩溃 ' + S.collapses + ' 次，失守 ' + S.loses + ' 次，僵持 ' + (S.standoffs||0) + ' 次，守住或反攻 ' + S.holds + ' 次（其中反攻 ' + S.reverses + ' 次）。',
       '接下来的二十年，都从这里开始。'
     ];
   },
@@ -1441,7 +1555,7 @@ const SCENES = {
      res:['这个国家从此由懂战争的人管理。它会更有效率，也会更少问自己为什么。'],
      tone:''},
     {k:'B', label:'把军队赶回军营', flavor:'DEPOLITICIZE THE MILITARY',
-     fx:{ARMY:-15, STAL:20, PAR:20, LEFT:-15}, flags:{napoleonPurged:true},
+     fx:{ARMY:-15, STAL:20, PAR:20, LEFT:-15}, flags:{napoleonPurged:true, napoleon:false, napoleonGov:false},
      verdict:'图哈切夫斯基被调任一个不存在的军区。',
      res:['文官重新掌握了一切。代价是这台机器在战后失去了唯一一个敢说真话的部门。'],
      tone:''}
@@ -1551,18 +1665,19 @@ const SCENES = {
   },
   options:[
     {k:'A', label:'完成试爆，并立刻启动氢弹', flavor:'—',
-     when:S=>S.nuclear>=15, lock:'需要第一幕启动过原子弹项目',
+     when:S=>S.nuclear>=15 && S.IND>=25, lock:'需要核进度 ≥ 15 且 工业 ≥ 25',
      fx:{IND:-25, COM:12}, add:{nuclear:45}, flags:{hbomb:true},
      verdict:'1949 年 8 月 29 日，第一朵蘑菇云。四年后第二朵更大。',
      res:['这个国家从此在每一次对抗中都有了底牌。底牌的价格从不公开。'],
      tone:'good'},
     {k:'B', label:'只做原子弹，不做氢弹', flavor:'—',
-     when:S=>S.nuclear>=15, lock:'需要第一幕启动过原子弹项目',
+     when:S=>S.nuclear>=15 && S.IND>=12, lock:'需要核进度 ≥ 15 且 工业 ≥ 12',
      fx:{IND:-12, COM:5}, add:{nuclear:20}, flags:{atomicOnly:true},
      verdict:'试爆成功，项目规模随即压缩。',
      res:['有和没有的区别解决了。多和少的区别留着。'],
      tone:''},
     {k:'C', label:'援助中国的核项目', flavor:'—',
+     when:S=>S.nuclear>=15 && S.IND>=15, lock:'需要核进度 ≥ 15 且 工业 ≥ 15',
      fx:{COM:20, IND:-15}, add:{nuclear:5},
      verdict:'一批专家和图纸被送过边境。',
      res:['阵营的纵深加深了。这件事在十年后会以一种完全不同的方式回到莫斯科的桌上。'],
@@ -1606,6 +1721,7 @@ const SCENES = {
          '问题只有一个：它是盟友，还是另一个需要防备的邻居。'],
   options:[
     {k:'A', label:'全力支持 —— 条约、专家、工厂', flavor:'—',
+     when:S=>S.IND>=10, lock:'需要工业 ≥ 10 提供工厂援助',
      fx:{COM:18, IND:-10},
      verdict:'一份友好同盟互助条约在莫斯科签署。',
      res:['社会主义阵营从此有了两个中心。这个结果在十年后会变成一件复杂的事。'],
@@ -1624,7 +1740,7 @@ const SCENES = {
 },
 
 '4-6': {
-  act:4, year:1948, chapter:'第四幕', title:'内 部 清 算',
+  act:4, year:1952, chapter:'第四幕', title:'内 部 清 算',
   sub:'列宁格勒案与医生阴谋',
   brief:['一份名单送上来，上面是几个战时在列宁格勒任职的干部。名单下面还有一份，涉及克里姆林宫的几位医生。',
          '战时被放松的那部分，现在要收回去。'],
@@ -1641,9 +1757,9 @@ const SCENES = {
      tone:'good'},
     {k:'C', label:'交给贝利亚去处理', flavor:'—', purge:true,
      when:S=>S.beria>=40, lock:'需要贝利亚势力 ≥ 40',
-     fx:{PAR:-20}, add:{beria:25},
+     fx:{PAR:-20, MOR:-4}, add:{beria:25, nuclear:-5},
      verdict:'贝利亚拿到名单之后，只逮捕了名单上的人。',
-     res:['精准代替了规模。他的势力因此又长了一截。'],
+     res:['清算规模较小，但仍伤及社会信任和科研。贝利亚借这次授权继续扩大人事网。'],
      tone:''}
   ]
 },
@@ -1686,21 +1802,21 @@ const SCENES = {
       mode = 'assassinated';
       txt = '<p><em>是内务部。或者是一位医生。或者是某个已经没有人记得名字的警卫。结论不重要——重要的是这台机器在最后关头被自己的零件拆掉了。</em></p>';
       S.assassinated = true;
-    } else if ((S.napoleon && S.ARMY >= 85) || S.napoleonGov){
+    } else if ((S.napoleon && !S.napoleonPurged && S.ARMY >= 85) || S.napoleonGov){
       mode = 'military';
       txt = '<p><em>总参谋部的车在同一个夜里开进了克里姆林宫。没有人抵抗，因为守卫的指挥官接到了两份命令，而他选择执行第二份。</em></p>';
-      S.route = 'military';
+      S.interimLeader = 'military';
     } else if (S.beria >= 65){
       mode = 'beria';
       txt = '<p><em>名单是贝利亚拟的，副署人是贝利亚，执行人是贝利亚的部门。他做这件事的时候非常有效率——就像他做所有事一样。</em></p>';
-      S.route = 'beria';
+      S.interimLeader = 'beria';
     } else {
       mode = 'natural';
       txt = '<p><em>是个普通的中风。发现的时候已经很晚了，或者说，没有人急着发现。</em></p>';
     }
     S.deathMode = mode;
     const label = {assassinated:'被暗杀', military:'被军政府接管', beria:'被贝利亚接管', natural:'自然死亡'}[mode];
-    return { deltas:{}, html:'<div class="brief">'+txt+'<p><b style="color:#9E1B1B">权力交接方式：'+label+'</b></p></div>' };
+    return { deltas:{}, html:'<div class="brief">'+txt+'<p><b style="color:#9E1B1B">权力交接方式：'+label+'</b></p><p>这是权力真空期的临时安排。下一场继承争论将决定长期路线；已有势力与资格限制仍然保留。</p></div>' };
   },
   brief:['1953 年 3 月 5 日，孔采沃别墅的电话响了很久。']
 },
@@ -1708,8 +1824,8 @@ const SCENES = {
 '5-1': {
   act:5, year:1953, chapter:'第五幕', title:'继 承 人 之 战',
   sub:'核心抉择 · 决定 1956 年的样子',
-  brief:['政治局委员们在同一栋楼里，彼此之间隔着一道走廊和二十年的记忆。',
-         '机器需要一个新的核心。选择的核心会决定这个国家此后三十年。'],
+  brief:S=>['政治局委员们在同一栋楼里，彼此之间隔着一道走廊和二十年的记忆。',
+         S.interimLeader==='military'?'军方已在权力真空期临时接管；这场争论决定是否把临时控制变成长期军政府。':S.interimLeader==='beria'?'贝利亚已临时控制中枢；政治局仍需要决定，是确认他的改革方案，还是另组长期领导层。':'机器需要一个新的核心。选择的核心会决定这个国家此后的方向。'],
   options:[
     {k:'A', label:'集体领导 —— 几个人一起负责', flavor:'COLLECTIVE LEADERSHIP',
      fx:{MOR:15, STAL:-20, PAR:-5}, flags:{route:'khrushchev'},
@@ -1728,7 +1844,7 @@ const SCENES = {
      res:['他同时推动了大规模改革和大规模平反。这件事本身就是这个方案的固有风险。'],
      tone:'good'},
     {k:'D', label:'由军队来管', flavor:'—',
-     when:S=>S.zhukov>=40 || S.napoleonGov, lock:'需要朱可夫威望 ≥ 40 或军队已在政坛',
+     when:S=>S.zhukov>=40 || S.napoleonGov || S.interimLeader==='military', lock:'需要朱可夫威望 ≥ 40 或军队已在政坛',
      fx:{ARMY:15, MOR:5, STAL:-30}, flags:{route:'military'},
      verdict:'元帅坐到了长桌的中间。',
      res:['这可能是效率最高的一种安排，也可能是一种无法退出的安排。'],
@@ -1750,7 +1866,12 @@ const SCENES = {
      fx:{MOR:25, COM:15, STAL:-25, PAR:-20}, flags:{route:'soviet'},
      verdict:'最高苏维埃获得了它名义上一直拥有的权力。',
      res:['党内分裂立刻加剧。这是唯一一条通向「全权苏维埃」的路。'],
-     tone:'good'}
+     tone:'good'},
+    {k:'H', label:'临时委员会留任 —— 搁置路线争论', flavor:'GOVERN BY INERTIA',
+     fx:{MOR:-5, COM:-5}, flags:{route:'caretaker'},
+     verdict:'继承安排变成了一项没有截止日期的临时决议。',
+     res:['各部门沿用旧计划，重大改革被继续搁置。民心与国际影响小幅流失，这条惯性道路通向「平庸的延续」。'],
+     tone:''}
   ]
 },
 
@@ -1786,6 +1907,11 @@ const SCENES = {
 '5-3': {
   act:5, year:1956, chapter:'第五幕', title:'1956 · 布 达 佩 斯 与 华 沙',
   sub:'阵营的第一次公开裂痕',
+  onEnter:S=>{
+    if ((S.destalinUnrest||0)<25) return {};
+    const loss = S.peoplesDemocracy ? 3 : 8;
+    return {deltas:{COM:-loss}, html:'<div class="brief"><p><em>全面批判引发阵营公开争论。'+(S.peoplesDemocracy?'此前保留的联合政府渠道减轻了冲击。':'此前集中的控制方式放大了冲击。')+'阵营影响 −'+loss+'。</em></p></div>'};
+  },
   brief:['波兰换了领导人，匈牙利走上了街。两个国家的共产党都在问同一个问题：这个阵营里，成员能不能有自己的路。',
          '坦克停在了边境线上的待命位置。'],
   options:[
@@ -1825,6 +1951,7 @@ const SCENES = {
      res:['一代人第一次拥有了自己的房间。这件事不会被写进任何历史书的第一页。'],
      tone:'good'},
     {k:'C', label:'世界革命与阵营扩张', flavor:'—',
+     when:S=>S.IND>=5, lock:'需要工业 ≥ 5 提供对外援助',
      fx:{COM:15, MOR:-5, IND:-5}, flags:{legacyWorld:true},
      verdict:'顾问、贷款和武器被送往三大洲。',
      res:['这个国家把自己变成了一场运动。运动不需要面包，但需要人相信它。'],
@@ -1838,7 +1965,11 @@ const SCENES = {
    决议表
    ============================================================ */
 const DECISIONS = [
-  {id:'purge-army', name:'清洗军队', note:'随机损失一名军官', purge:true, cost:{PP:30}, max:3, act:[0,1,2],
+  {id:'party-debate', name:'恢复党内讨论', note:'扩大两派发言空间；现有核心更不安', cost:{PP:30}, max:2, act:[1,2],
+   when:S=>!!(S.tolerance||S.divide), fx:{LEFT:10, RIGHT:10, STAL:-5, PAR:5, MOR:3}},
+  {id:'nkvd-delegate', name:'内务部专项授权', note:'短期偏执缓解，社会信任受损，贝利亚势力扩大', cost:{PP:30}, max:2, act:[1,2,3,4],
+   when:S=>S.beria>=15, fx:{PAR:-5, MOR:-4, STAL:-3}, raw:{beria:15}},
+  {id:'purge-army', name:'清洗军队', note:'军官团缩减，红军战力下降', purge:true, cost:{PP:30}, max:3, act:[0,1,2],
    fx:{ARMY:-5, PAR:-10, MOR:-3}},
   {id:'purge-party', name:'清洗党', note:'老布尔什维克又少一批', purge:true, cost:{PP:25}, max:4, act:[0,1,2],
    fx:{STAL:3, LEFT:-4, RIGHT:-4, PAR:-8}},
@@ -1851,7 +1982,7 @@ const DECISIONS = [
   {id:'fort-molotov', name:'修建莫洛托夫防线', note:'新边界 · 未满三次则完全作废', cost:{PP:30}, max:3, act:[2],
    raw:{fortMolotov:8}},
   {id:'tanks', name:'扩产坦克', note:'坦克工厂昼夜不停', cost:{PP:25}, max:3, act:[2,3],
-   fx:{ARMY:6}},
+   when:S=>S.ARMY<100, fx:{ARMY:6}},
   {id:'relocate', name:'工业东迁', note:'把工厂装上车皮', cost:{PP:40}, max:2, act:[3],
    raw:{indSaved:25}},
   {id:'lend', name:'请求租借法案物资', note:'卡车、铝、罐头', cost:{PP:25}, max:3, act:[3],
@@ -1869,13 +2000,13 @@ const DECISIONS = [
   {id:'amnesty', name:'大赦', note:'打开一些营地的门', cost:{PP:25}, max:1, act:[1,2,3,4],
    fx:{MOR:8, PAR:-10, STAL:-5}},
   {id:'rebuild', name:'战后重建', note:'住房、道路、医院', cost:{PP:30}, max:3, act:[4,5],
-   fx:{MOR:10, IND:6}},
+   when:S=>S.MOR<100 || S.IND<300, fx:{MOR:10, IND:6}},
   {id:'comintern', name:'扩大阵营', note:'向亚洲和非洲派顾问', cost:{PP:30}, max:3, act:[4,5],
    fx:{COM:12, MOR:-3}},
   {id:'hydrogen', name:'氢弹工程', note:'直接消耗工业产能', cost:{IND:30}, max:2, act:[4],
-   when:S=>S.nuclear>=40, raw:{nuclear:30}},
-  {id:'consumer', name:'消费品生产', note:'让商店里出现东西', cost:{IND:25}, max:2, act:[4,5],
-   fx:{MOR:12, IND:5}},
+   when:S=>S.nuclear>=40 && S.nuclear<100, raw:{nuclear:30}},
+  {id:'consumer', name:'消费品生产', note:'以工业产能换取住房与日用品', cost:{IND:20}, max:2, act:[4,5],
+   fx:{MOR:12}},
   {id:'destalin', name:'反个人崇拜', note:'把画像取下来', cost:{PP:40}, max:1, act:[5],
    fx:{PAR:-25, STAL:-15, MOR:5}},
   {id:'deport', name:'民族迁移', note:'整批人装上列车', cost:{PP:30}, max:2, act:[3,4],
@@ -1886,13 +2017,13 @@ const DECISIONS = [
    结局名录（图鉴用；顺序即图鉴顺序）
    ============================================================ */
 const ENDINGS = [
-  {id:'khrushchev', t:'伟 大 的 继 承 人', h:'集体领导 + 全面批判个人崇拜'},
+  {id:'khrushchev', t:'伟 大 的 继 承 人', h:'集体领导，以公开问责或渐进调整走向 1956'},
   {id:'beria',      t:'技 术 官 僚 的 秩 序', h:'秘密警察换成了规划委员会的图表'},
   {id:'military',   t:'红 色 拿 破 仑',   h:'军队走进了克里姆林宫'},
   {id:'right',      t:'新 经 济 道 路',   h:'市场被政权自己请了回来'},
   {id:'left',       t:'永 久 的 革 命',   h:'这个国家不再是一个国家，而是一场运动'},
   {id:'soviet',     t:'全 权 苏 维 埃',   h:'最高苏维埃第一次真正投票'},
-  {id:'stalin-quiet',t:'无 声 的 独 裁',  h:'路线未变，但批判了个人崇拜'},
+  {id:'stalin-quiet',t:'无 声 的 独 裁',  h:'恐惧退潮，集中的权力结构延续'},
   {id:'eternal',    t:'钢 铁 的 永 恒',   h:'画像还挂在那里'},
   {id:'dusk',       t:'苏 维 埃 的 黄 昏', h:'联盟开始一块一块地掉下来'},
   {id:'rome',       t:'第 三 罗 马',      h:'旧王朝在废墟上复辟'},
@@ -1925,8 +2056,20 @@ function loadGame(){
   const d = store.get(SAVE_KEY);
   if (!validSave(d)){ clearSave(); return false; }
   S = d.S; i = d.i; LOG = Array.isArray(d.LOG) ? d.LOG.filter(l => typeof l === 'string') : []; ENDED = false;
+  FLOW = S.flowVersion===2 ? FLOW_V2 : FLOW_V1;
+  S.flowVersion = S.flowVersion===2 ? 2 : 1;
   const savedScene = FLOW.indexOf(S.curId);
   if (savedScene >= 0) i = savedScene;
+  for (const k of [...KEYS, ...Object.keys(FACTION), ...Object.keys(RAW_LIMITS)]){
+    if (Number.isFinite(S[k])) S[k] = boundedValue(k,S[k]);
+  }
+  S.westTrust = Number.isFinite(S.westTrust) ? boundedValue('westTrust',S.westTrust) : 0;
+  S.standoffs = Number.isFinite(S.standoffs) ? S.standoffs : 0;
+  if ((S.rulesVersion||1)<2){
+    if (LOG.includes(SCENES['1-1'].options[2].label)){ S.tukh=true; S.officerCorpsPurged=true; }
+    if (S.napoleonPurged){ S.napoleon=false; S.napoleonGov=false; }
+    S.rulesVersion=2;
+  }
   if (S._purgeAccounting !== 2){
     const purgeNames = new Set(DECISIONS.filter(d => d.purge).map(d => d.name));
     for (const scene of Object.values(SCENES)) for (const option of scene.options||[]) if (option.purge) purgeNames.add(option.label);
@@ -1972,7 +2115,7 @@ function decideEnding(){
     switch (S.route) {
       case 'khrushchev':
         push('khrushchev', '伟 大 的 继 承 人',
-          '秘密报告念完的那一刻，大厅里有人晕倒。二十年的账第一次被拿到桌面上。这台机器开始试着承认自己做过什么——这是它二十年来最难的一个动作。');
+          S.destalin==='full'?'秘密报告念完的那一刻，大厅里有人晕倒。二十年的账第一次被拿到桌面上。这台机器开始试着承认自己做过什么——这是它二十年来最难的一个动作。':S.destalin==='limited'?'集体领导取代了单一的声音。报告只公开了一部分历史，新的领导层选择渐进调整；留下的账目，还需要下一代人继续追问。':'权力被拆分给几个人，但秘密报告仍被锁在抽屉里。新的领导层学会了内部协商，尚未学会公开回答过去的问题。');
         break;
       case 'beria':
         push('beria', '技 术 官 僚 的 秩 序',
@@ -1996,7 +2139,11 @@ function decideEnding(){
         break;
       case 'stalin':
         push('stalin-quiet', '无 声 的 独 裁',
-          '一切照旧。没有恐怖，也没有变化。二十年里这个国家学会了一件事：只要不提问，生活是可以继续下去的。');
+          '恐惧逐渐退潮，集中的权力结构却没有改变。'+(S.destalin==='none'?'报告没有被公开，画像仍留在原处。':'报告触及了个人崇拜，却没有重新分配决定事情的权力。')+'这台机器仍按熟悉的程序运转。');
+        break;
+      case 'caretaker':
+        push('mediocre', '平 庸 的 延 续',
+          '临时委员会一直没有结束任期。计划被续签，争论被搁置，部门之间互相等待批复。1956 年的国家沿着旧有惯性前行，谁也没有为它确定新的方向。');
         break;
       default:
         push('mediocre', '平 庸 的 延 续',
@@ -2017,8 +2164,15 @@ function decideEnding(){
   if (S.COM >= 90) mods.push('社会主义阵营覆盖了欧亚大陆的大部分');
   if (S.indSaved >= 50) mods.push('工业整体搬到了乌拉尔山以东');
   if (S.constitution) mods.push('1936 年宪法从未被废除');
-  if (!S.tukh && S.napoleon === false) mods.push('图哈切夫斯基与他的同僚没有活过 1937 年');
-  if (S.tukh) mods.push('总参谋部在整个战争期间保持了完整');
+  if (S.tukh === false) mods.push('图哈切夫斯基与他的同僚没有活过 1937 年');
+  if (S.tukh && S.officerCorpsPurged) mods.push('图哈切夫斯基活着，但军官团在部分清洗中受损');
+  if (S.tukh && !S.officerCorpsPurged) mods.push('总参谋部在战争期间保持了完整');
+  if (S.legacyArms) mods.push('最后的预算向军备倾斜，工业与军力增加，民心付出代价');
+  if (S.legacyHome) mods.push('最后的预算投向住房，民心和民用工业改善');
+  if (S.legacyWorld) mods.push('最后的预算用于阵营扩张，国际影响增加，国内资源更紧');
+  if ((S.destalinUnrest||0)>=25) mods.push('去斯大林化引发的阵营争论仍未平息');
+  if (S.interimLeader==='beria') mods.push('1953 年的权力真空期曾由内务部临时控制');
+  if (S.interimLeader==='military') mods.push('1953 年的权力真空期曾由军方临时接管');
 
   const industry = S.IND >= 220 ? '欧洲第一、世界第二'
                  : S.IND >= 150 ? '重建完成，但落后于美国'
@@ -2070,7 +2224,7 @@ function renderEnding(){
     fresh(); renderHUD(); advance();
   });
   document.getElementById('to-menu').addEventListener('click', renderTitle);
-  window.scrollTo({top:0, behavior:'smooth'});
+  scrollToStart();
 }
 
 /* ---------- 键盘 ---------- */
@@ -2081,10 +2235,11 @@ document.addEventListener('keydown', (e) => {
   if ((e.key === 'Enter' || e.key === ' ') && e.target?.closest?.('button,a,summary')) return;
   const opts = Array.from(document.querySelectorAll('.opt'));
   let choice;
-  if (/^[1-9]$/.test(e.key)) choice = opts[parseInt(e.key,10) - 1];
-  else if (/^[a-zA-Z]$/.test(e.key)) {
-    const matches = b => b.querySelector('.key')?.textContent.trim().toUpperCase() === e.key.toUpperCase();
+  if (/^[1-9a-zA-Z]$/.test(e.key)) {
+    const requested = /^[1-9]$/.test(e.key) ? String.fromCharCode(64+Number(e.key)) : e.key.toUpperCase();
+    const matches = b => b.querySelector('.key')?.textContent.trim().toUpperCase() === requested;
     choice = opts.find(b => !b.disabled && matches(b)) || opts.find(matches);
+    if (!choice && /^[1-9]$/.test(e.key)) choice = opts[Number(e.key)-1];
   }
   if (choice){
     e.preventDefault();
@@ -2094,6 +2249,9 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' '){
     const nx = document.getElementById('next');
     if (nx){ e.preventDefault(); nx.click(); }
+    else if (opts.length===1 && !opts[0].disabled && opts[0].querySelector('.key')?.textContent.trim()==='→'){
+      e.preventDefault(); opts[0].click();
+    }
   }
 });
 

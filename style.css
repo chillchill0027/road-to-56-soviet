@@ -1715,3 +1715,61 @@ dialog p {
   aspect-ratio: auto;
   transform: none;
 }
+/* Event accounting is shared by choices, automatic events and decisions. */
+.entry-effects {
+  margin-bottom: 22px;
+}
+.entry-effects .deltas {
+  margin-top: 8px;
+}
+.decision-result {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+.decision-result .hint {
+  margin-top: 0;
+}
+.decision-result .deltas {
+  margin-top: 8px;
+}
+.decision-effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 7px;
+  font-size: 10px;
+  font-weight: 400;
+}
+.decision-effects span {
+  padding: 1px 5px;
+  background: var(--paper);
+}
+.decision-effects .up {
+  color: #416246;
+}
+.decision-effects .dn {
+  color: #91463b;
+}
+.decision-effects span {
+  font-size: 10px;
+  font-weight: 400;
+}
+.stat .fly {
+  top: 0;
+  right: 3px;
+  font-size: 9px;
+  background: var(--dark);
+  padding: 0 2px;
+}
+@media (max-width: 760px) {
+  .stat .fly {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stat .fly {
+    display: none;
+  }
+}
