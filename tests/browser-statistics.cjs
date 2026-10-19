@@ -50,6 +50,7 @@ const fixture=require('./fixtures/routes.json').routes[0];
           await page.setViewportSize({width,height:1000});
           assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0);
           assert.ok(await page.locator('.stat-chart').isVisible());
+          assert.ok(await page.locator('.stat-chart').evaluate(svg=>parseFloat(getComputedStyle(svg.querySelector('text')).fontSize)*svg.getBoundingClientRect().width/svg.viewBox.baseVal.width>=10),'chart labels remain readable after scaling');
           assert.ok(await page.locator('#statistics-dialog').evaluate(d=>d.scrollWidth<=d.clientWidth),'dashboard fits its own viewport');
           if(width===1440||width===390) {await page.locator('#statistics-dialog').evaluate(d=>d.scrollTop=0);await page.screenshot({path:path.join(path.dirname(out),`dashboard-${width}.png`)});}
         }

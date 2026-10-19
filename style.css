@@ -2368,3 +2368,15 @@ dialog p {
   .annual-numbers > div { padding:12px; }
   .nav-actions { flex-wrap:wrap; }
 }
+@media(max-width:900px) {
+  .stat-chart text { font-size:18px; }
+}
+@media(max-width:600px) {
+  .stat-chart text { font-size:22px; }
+}
+@media(max-width:420px) {
+  .stat-chart text { font-size:32px; }
+}
+@media(max-width:350px) {
+  .stat-chart text { font-size:38px; }
+}
