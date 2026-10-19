@@ -217,8 +217,14 @@ const output = path.resolve(
             assert.notEqual(seat.key, "vacant", "interregnum ends");
             summary.successor = seat.name;
           }
-          for (const battle of s._pendingResult.battles)
+          for (const battle of s._pendingResult.battles) {
             covered.add("battle:" + battle.tier);
+            assert.equal(await page.locator('#stage .war-report').getAttribute('data-war-tier'),battle.tier,'dispatch uses actual battle result');
+            const sector=await page.evaluate(name=>WarReports.sectorFor(name)[0],battle.name);
+            assert.equal(await page.locator('#stage .war-map').getAttribute('data-sector'),sector,'location follows actual battle direction');
+            assert.equal(await page.locator('#stage .war-source').count(),3,'frontline, logistics and civilian information');
+          }
+          if (id==='a3-end') assert.equal(await page.locator('#stage .war-report').getAttribute('data-war-kind'),'war');
           for (const { k, d } of s._pendingResult.deltas) {
             const text = `${model.names[k]} ${d > 0 ? "+" : ""}${d}`;
             assert.ok(

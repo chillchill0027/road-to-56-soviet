@@ -441,6 +441,7 @@ const Novel = (() => {
         answers: S._novel.answers,
       });
     document.getElementById("novel-log-content").innerHTML =
+      (typeof WarReports!=='undefined' ? WarReports.archiveHTML() : '') +
       World.archiveHTML() +
       (history.length
         ? history

@@ -16,7 +16,7 @@ const output = path.resolve(__dirname, '../docs/qa/live');
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
     const root = path.resolve(__dirname, '..');
-    const expected = ['script.js', 'novel.js', 'novel-content.js', 'world.js', 'world-content.js', 'presentation.js', 'statistics.js', 'style.css'].map(file => ({file, body:fs.readFileSync(path.join(root, file))}));
+    const expected = ['script.js', 'novel.js', 'novel-content.js', 'world.js', 'world-content.js', 'war.js', 'war-content.js', 'presentation.js', 'statistics.js', 'style.css'].map(file => ({file, body:fs.readFileSync(path.join(root, file))}));
     let current = false;
     for (let attempt = 0; attempt < 24; attempt++) {
       const checks = await Promise.all(expected.map(async asset => {
@@ -36,7 +36,8 @@ const output = path.resolve(__dirname, '../docs/qa/live');
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await page.locator('.title-hero').count(), 1, 'published redesign is visible');
     assert.match(await page.locator('#ts-new').innerText(), /开启你的历史/);
-    const assets = ['presentation.js', 'assets/fonts/archival-serif.woff2', 'assets/images/cover.webp', 'assets/images/cast-sheet.webp', ...['life','signals','state'].map(x=>`assets/images/world-${x}-sheet.webp`),
+    const assets = [
+      ...['frontier','moscow','volga','kursk','belarus','romania','berlin','aftermath'].map(x=>`assets/images/battle-${x}-sheet.webp`),'presentation.js', 'assets/fonts/archival-serif.woff2', 'assets/images/cover.webp', 'assets/images/cast-sheet.webp', ...['life','signals','state'].map(x=>`assets/images/world-${x}-sheet.webp`),
       ...['leader', 'industry', 'military', 'war', 'state', 'history'].map(x => `assets/images/${x}-sheet.webp`)];
     for (const asset of assets) {
       const result = await context.request.get(new URL(asset, target).href);
@@ -46,7 +47,7 @@ const output = path.resolve(__dirname, '../docs/qa/live');
     const cover = await page.locator('.hero-image img').evaluate(img => ({loaded:img.complete&&img.naturalWidth>0,width:img.naturalWidth}));
     assert.equal(cover.loaded, true);
     await page.screenshot({ path: path.join(output, 'title-desktop.png'), fullPage: true });
-    report.checks.push('public homepage, local font and all eleven image files return HTTP 200');
+    report.checks.push('public homepage, local font and all nineteen image files return HTTP 200');
     await page.click('#ts-new');
     await advanceScene(page);
     assert.equal(await page.evaluate(() => S.curId), '0-1');

@@ -399,18 +399,20 @@ function renderScene(sc, options = {}){
 function renderResult(sc, o, deltas, battles, extra){
   renderHUD(); showDeltas(deltas);
   const st = document.getElementById('stage');
-  const tone = o.tone || '';
+  const warReport = typeof WarReports!=='undefined' ? WarReports.forResult(sc,o,battles,deltas) : null;
+  const tone = warReport?.kind==='battle' ? (warReport.level>=3?'good':warReport.level<2?'bad':'') : warReport?.kind==='war' ? (S.warOutcome==='great'?'good':S.warOutcome==='defeat'?'bad':'') : o.tone || '';
   const failed = (battles||[]).some(b=>!battleSucceeded(b));
-  const verdict = failed ? '作战结果：'+battles.map(b=>b.tier).join('、')+'，未达成计划目标' : o.verdict||'';
-  const paragraphs = failed ? ['部队执行了所选计划，但实际战力不足以取得预期胜利。伤亡和额外成本已结算；未发放胜利专属奖励。'] : o.res||[];
+  const verdict = warReport ? warReport.headline+(failed?'，未达成计划目标':'') : failed ? '作战结果：'+battles.map(b=>b.tier).join('、')+'，未达成计划目标' : o.verdict||'';
+  const paragraphs = warReport ? [warReport.opening] : failed ? ['部队执行了所选计划，但实际战力不足以取得预期胜利。伤亡和额外成本已结算；未发放胜利专属奖励。'] : o.res||[];
   let html = `<div class="fade">
     <div class="tag">${esc(sc.chapter||'')} · 选择已执行</div>
     <h1 class="scene">${esc(o.label)}</h1>
     ${S.novelVersion && typeof Novel!=='undefined' ? Novel.seatHTML() : ''}
     ${o.flavor?`<div class="sub">${esc(o.flavor)}</div>`:'<div class="sub"></div>'}
-    ${artForCurrent()}
+    ${warReport ? WarReports.heroHTML(warReport) : artForCurrent()}
     <div class="verdict ${failed?'bad':tone}">${esc(sceneText(sc,verdict))}</div>
     <div class="brief">${paragraphs.map(p=>`<p>${sceneText(sc,p)}</p>`).join('')}</div>
+    ${warReport ? WarReports.bodyHTML(warReport) : ''}
     ${(battles||[]).map(battleHTML).join('')}
     ${extra||''}
     <div class="deltas">${deltas.length?effectsHTML(deltas):'<span>无数值变化</span>'}</div>
@@ -420,6 +422,7 @@ function renderResult(sc, o, deltas, battles, extra){
   </div>`;
   st.innerHTML = html;
   document.getElementById('next').addEventListener('click', advance);
+  document.getElementById('war-open-archive')?.addEventListener('click',()=>Novel.openLog());
   scrollToStart();
 }
 function logHTML(){
@@ -649,6 +652,7 @@ function choose(sc, o){
     if (j >= 0){ i = j - 1; }
   }
   const deltas = effectChanges(before);
+  if (typeof WarReports!=='undefined') WarReports.capture(sc,o,battles,deltas);
   if (typeof Statistics!=='undefined') Statistics.record('政策',`${sceneText(sc,sc.title)} · ${o.label}`);
   S._pendingResult = {sceneId:S.curId, optionIndex:sc.options.indexOf(o), deltas, battles, extra, nextIndex:i, nextSceneId:FLOW[i+1]||null};
   saveGame();
@@ -2223,6 +2227,7 @@ function decideEnding(){
 }
 
 function renderEnding(){
+  if (typeof WarReports!=='undefined') WarReports.finish();
   if (typeof Statistics!=='undefined') Statistics.finish();
   const e = decideEnding();
   ENDED = true;
