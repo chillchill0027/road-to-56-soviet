@@ -47,7 +47,10 @@ const fixture=require('./fixtures/routes.json').routes.find(f=>f.steps.some(([id
               assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth),0);
               assert.ok(await page.locator('#stage .war-map').isVisible());
               await page.waitForFunction(()=>[...document.querySelectorAll('#stage img')].every(img=>img.complete&&img.naturalWidth>0));
-              if(width===1440||width===390)await page.screenshot({path:path.join(path.dirname(out),`battle-${width}.png`),fullPage:true});
+              if(width===1440||width===390){
+                await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+                await page.screenshot({path:path.join(path.dirname(out),`battle-${width}.png`),fullPage:true});
+              }
             }
             await page.setViewportSize({width:1440,height:1000});reloaded=true;
           }
