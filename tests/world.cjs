@@ -83,6 +83,7 @@ test("news snapshots remain what was read, while a new report reflects the curre
   const two = g.world.materialize(fragment, "two");
   assert.match(two.body, /战败/);
   assert.doesNotMatch(two.body, /大规模胜利/);
+  for(const r of g.worldEvents["4-1"]) assert.doesNotMatch(r.title,/胜利/,"reconstruction news must also fit a defeat");
 });
 test("handover reports distinguish interim control from assassination or natural death", () => {
   const { game: g } = runtime({ novel: true });
