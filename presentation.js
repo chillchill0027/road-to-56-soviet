@@ -38,7 +38,13 @@ function enhanceStage() {
       if (n !== artwork) copy.append(n);
     });
     root.classList.add("play-layout");
-    root.append(rail, copy);
+    // Keep the article heading, byline and image in reading order.
+    const lead = [];
+    while (copy.firstElementChild && copy.firstElementChild.matches('.tag, h1, .vn-seat, .sub')) {
+      lead.push(copy.firstElementChild);
+      copy.firstElementChild.remove();
+    }
+    root.append(...lead, rail, copy);
   }
   const heading = root.querySelector("h1") || root.querySelector("h2");
   if (heading) {

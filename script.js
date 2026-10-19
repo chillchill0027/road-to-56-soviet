@@ -543,16 +543,17 @@ function renderTitle(){
   st.innerHTML = `<div class="title-screen fade">
     <section class="title-hero">
       <div class="hero-copy"><div class="eyebrow">一部可交互的国家编年史</div>
-        <div class="hero-years">1936 <span>—</span> 1956</div>
-        <h1 class="ts-title">56之路<b>苏维埃</b></h1>
+        <h1 class="ts-title">56之路：苏维埃</h1>
+        <div class="article-byline"><span>历史视觉小说</span><span>1936 — 1956</span></div>
         <p class="hero-quote">历史没有如果。<br>直到你做出选择。</p>
-        <p class="ts-lede">从斯大林的书房，到继承人的会议桌。<br class="desktop-break">报上的消息未散，门外已有人等候。</p>
+        <p class="ts-lede">从斯大林的书房，到继承人的会议桌。报上的消息未散，门外已有人等候。</p>
         <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span>继续</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span>开始</span></button>`}</div>
         ${hasSave()&&!store.get(SAVE_KEY)?.S?.novelVersion?'<p class="hint">此存档沿用旧版国策流程；新周目启用完整情景对话，结局图鉴保留。</p>':''}
-        <div class="hero-small">新闻与密电 <span>/</span> 私人会谈 <span>/</span> 14 种历史结局</div>
+        <div class="hero-small">国家意志贯穿始终 · 14 种历史结局</div>
       </div>
-      <div class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><div class="hero-image-top"><span>苏维埃 / 国家档案</span><span>卷 001</span></div><div class="hero-image-bottom"><span>莫斯科，1936 年</span><span>历史场景演绎</span></div></div>
+      <figure class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><figcaption><span>莫斯科，1936 年</span><span>AI 生成的历史场景演绎</span></figcaption></figure>
     </section>
+    <div class="article-intro"><p>一份未签署的文件，一场没有旁观者的谈话。故事从这里开始。</p><p>你既是国家意志，也是此刻坐在书桌后的最高领导人。听取消息，与来访者交谈，让一次次回应逐渐形成决定。</p></div>
     <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件，一场没有旁观者的谈话开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><span class="chapter-num">0${n+1}</span><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
     <section class="title-bottom"><p><span class="eyebrow">你的决定，组成历史</span><br>发展工业，平衡派系，迎战时代。与人物交谈，让每一次表态逐渐形成政策。</p><button class="archive-link" id="ts-gallery"><span>结局档案</span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span>查阅</span></button></section>
     <div class="ts-note"><span><kbd>A–H</kbd> / <kbd>1–8</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>

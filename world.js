@@ -135,7 +135,7 @@ const World = (() => {
     renderHUD();
     if (entry.applied && entry.deltas.length) showDeltas(entry.deltas);
     document.getElementById("stage").innerHTML =
-      `<div class="fade world-interlude"><div class="world-scene-heading"><span>${esc(sc.chapter)} · ${esc(S.year)}</span><span>${index + 1} / ${pages.length}</span></div><div class="world-scene-frame">${artHTML(record.art, S.year)}</div><div class="world-scene-copy">${card(record, false, "h1")}<div class="acts"><button class="btn" id="next">${index < pages.length - 1 ? "往 下 看" : "继 续"}</button></div></div></div>`;
+      `<div class="fade world-interlude"><div class="world-scene-heading"><span>${esc(sc.chapter)} · ${esc(S.year)}</span><span>${index + 1} / ${pages.length}</span></div><article class="world-scene-copy">${card(record, false, "h1")}<div class="world-scene-frame">${artHTML(record.art, S.year)}</div><div class="acts"><button class="btn" id="next">${index < pages.length - 1 ? "往 下 看" : "继 续"}</button></div></article></div>`;
     document.getElementById("next").addEventListener("click", () => {
       if (S.curId !== id || S._worldPage?.index !== index) return;
       if (index < pages.length - 1) {
