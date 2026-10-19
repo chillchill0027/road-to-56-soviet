@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:45851/",
+  "url": "http://127.0.0.1:45951/",
   "passed": true,
   "routes": [
     {
@@ -319,5 +319,37 @@
   "resourceFailures": [],
   "missing": [],
   "covered": 250,
-  "galleryUnlocked": 14
+  "galleryUnlocked": 14,
+  "informationSources": [
+    "aside",
+    "border",
+    "budget",
+    "cipher",
+    "diary",
+    "diplomacy",
+    "dispatch",
+    "embassy",
+    "factory",
+    "family",
+    "foreignPress",
+    "guard",
+    "hospital",
+    "intel",
+    "intercept",
+    "lab",
+    "map",
+    "paper",
+    "party",
+    "petition",
+    "phone",
+    "photo",
+    "poster",
+    "questioning",
+    "queue",
+    "radio",
+    "rail",
+    "ration",
+    "reel",
+    "wire"
+  ]
 }

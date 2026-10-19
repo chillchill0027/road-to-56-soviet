@@ -4,7 +4,12 @@ const assert = require("node:assert/strict"),
   path = require("node:path");
 const { chromium } = require("playwright");
 const { startServer } = require("./helpers/server.cjs");
-const { choosePolicy, executeAgenda } = require("./helpers/dialogue.cjs");
+const {
+  choosePolicy,
+  executeAgenda,
+  advanceScene,
+  sourceKinds,
+} = require("./helpers/dialogue.cjs");
 const { runtime } = require("./helpers/runtime.cjs");
 const {
   catalog,
@@ -249,7 +254,7 @@ const output = path.resolve(
           meta: model.meta,
           limits: model.limits,
         });
-        await page.click("#next");
+        await advanceScene(page);
         summary.steps++;
       }
       assert.equal(
@@ -299,6 +304,12 @@ const output = path.resolve(
     assert.deepEqual(report.resourceFailures, []);
     report.covered = required.length;
     report.galleryUnlocked = 14;
+    report.informationSources = [...sourceKinds].sort();
+    assert.ok(
+      sourceKinds.size >= 20,
+      "at least 20 source types were encountered through real play",
+    );
+    console.log("INFORMATION SOURCES VERIFIED:", sourceKinds.size);
     report.passed = true;
     console.log(
       "ALL BRANCHES VERIFIED:",

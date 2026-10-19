@@ -3,7 +3,7 @@ const assert = require("node:assert/strict"),
   path = require("node:path");
 const { chromium } = require("playwright");
 const { startServer } = require("./helpers/server.cjs");
-const { choosePolicy, replyPolicy } = require("./helpers/dialogue.cjs");
+const { choosePolicy, replyPolicy,advanceScene } = require("./helpers/dialogue.cjs");
 (async () => {
   const local = process.argv[2] ? null : await startServer(),
     url = process.argv[2] || local.url;
@@ -27,7 +27,7 @@ const { choosePolicy, replyPolicy } = require("./helpers/dialogue.cjs");
     page.on("pageerror", (e) => report.errors.push(e.message));
     await page.goto(url, { waitUntil: "networkidle" });
     await page.click("#ts-new");
-    await page.click("#next");
+    await advanceScene(page);
     const core = () => page.evaluate(() => JSON.stringify(effectSnapshot())),
       base = await core();
     const sequence = [2, 2, 0, 0, 2, 2, 0];
@@ -63,11 +63,11 @@ const { choosePolicy, replyPolicy } = require("./helpers/dialogue.cjs");
     report.checks.push(
       "seven mixed replies form a 4:3 majority, not the final reply; no interim resource changes; exact dialogue reload; transcript modal blocks shortcuts",
     );
-    await page.click("#next");
+    await advanceScene(page);
     await choosePolicy(page, 1);
-    await page.click("#next");
+    await advanceScene(page);
     await choosePolicy(page, 0);
-    await page.click("#next");
+    await advanceScene(page);
     assert.equal(await page.evaluate(() => S.curId), "dec-prologue");
     await page.click('.db2[data-id="religion"]');
     const before = await core();
@@ -98,8 +98,8 @@ const { choosePolicy, replyPolicy } = require("./helpers/dialogue.cjs");
     report.checks.push(
       "agenda deferral pays nothing; approved agenda survives a mid-dialogue reload and pays exactly once",
     );
-    await page.click("#next");
-    await page.click("#next");
+    await advanceScene(page);
+    await advanceScene(page);
     for (const width of [1440, 768, 390, 320]) {
       await page.setViewportSize({ width, height: 1000 });
       assert.equal(

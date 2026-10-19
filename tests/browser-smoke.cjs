@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const { chromium } = require('playwright');
-const {choosePolicy,executeAgenda}=require('./helpers/dialogue.cjs');
+const {choosePolicy,executeAgenda,advanceScene}=require('./helpers/dialogue.cjs');
 
 const root = path.resolve(__dirname, '..');
 const output = path.resolve(process.env.SMOKE_OUTPUT || path.join(root, 'docs/qa/browser-smoke.json'));
@@ -181,7 +181,7 @@ async function scenario(browser, url, config) {
       }
       const next = page.locator('#next');
       assert.equal(await next.count(), 1, `${current.scene} has a continue button`);
-      await next.click();
+      await advanceScene(page);
     }
     const final = await record('ending reached');
     assert.equal(final.ended, true, 'the entire playthrough terminates');

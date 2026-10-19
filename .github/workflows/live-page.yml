@@ -22,6 +22,8 @@ jobs:
         run: ROUTE_BROWSER_OUTPUT=docs/qa/live/browser-routes.json node tests/browser-routes.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - name: Verify dialogue and automatic policy formation on the published page
         run: NOVEL_BROWSER_OUTPUT=docs/qa/live/novel-browser.json node tests/browser-novel.cjs https://chillchill0027.github.io/road-to-56-soviet/
+      - name: Verify news, opening and source archive on the published page
+        run: IMMERSION_OUTPUT=docs/qa/live/immersion/report.json node tests/browser-immersion.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - uses: actions/upload-artifact@v4
         if: always()
         with:

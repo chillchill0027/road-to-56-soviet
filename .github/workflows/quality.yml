@@ -21,6 +21,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
       - run: npm run test:browser:novel
+      - run: npm run test:browser:immersion
       - run: npm run test:browser:routes
       - uses: actions/upload-artifact@v4
         if: always()
@@ -36,3 +37,4 @@ jobs:
             docs/qa/battle-costs.png
             docs/qa/novel-*.png
             docs/qa/novel-browser.json
+            docs/qa/immersion/
