@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:43311/",
+  "passed": true,
+  "checks": [
+    "seven mixed replies form a 4:3 majority, not the final reply; no interim resource changes; exact dialogue reload; transcript modal blocks shortcuts",
+    "agenda deferral pays nothing; approved agenda survives a mid-dialogue reload and pays exactly once",
+    "desktop, tablet, 390px and 320px layouts fit; character portraits load"
+  ],
+  "errors": []
+}

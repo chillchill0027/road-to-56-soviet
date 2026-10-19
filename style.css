@@ -20,6 +20,377 @@
   --sans: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --mono: "Courier New", monospace;
 }
+.novel-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 38% minmax(0, 1fr);
+  column-gap: 36px;
+}
+.vn-heading {
+  grid-column: 1/-1;
+}
+.vn-progress {
+  grid-column: 1/-1;
+  grid-row: 2;
+  margin-bottom: 22px;
+}
+.vn-film {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: start;
+  position: sticky;
+  top: 210px;
+}
+.vn-body {
+  grid-column: 2;
+  grid-row: 3;
+}
+.vn-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.vn-heading .scene {
+  margin: 10px 0 0;
+}
+.vn-seat {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  max-width: 320px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.vn-seat > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.vn-seat small {
+  font-size: 10px;
+  color: var(--mut);
+}
+.vn-seat strong {
+  font: 600 18px/1.5 var(--serif);
+}
+.vn-portrait {
+  flex: 0 0 auto;
+  display: block;
+  width: 90px;
+  aspect-ratio: 3/4;
+  background-image: url("assets/images/cast-sheet.webp");
+  background-size: 400% 300%;
+  background-position: calc(var(--cx) * 100% / 3) calc(var(--cy) * 100% / 2);
+  background-repeat: no-repeat;
+  border: 1px solid var(--line);
+}
+.vn-seat .vn-seat-portrait {
+  width: 42px;
+}
+.vn-film {
+  position: sticky;
+  background: var(--dark);
+}
+.vn-film .scene-art {
+  margin: 0;
+}
+.vn-film .art-window {
+  height: auto;
+  aspect-ratio: 3/2;
+}
+.vn-film .scene-art figcaption {
+  display: none;
+}
+.vn-location {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 12px 22px;
+  color: var(--paper);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.vn-progress {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+  font: 12px var(--mono);
+}
+.vn-progress > div {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+.vn-progress > div > span {
+  width: 22px;
+  height: 3px;
+  background: var(--line);
+}
+.vn-progress .done {
+  background: var(--ink2);
+}
+.vn-progress .now {
+  background: var(--red);
+}
+.vn-body {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+.vn-opening {
+  font: 15px/1.9 var(--serif);
+  margin-bottom: 12px;
+  color: var(--ink2);
+}
+.vn-body details {
+  font-size: 12px;
+  color: var(--ink2);
+}
+.vn-body summary,
+.vn-resolution summary {
+  cursor: pointer;
+  padding: 8px 0;
+  color: var(--ink2);
+}
+.vn-bridge {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 22px;
+}
+.vn-bridge p {
+  margin: 10px 0;
+  line-height: 1.9;
+}
+.vn-aside {
+  font: 15px/1.9 var(--serif);
+  color: var(--mut);
+  margin: 25px 0;
+}
+.vn-dialogue {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+}
+.vn-dialogue > div {
+  flex: 1;
+  min-width: 0;
+}
+.vn-speaker {
+  color: var(--red);
+  font: 600 16px var(--serif);
+  margin: 0 0 13px;
+}
+.vn-speaker small {
+  display: block;
+  font: 11px/1.7 var(--sans);
+  color: var(--mut);
+  margin-top: 5px;
+}
+.vn-line {
+  font: 19px/1.9 var(--serif);
+  min-height: 95px;
+}
+.vn-previous {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--line);
+  font-size: 12px;
+  color: var(--ink2);
+}
+.vn-memory {
+  margin-top: 14px;
+}
+.vn-memory p {
+  padding: 8px 12px;
+  background: var(--white);
+}
+.vn-options {
+  display: grid;
+  gap: 9px;
+}
+.vn-options .vn-choice {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 16px 19px;
+  margin: 0;
+  min-height: 57px;
+  text-align: left;
+}
+.vn-choice .key {
+  flex: 0 0 20px;
+  font: 12px var(--mono);
+  color: var(--red);
+}
+.vn-choice > span:last-child {
+  font: 15px/1.75 var(--serif);
+}
+.vn-choice:hover {
+  background: var(--white);
+  border-color: var(--red);
+}
+.vn-rule {
+  font-size: 11px;
+  color: var(--mut);
+  margin: 18px 0 10px;
+  line-height: 1.8;
+}
+.vn-unavailable,
+.vn-process {
+  margin-top: 14px;
+}
+.vn-unavailable p {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.vn-process p {
+  padding: 10px 0;
+}
+.vn-resolution {
+  margin: 24px 0;
+  padding: 15px 20px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  font-size: 13px;
+}
+.vn-resolution ol {
+  margin-left: 20px;
+}
+.vn-resolution li {
+  padding: 10px 0;
+}
+.vn-resolution li span {
+  font-size: 11px;
+  color: var(--mut);
+}
+.vn-tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+.vn-tally span {
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  font-size: 11px;
+}
+.vn-connecting {
+  padding: 15px 0;
+  font: 15px/1.9 var(--serif);
+  color: var(--ink2);
+}
+.vn-decision-outcome {
+  margin-bottom: 20px;
+}
+#novel-log {
+  width: min(850px, calc(100vw - 28px));
+  max-height: 85dvh;
+  overflow: auto;
+}
+#novel-log-content section {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+}
+.vn-log-line {
+  border-bottom: 1px solid var(--line);
+  padding: 15px 0;
+  font: 14px/1.9 var(--serif);
+}
+.vn-log-line small {
+  font: 11px var(--sans);
+  color: var(--mut);
+}
+.vn-log-line p {
+  margin: 6px 0;
+}
+@media (max-width: 700px) {
+  .novel-layout {
+    display: block;
+  }
+  .vn-film {
+    position: relative;
+    top: auto;
+  }
+  .vn-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 17px;
+    margin-bottom: 20px;
+  }
+  .vn-heading .scene {
+    font-size: 27px;
+  }
+  .vn-heading .vn-seat {
+    border-left: 2px solid var(--red);
+    padding-left: 12px;
+  }
+  .vn-film .art-window {
+    height: auto;
+    aspect-ratio: 1.8;
+  }
+  .vn-location {
+    padding: 10px 12px;
+    font-size: 10px;
+  }
+  .vn-progress {
+    gap: 12px;
+    font-size: 11px;
+  }
+  .vn-progress > div > span {
+    width: 16px;
+  }
+  .vn-body {
+    padding: 15px 0 0;
+  }
+  .vn-dialogue {
+    gap: 16px;
+  }
+  .vn-dialogue .vn-portrait {
+    width: 64px;
+  }
+  .vn-line {
+    font-size: 17px;
+    min-height: 0;
+  }
+  .vn-aside {
+    font-size: 14px;
+    margin: 20px 0;
+  }
+  .vn-options .vn-choice {
+    padding: 14px;
+    gap: 10px;
+  }
+  .vn-choice > span:last-child {
+    font-size: 15px;
+  }
+  .vn-resolution {
+    padding: 12px;
+  }
+  .masthead .nav-actions {
+    gap: 12px;
+  }
+  .masthead .nav-button {
+    font-size: 11px;
+  }
+  #save-status {
+    display: none;
+  }
+}
+@media (max-width: 360px) {
+  .masthead .nav-actions {
+    gap: 5px;
+  }
+  .masthead .nav-button {
+    font-size: 10px;
+  }
+}
 * {
   box-sizing: border-box;
   margin: 0;

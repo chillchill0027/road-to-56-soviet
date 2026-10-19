@@ -67,6 +67,9 @@ const statGuide = {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nav-home").addEventListener("click", renderTitle);
   document
+    .getElementById("nav-dialogue")
+    .addEventListener("click", Novel.openLog);
+  document
     .getElementById("nav-gallery")
     .addEventListener("click", renderGallery);
   document

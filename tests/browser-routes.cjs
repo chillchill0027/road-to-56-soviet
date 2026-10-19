@@ -4,6 +4,7 @@ const assert = require("node:assert/strict"),
   path = require("node:path");
 const { chromium } = require("playwright");
 const { startServer } = require("./helpers/server.cjs");
+const { choosePolicy, executeAgenda } = require("./helpers/dialogue.cjs");
 const { runtime } = require("./helpers/runtime.cjs");
 const {
   catalog,
@@ -82,6 +83,7 @@ const output = path.resolve(
       await page.click("#ts-new");
       let resultRestore = false,
         decisionRestore = false,
+        dialogueRestore = false,
         previousYear = 1936;
       const summary = {
         id: fixture.id,
@@ -129,7 +131,9 @@ const output = path.resolve(
               `${id}: ${decisionId} affordable`,
             );
             const count = s["_c_" + decisionId] || 0;
-            await button.click();
+            summary.dialogueRounds =
+              (summary.dialogueRounds || 0) +
+              (await executeAgenda(page, decisionId));
             s = await state();
             assert.equal(s["_c_" + decisionId], count + 1);
             covered.add("decision:" + decisionId);
@@ -166,10 +170,31 @@ const output = path.resolve(
           );
           const key = await button.locator(".key").innerText();
           optionPaths(s, { k: key }, covered);
-          if (id === "5-1" && key === "H") await page.keyboard.press("8");
-          else if (id === "2-2" && key === "A") await page.keyboard.press("1");
-          else if (key === "→") await page.keyboard.press("Enter");
-          else await button.click();
+          const inputKey =
+            id === "5-1" && key === "H"
+              ? "8"
+              : id === "2-2" && key === "A"
+                ? "1"
+                : key === "→"
+                  ? "Enter"
+                  : undefined;
+          if (!dialogueRestore && (await page.locator(".vn-choice").count())) {
+            await button.click();
+            const before = JSON.stringify(await state());
+            await page.reload({ waitUntil: "load" });
+            await page.click("#ts-continue");
+            assert.equal(
+              JSON.stringify(await state()),
+              before,
+              "mid-dialogue state restores exactly",
+            );
+            dialogueRestore = true;
+            summary.dialogueRestored = true;
+            summary.dialogueRounds = (summary.dialogueRounds || 0) + 1;
+          }
+          summary.dialogueRounds =
+            (summary.dialogueRounds || 0) +
+            (await choosePolicy(page, action, inputKey));
           s = await state();
           assert.equal(
             s._pendingResult.optionIndex,
@@ -177,6 +202,16 @@ const output = path.resolve(
             `${id}: input selected the displayed option`,
           );
           covered.add(`option:${id}:${action}`);
+          if (id === "5-1") {
+            const seat = await page.evaluate(() => Novel.leader());
+            assert.notEqual(
+              seat.key,
+              "stalin",
+              "successor viewpoint replaces Stalin",
+            );
+            assert.notEqual(seat.key, "vacant", "interregnum ends");
+            summary.successor = seat.name;
+          }
           for (const battle of s._pendingResult.battles)
             covered.add("battle:" + battle.tier);
           for (const { k, d } of s._pendingResult.deltas) {

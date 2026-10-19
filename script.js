@@ -1,10 +1,10 @@
 /* 《56之路：苏维埃》游戏脚本
    状态机 / 数值结算 / 战役判定 / 结局判定
-   玩家扮演：国家意志本身 */
+   玩家扮演：斯大林与继承人的最高领导席位，国家意志贯穿全程 */
 
 /* ============================================================
    《56之路：苏维埃》 —— 状态机 / 数值 / 战役判定
-   玩家扮演：国家意志本身
+   玩家扮演：斯大林与继承人的最高领导席位，国家意志贯穿全程
    ============================================================ */
 
 /* ---------- 属性定义 ---------- */
@@ -147,7 +147,7 @@ function fresh(){
     purgeCount:0, _purgeAccounting:2, beria:0, zhukov:0, napoleon:false,
     fort:0, warning:1.0, enemyMod:0, nationalQ:0, nuclear:0, westTrust:0,
     collapses:0, loses:0, holds:0, reverses:0, standoffs:0,
-    rulesVersion:2, flowVersion:2,
+    rulesVersion:2, flowVersion:2, novelVersion:1,
     warOutcome:null, act:0, year:1936,
   };
   i = -1; LOG = []; ENDED = false; S.curId = null;
@@ -178,7 +178,8 @@ function addRaw(k,v){
 function hudAct(){
   const names = ['序幕','第一幕 · 钢铁与血','第二幕 · 魔鬼的交易','第三幕 · 伟大的卫国战争','第四幕 · 胜利的代价','第五幕 · 走向 56'];
   document.getElementById('hud-act').textContent =
-    (names[S.act] || '') + (S.year ? '  ' + S.year : '');
+    (names[S.act] || '') + (S.year ? '  ' + S.year : '') +
+    (S.novelVersion && typeof Novel!=='undefined' ? ' · '+Novel.leader().name : '');
 }
 function renderHUD(){
   const box = document.getElementById('hud-stats');
@@ -352,6 +353,10 @@ function enterScene(sc, options = {}){
 }
 function renderScene(sc, options = {}){
   const entry = enterScene(sc,options);
+  if (S.novelVersion && typeof Novel!=='undefined' && Novel.handles(S.curId)) {
+    Novel.renderEvent(sc, entry);
+    return;
+  }
   const ex = entry.ex;
   const dl = entry.deltas;
   const briefArr = typeof sc.brief === 'function' ? sc.brief(S) : (sc.brief||[]);
@@ -379,6 +384,7 @@ function renderScene(sc, options = {}){
   });
   const nb = document.getElementById('next');
   if (nb) nb.addEventListener('click', advance);
+  if (S.novelVersion && typeof Novel!=='undefined') Novel.connectScene(sc);
   saveGame();
   scrollToStart();
 }
@@ -394,6 +400,7 @@ function renderResult(sc, o, deltas, battles, extra){
   let html = `<div class="fade">
     <div class="tag">${esc(sc.chapter||'')} · 选择已执行</div>
     <h1 class="scene">${esc(o.label)}</h1>
+    ${S.novelVersion && typeof Novel!=='undefined' ? Novel.seatHTML() : ''}
     ${o.flavor?`<div class="sub">${esc(o.flavor)}</div>`:'<div class="sub"></div>'}
     ${artForCurrent()}
     <div class="verdict ${failed?'bad':tone}">${esc(sceneText(sc,verdict))}</div>
@@ -401,6 +408,7 @@ function renderResult(sc, o, deltas, battles, extra){
     ${(battles||[]).map(battleHTML).join('')}
     ${extra||''}
     <div class="deltas">${deltas.length?effectsHTML(deltas):'<span>无数值变化</span>'}</div>
+    ${S.novelVersion && typeof Novel!=='undefined' ? Novel.resolutionHTML() : ''}
     <div class="acts"><button class="btn" id="next">继 续</button></div>
     ${logHTML()}
   </div>`;
@@ -421,6 +429,9 @@ function enterDecisionPhase(phase){
 }
 function renderDecisions(phase){
   enterDecisionPhase(phase);
+  if (S.novelVersion && typeof Novel!=='undefined' && S._novel?.kind==='decision') {
+    Novel.renderActive(); return;
+  }
   renderHUD();
   const st = document.getElementById('stage');
   const avail = DECISIONS.filter(d =>
@@ -435,6 +446,7 @@ function renderDecisions(phase){
     ${artForCurrent()}
     <div class="brief">${(phase.brief||[]).map(p=>`<p>${sceneText(phase,p)}</p>`).join('')}</div>
     ${S._lastDecision?.sceneId===S.curId?`<div class="decision-result" role="status"><div class="hint">已执行：${esc(S._lastDecision.name)}</div><div class="deltas">${effectsHTML(S._lastDecision.deltas)}</div></div>`:''}
+    ${S.novelVersion && typeof Novel!=='undefined' ? Novel.decisionOutcomeHTML() : ''}
     <div class="dpanel">
       <div class="dhead">
         <span class="dt">决 议 台</span>
@@ -448,12 +460,12 @@ function renderDecisions(phase){
           return `<div class="di">
             <div class="dn">${esc(d.name)}<span class="df">${esc(d.note||'')}${left}${d.purge&&S.constitution?' · 宪法法理降低政治成本 20%':''}</span><span class="decision-effects">${effectsHTML(previewEffects(d))}</span></div>
             <div class="dc">${Object.keys(c).map(k=>`${META[k].n} −${c[k]}`).join(' · ')}</div>
-            <button class="db2" data-id="${d.id}" ${can?'':'disabled'}>执 行</button>
+            <button class="db2" data-id="${d.id}" ${can?'':'disabled'}>${S.novelVersion?'听取汇报':'执 行'}</button>
           </div>`;
         }).join(''):'<div class="di"><div class="dn">当前无可执行决议</div></div>'}
       </div>
     </div>
-    <div class="hint">决议不消耗回合，只消耗资源。执行完毕后进入下一阶段。</div>
+    <div class="hint">${S.novelVersion?'常设议题经过交谈形成安排，决定推进时才扣除资源。处理完毕后进入下一阶段。':'决议不消耗回合，只消耗资源。执行完毕后进入下一阶段。'}</div>
     <div class="acts"><button class="btn" id="next">进 入 下 一 阶 段</button></div>
     ${logHTML()}
   </div>`;
@@ -461,6 +473,7 @@ function renderDecisions(phase){
     if (b.disabled) return;
     b.addEventListener('click', () => {
       const d = DECISIONS.find(x=>x.id===b.dataset.id);
+      if (S.novelVersion && typeof Novel!=='undefined') { Novel.startDecision(d); return; }
       const d2 = executeDecision(d);
       if (!d2) return;
       renderHUD(); showDeltas(d2);
@@ -470,6 +483,7 @@ function renderDecisions(phase){
     });
   });
   document.getElementById('next').addEventListener('click', advance);
+  if (S.novelVersion && typeof Novel!=='undefined') Novel.connectScene(phase);
   saveGame();
   scrollToStart();
 }
@@ -521,14 +535,15 @@ function renderTitle(){
         <div class="hero-years">1936 <span>—</span> 1956</div>
         <h1 class="ts-title">56之路<b>苏维埃</b></h1>
         <p class="hero-quote">历史没有如果。<br>直到你做出选择。</p>
-        <p class="ts-lede">你将成为国家意志本身。在钢铁、战争与理想之间，<br class="desktop-break">为一个国家写下二十年的命运。</p>
+        <p class="ts-lede">你是斯大林，也是国家意志。与身边的人交谈，<br class="desktop-break">让回应形成政策，让继承人接过二十年的命运。</p>
         <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span>继续</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span>开始</span></button>`}</div>
-        <div class="hero-small">五幕叙事 <span>/</span> 14 种结局 <span>/</span> 每一个抉择皆有回响</div>
+        ${hasSave()&&!store.get(SAVE_KEY)?.S?.novelVersion?'<p class="hint">此存档沿用旧版国策流程；新周目启用完整情景对话，结局图鉴保留。</p>':''}
+        <div class="hero-small">3 / 5 / 7 轮情景对话 <span>/</span> 14 种结局 <span>/</span> 表态自动形成政策</div>
       </div>
       <div class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><div class="hero-image-top"><span>苏维埃 / 国家档案</span><span>卷 001</span></div><div class="hero-image-bottom"><span>莫斯科，1936 年</span><span>历史场景演绎</span></div></div>
     </section>
-    <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><span class="chapter-num">0${n+1}</span><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
-    <section class="title-bottom"><p><span class="eyebrow">你的决定，组成历史</span><br>发展工业，平衡派系，迎战时代。每一项选择都将改变结局。</p><button class="archive-link" id="ts-gallery"><span>结局档案</span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span>查阅</span></button></section>
+    <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件，一场没有旁观者的谈话开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><span class="chapter-num">0${n+1}</span><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
+    <section class="title-bottom"><p><span class="eyebrow">你的决定，组成历史</span><br>发展工业，平衡派系，迎战时代。与人物交谈，让每一次表态逐渐形成政策。</p><button class="archive-link" id="ts-gallery"><span>结局档案</span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span>查阅</span></button></section>
     <div class="ts-note"><span><kbd>A–H</kbd> / <kbd>1–8</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>
   </div>`;
   const nw = document.getElementById('ts-new');
@@ -677,7 +692,7 @@ const SCENES = {
   act:0, year:1936, chapter:'序幕', title:'两 个 纵 队',
   sub:'定调抉择 · 决定此后二十年的运转方式',
   brief:[
-    '内务部递上来的名单排成两个纵队。左边是左翼反对派：托洛茨基在阿拉木图，季诺维也夫和加米涅夫在等第二次机会。右边是右翼：布哈林还在《消息报》上写社论，语气温和得像什么都没发生。',
+    '内务部递上来的名单排成两个纵队。左边是左翼反对派：托洛茨基仍在国外流亡，季诺维也夫和加米涅夫在等第二次机会。右边是右翼：布哈林还在《消息报》上写社论，语气温和得像什么都没发生。',
     '名单下面压着一张空白表格，填的是处理方式。'
   ],
   options:[
@@ -815,7 +830,7 @@ const SCENES = {
      fx:{IND:20, MOR:-25, RIGHT:-20},
      flags:{famine:true},
      verdict:'拖拉机站建起来了，交不起粮的人被划成了另一个阶级。',
-     res:['1938 年冬天，乌克兰和哈萨克斯坦的死亡率翻了几倍。这件事没有出现在任何公告里。'],
+     res:['在这条架空路线中，追加征购进一步挤压农村生计。饥荒与逃亡的风险上升，死亡不会出现在产量表里。'],
      tone:'bad'},
     {k:'B', label:'有节制 —— 分三年完成，允许自留地', flavor:'—',
      fx:{IND:10, MOR:-10, RIGHT:5},
@@ -846,7 +861,7 @@ const SCENES = {
      tone:'bad'},
     {k:'B', label:'换上贝利亚', flavor:'THE FAITHFUL SERVANT',
      fx:{PAR:-10}, flags:{beria:15},
-     verdict:'叶若夫调任农业人民委员部。他很清楚那意味着什么。',
+     verdict:'叶若夫被调离内务部。他很清楚这意味着什么。',
      res:['贝利亚获得初始势力 15。后续可在决议台给内务部专项授权，换取短期控制力，同时承担权力向他集中的代价。'],
      tone:''},
     {k:'C', label:'清算叶若夫', flavor:'—', purge:true,
@@ -862,7 +877,7 @@ const SCENES = {
   sub:'长期投注 · 1949 年才结算',
   brief:[
     '列宁格勒物理研究所递上来一份估算：铀-235 分离需要的电力，相当于一座中型城市全年用电量。',
-    '哈恩的裂变实验已经发表两年了。这份备忘录在纸堆里躺了很久，因为没有人急着打仗。'
+    '1938 年末，核裂变研究正在改变物理学的边界。军用设想仍未得到验证，这份超前的工程预案属于本作的架空分支。'
   ],
   options:[
     {k:'A', label:'全力投入', flavor:'SOVIET ATOMIC BOMB PROJECT',
@@ -1535,7 +1550,7 @@ const SCENES = {
     {k:'B', label:'纵容 —— 让事情发生', flavor:'COUP D ETAT',
      fx:{LEFT:15, STAL:-30, PAR:-25, ARMY:10}, flags:{leftCoup:true},
      verdict:'那个夜里，克里姆林宫的警卫换成了另一支部队。',
-     res:['核心被换掉了。五年后，这个国家的旗帜会挂在更多地方，也会被更多人当成威胁。'],
+     res:['斯大林保留最高领导席位，但接受左翼联盟分享实际决策权。此后的正式继承，将在这一新的权力基础上展开。'],
      tone:''}
   ]
 },
@@ -1552,7 +1567,7 @@ const SCENES = {
     {k:'A', label:'让军队留在政治里', flavor:'THE IRON WALL',
      fx:{ARMY:15, MOR:5, STAL:-25, PAR:10, LEFT:-10}, flags:{napoleonGov:true},
      verdict:'元帅们开始坐在政治局会议桌的边上，后来坐到了中间。',
-     res:['这个国家从此由懂战争的人管理。它会更有效率，也会更少问自己为什么。'],
+     res:['军方进入行政与重建机关，斯大林仍保留最高领导席位。军事效率与政治权力从此更紧地缠在一起。'],
      tone:''},
     {k:'B', label:'把军队赶回军营', flavor:'DEPOLITICIZE THE MILITARY',
      fx:{ARMY:-15, STAL:20, PAR:20, LEFT:-15}, flags:{napoleonPurged:true, napoleon:false, napoleonGov:false},
@@ -2239,7 +2254,7 @@ document.addEventListener('keydown', (e) => {
     const requested = /^[1-9]$/.test(e.key) ? String.fromCharCode(64+Number(e.key)) : e.key.toUpperCase();
     const matches = b => b.querySelector('.key')?.textContent.trim().toUpperCase() === requested;
     choice = opts.find(b => !b.disabled && matches(b)) || opts.find(matches);
-    if (!choice && /^[1-9]$/.test(e.key)) choice = opts[Number(e.key)-1];
+    if (!choice && /^[1-9]$/.test(e.key) && opts.every(b=>! /^[A-Z]$/.test(b.querySelector('.key')?.textContent.trim()))) choice = opts[Number(e.key)-1];
   }
   if (choice){
     e.preventDefault();

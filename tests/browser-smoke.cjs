@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const { chromium } = require('playwright');
+const {choosePolicy,executeAgenda}=require('./helpers/dialogue.cjs');
 
 const root = path.resolve(__dirname, '..');
 const output = path.resolve(process.env.SMOKE_OUTPUT || path.join(root, 'docs/qa/browser-smoke.json'));
@@ -59,7 +60,7 @@ async function snapshot(page, action) {
     heading: document.querySelector('#stage h1, #stage h2')?.textContent.trim() || '',
     options: [...document.querySelectorAll('.opt')].map(button => ({
       index: Number(button.dataset.i), key: button.querySelector('.key')?.textContent.trim(),
-      label: button.querySelector('.lb')?.textContent.trim(), disabled: button.disabled,
+      label: SCENES[S.curId]?.options?.[Number(button.dataset.i)]?.label || button.innerText.trim(), disabled: button.disabled,
     })),
     overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - innerWidth,
     battle: document.querySelector('.battle')?.innerText || null,
@@ -156,12 +157,12 @@ async function scenario(browser, url, config) {
         const option = available.find(option => option.key === preferred) || available[0];
         if (config.balanced && ((current.scene === '2-2' && option.key === 'C') ||
             (current.scene === '5-1' && option.key === 'G'))) {
-          await page.keyboard.press(option.key.toLowerCase());
+          await choosePolicy(page,option.index,option.key.toLowerCase());
           const label = await page.evaluate(() => LOG.at(-1));
           assert.equal(label, option.label, 'the letter shortcut selects its displayed option');
           await record(`keyboard choice ${option.key}`);
         } else {
-          await page.locator(`.opt[data-i="${option.index}"]`).click();
+          await choosePolicy(page,option.index);
           await record(`click choice ${option.key}`);
         }
         continue;
@@ -172,7 +173,7 @@ async function scenario(browser, url, config) {
             const button = page.locator(`.db2[data-id="${id}"]`);
             if (!await button.count() || !await button.isEnabled()) break;
             const before = await page.evaluate(id => S['_c_' + id] || 0, id);
-            await button.click();
+            await executeAgenda(page,id);
             assert.equal(await page.evaluate(id => S['_c_' + id], id), before + 1);
             await record(`execute decision ${id}`);
           }
