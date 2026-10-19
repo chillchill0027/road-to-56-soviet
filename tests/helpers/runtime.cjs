@@ -66,7 +66,7 @@ function runtime(options = {}) {
     "utf8",
   );
   vm.runInContext(
-    source + (options.novel ? ['novel-content.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
+    source + (options.novel ? ['novel-content.js','world-content.js','world.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
       `
     const renderRealResult = renderResult;
     renderHUD = () => {};
@@ -81,6 +81,11 @@ function runtime(options = {}) {
       meta:META, names:EFFECT_NAMES, limits:RAW_LIMITS, endings:ENDINGS, purgeTargets:PURGE_TARGETS, legacyFlow:FLOW_V1,
       scenes: SCENES, get flow(){ return FLOW; }, decisions: DECISIONS,
       novel:typeof Novel==='undefined'?null:Novel,
+      world:typeof World==='undefined'?null:World,
+      worldEvents:typeof WORLD_EVENTS==='undefined'?null:WORLD_EVENTS,
+      worldIntros:typeof WORLD_INTERLUDES==='undefined'?null:WORLD_INTERLUDES,
+      worldTypes:typeof WORLD_SOURCE_TYPES==='undefined'?null:WORLD_SOURCE_TYPES,
+      worldAgendas:typeof WORLD_AGENDAS==='undefined'?null:WORLD_AGENDAS,
       novelEvents:typeof NOVEL_EVENTS==='undefined'?null:NOVEL_EVENTS,
       novelDecisions:typeof NOVEL_DECISIONS==='undefined'?null:NOVEL_DECISIONS,
       saveKey: SAVE_KEY, galleryKey: GALLERY_KEY,

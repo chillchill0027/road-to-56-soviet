@@ -1,0 +1,13 @@
+{
+  "url": "http://127.0.0.1:35007/",
+  "passed": true,
+  "checks": [
+    "three opening fragments before policy replies",
+    "short source before dialogue, no repeated rule explanations",
+    "interlude and mid-dialogue reload preserve state and inbox",
+    "news archive reopens actual received material",
+    "three generated scene atlases load; desktop/tablet/390/320px fit"
+  ],
+  "errors": [],
+  "resourceFailures": []
+}

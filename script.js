@@ -353,6 +353,9 @@ function enterScene(sc, options = {}){
 }
 function renderScene(sc, options = {}){
   const entry = enterScene(sc,options);
+  if (S.novelVersion && typeof World!=='undefined' && World.handles(S.curId)) {
+    World.renderInterlude(sc,entry); return;
+  }
   if (S.novelVersion && typeof Novel!=='undefined' && Novel.handles(S.curId)) {
     Novel.renderEvent(sc, entry);
     return;
@@ -465,7 +468,7 @@ function renderDecisions(phase){
         }).join(''):'<div class="di"><div class="dn">当前无可执行决议</div></div>'}
       </div>
     </div>
-    <div class="hint">${S.novelVersion?'常设议题经过交谈形成安排，决定推进时才扣除资源。处理完毕后进入下一阶段。':'决议不消耗回合，只消耗资源。执行完毕后进入下一阶段。'}</div>
+    <div class="hint">${S.novelVersion?'秘书将各部门的文件分开摆好，没有批示的仍压在桌角。':'决议不消耗回合，只消耗资源。执行完毕后进入下一阶段。'}</div>
     <div class="acts"><button class="btn" id="next">进 入 下 一 阶 段</button></div>
     ${logHTML()}
   </div>`;
@@ -535,10 +538,10 @@ function renderTitle(){
         <div class="hero-years">1936 <span>—</span> 1956</div>
         <h1 class="ts-title">56之路<b>苏维埃</b></h1>
         <p class="hero-quote">历史没有如果。<br>直到你做出选择。</p>
-        <p class="ts-lede">你是斯大林，也是国家意志。与身边的人交谈，<br class="desktop-break">让回应形成政策，让继承人接过二十年的命运。</p>
+        <p class="ts-lede">从斯大林的书房，到继承人的会议桌。<br class="desktop-break">报上的消息未散，门外已有人等候。</p>
         <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span>继续</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span>开始</span></button>`}</div>
         ${hasSave()&&!store.get(SAVE_KEY)?.S?.novelVersion?'<p class="hint">此存档沿用旧版国策流程；新周目启用完整情景对话，结局图鉴保留。</p>':''}
-        <div class="hero-small">3 / 5 / 7 轮情景对话 <span>/</span> 14 种结局 <span>/</span> 表态自动形成政策</div>
+        <div class="hero-small">新闻与密电 <span>/</span> 私人会谈 <span>/</span> 14 种历史结局</div>
       </div>
       <div class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><div class="hero-image-top"><span>苏维埃 / 国家档案</span><span>卷 001</span></div><div class="hero-image-bottom"><span>莫斯科，1936 年</span><span>历史场景演绎</span></div></div>
     </section>

@@ -52,7 +52,7 @@ const Novel = (() => {
   }
   function seatHTML() {
     const l = leader();
-    return `<div class="vn-seat">${portrait(l.key, "vn-seat-portrait")}<span><small>你的位置 · 国家意志贯穿始终</small><strong>${esc(l.name)}</strong><span>${esc(l.role)}</span></span></div>`;
+    return `<div class="vn-seat">${portrait(l.key, "vn-seat-portrait")}<span><small>当前席位</small><strong>${esc(l.name)}</strong><span>${esc(l.role)}</span></span></div>`;
   }
   function profile(session = S._novel) {
     if (!session) return null;
@@ -198,14 +198,15 @@ const Novel = (() => {
     if (entry.applied && entry.deltas.length) showDeltas(entry.deltas);
     renderActive();
   }
-  function bridgeHTML(arrival) {
-    const previous = (S._novelHistory || []).at(-1);
-    return `${S._novel?.round === 0 ? `<p class="vn-opening">${esc(arrival)}</p>` : ""}<details class="vn-bridge"><summary>前情与此刻</summary>${previous ? `<p>上一次，你在“${esc(previous.title)}”中形成了“${esc(previous.policy)}”的安排。${esc(previous.consequence || "这项安排已经交给执行机关。")}</p>` : ""}<p>${esc(arrival)}</p></details>`;
-  }
   function roundArt(r) {
+    if (/走廊|外间/.test(r.place)) return "corridor";
+    if (/铁路|调度|站台/.test(r.place)) return "station";
+    if (/休息室|食堂/.test(r.place)) return "canteen";
+    if (/接待|来访/.test(r.place)) return "reception";
+    if (/情报|监听/.test(r.place)) return "radio-room";
     if (/工厂|厂区/.test(r.place)) return "steel";
     if (/居民|住房|工棚/.test(r.place)) return "housing";
-    if (/实验室|物理研究/.test(r.place)) return "lab";
+    if (/实验室|物理研究/.test(r.place)) return "lab-bench";
     if (/训练|演习/.test(r.place)) return "formation";
     if (/总参谋部|作战室|作战图/.test(r.place)) return "map-arrows";
     if (/谈判|会谈/.test(r.place)) return "summit-table";
@@ -230,8 +231,7 @@ const Novel = (() => {
       session.kind === "decision"
         ? DECISIONS.find((d) => d.id === session.decisionId).name
         : sceneText(sc, sc.title);
-    const previous = session.answers.at(-1),
-      memory = S._novelMemory?.[actor.key];
+    const previous = session.answers.at(-1);
     const changed =
       session.answers.length > 1 &&
       previous.option !== session.answers.at(-2).option;
@@ -249,20 +249,15 @@ const Novel = (() => {
       enabled = all.filter((o) => !o.hidden),
       locked = enabled.filter((o) => !o.enabled);
     const text = sceneText(sc, r.line).replaceAll("{address}", address());
-    const entry =
-      session.kind === "event" && S._entryDeltas?.length
-        ? `<details class="vn-entry"><summary>已发生的阶段结算</summary><div class="deltas">${effectsHTML(S._entryDeltas)}</div></details>`
-        : "";
+    const context = World.current(session, p);
     const stage = document.getElementById("stage");
     stage.innerHTML = `<div class="fade novel-layout">
-      <div class="vn-heading"><div><div class="tag">${esc(sc.chapter)} · ${esc(S.year)} · ${esc(p.pace)}</div><h1 class="scene">${esc(title)}</h1></div>${seatHTML()}</div>
-      <div class="vn-film">${artHTML(roundArt(r), S.year)}<div class="vn-location"><span>${esc(r.place)}</span><span>${esc(sceneText(sc, r.time))}</span></div></div>
-      <div class="vn-progress" aria-label="对话进度，第${session.round + 1}轮，共${p.rounds.length}轮"><span>第 ${session.round + 1} / ${p.rounds.length} 轮</span><div>${p.rounds.map((_, n) => `<span class="${n < session.round ? "done" : n === session.round ? "now" : ""}"></span>`).join("")}</div><button class="nav-button" id="vn-log">对话记录</button></div>
-      <div class="vn-body">${bridgeHTML(p.arrival)}${entry}
+      <div class="vn-heading"><div><div class="tag">${esc(sc.chapter)} · ${esc(S.year)}</div><h1 class="scene">${esc(title)}</h1></div>${seatHTML()}</div>
+      <div class="vn-film">${artHTML(context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(context?.show ? context.record.from : r.place)}</span><span>${esc(context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
+      <div class="vn-progress" aria-label="对话进度，第${session.round + 1}轮，共${p.rounds.length}轮"><span>第 ${session.round + 1} / ${p.rounds.length} 轮</span><div>${p.rounds.map((_, n) => `<span class="${n < session.round ? "done" : n === session.round ? "now" : ""}"></span>`).join("")}</div><button class="nav-button" id="vn-log">见闻档案</button></div>
+      <div class="vn-body">${context?.show ? World.card(context.record) : ""}
       <p class="vn-aside">${esc(r.aside)}${reaction ? " " + esc(reaction) : ""}</p>
       <section class="vn-dialogue" aria-label="${esc(actor.name)}的对话">${portrait(actor.key)}<div><div class="vn-speaker">${esc(actor.name)}<small>${esc(actor.role)}</small></div><p class="vn-line">“${esc(text)}”</p></div></section>
-      ${memory && memory.sceneId !== S.curId ? `<details class="vn-memory"><summary>对方还记得上次的谈话</summary><p>在“${esc(memory.title)}”中，你曾说：“${esc(memory.text)}”</p></details>` : ""}
-      ${previous ? `<p class="vn-previous">你刚才说：“${esc(previous.text)}”</p>` : ""}
       <div class="prompt">${esc(leader().name)} · 你的回应</div><div class="vn-options">${enabled
         .filter((o) => o.enabled)
         .map(
@@ -270,9 +265,7 @@ const Novel = (() => {
             `<button class="opt vn-choice" data-i="${o.id}"><span class="key">${esc(o.key)}</span><span>${esc(p.voices[o.id][session.round])}</span></button>`,
         )
         .join("")}</div>
-      ${locked.length ? `<details class="vn-unavailable"><summary>暂时无法作出的承诺 · ${locked.length}</summary>${locked.map((o) => `<p><strong>${esc(o.label)}</strong><br>${esc(o.lock)}</p>`).join("")}</details>` : ""}
-      <p class="vn-rule">回应将累计形成政策，本轮不扣除国家资源。${session.round === p.rounds.length - 1 ? "这轮之后将自动归纳并结算。" : "你可以在接下来的交谈中改变立场。"}</p>
-      <details class="vn-process"><summary>这项决定为什么需要 ${p.rounds.length} 轮？</summary><p>${esc(p.reason)}轮数是历史情境的叙事压缩，不代表史实中的会议次数。各倾向按表态次数累计；最高次数相同时，以其中最近一次明确表态为准。</p></details>
+      ${locked.length ? `<details class="vn-unavailable"><summary>其他尚未具备条件的意见</summary>${locked.map((o) => `<p><strong>${esc(o.label)}</strong><br>${esc(o.lock)}</p>`).join("")}</details>` : ""}
       </div></div>`;
     const renderRound = session.round;
     stage
@@ -286,7 +279,7 @@ const Novel = (() => {
     saveGame();
     if (session.round > 0)
       document
-        .querySelector(".vn-aside")
+        .querySelector(context?.show ? "#stage .world-source" : ".vn-aside")
         ?.scrollIntoView({ block: "start", behavior: "instant" });
     else scrollToStart();
   }
@@ -419,7 +412,7 @@ const Novel = (() => {
   function resolutionHTML() {
     const r = S._novelResolution;
     if (!r || r.sceneId !== S.curId) return "";
-    return `<details class="vn-resolution"><summary>这项决定怎样形成 · ${r.answers.length} 轮表态</summary><p>累计倾向自动形成：${esc(r.policy)}。${r.tied ? "最高次数相同，采用其中最近一次明确表态。" : "采用累计次数最多的倾向。"}</p><div class="vn-tally">${r.scores
+    return `<details class="vn-resolution"><summary>会谈记录 · ${r.answers.length} 次回应</summary><p>累计倾向自动形成：${esc(r.policy)}。${r.tied ? "最高次数相同，采用其中最近一次明确表态。" : "采用累计次数最多的倾向。"}</p><div class="vn-tally">${r.scores
       .filter((s) => s.votes)
       .map((s) => `<span>${esc(s.label)} · ${s.votes} 次</span>`)
       .join(
@@ -433,47 +426,9 @@ const Novel = (() => {
       : "";
   }
   function connectScene(sc) {
-    if (S.curId === "5-0" && S.deathMode) {
-      S._novelLeader = "vacant";
-      hudAct();
-    }
-    const root = document.querySelector("#stage > .fade");
-    if (!root) return;
-    const heading = root.querySelector("h1");
+    const root = document.querySelector("#stage > .fade"),
+      heading = root?.querySelector("h1");
     if (heading) heading.insertAdjacentHTML("afterend", seatHTML());
-    const bridge =
-      {
-        "p0-intro":
-          "你是约瑟夫·斯大林，也承载着国家的意志。眼前的每个人都有自己的记忆与目的。你的回应会逐轮积累，形成真正下达的政策。",
-        "a1-intro":
-          "政治局散会之后，干部带着新的口径返回各地。报表仍会按时到达，报表之外的人也会再次来到门前。",
-        "a1-end":
-          "一份任命改变了机关里谁敢开口，一份预算改变了谁必须等待。夜里，白天没有说完的话开始变成私人来信。",
-        "a2-intro":
-          "国内的安排还没有显出全部后果，欧洲已经开始按另一种速度运转。外交官等待的答复，很快会变成边境上的时间。",
-        "a2-end":
-          "过去的会议纪要被收入柜中。新的地图挂上墙，铁路上的每一班列车都开始带着战争的意味。",
-        "a3-intro":
-          "电话取代了会议。你仍然是下令的人，但从此无法等所有报告互相吻合之后才回答。",
-        "a3-end":
-          "秘书把伤亡、工业损失与战线位置逐项念出。这里没有新的政策可选；战争结果来自此前所有已经执行的决定。",
-        "a4-intro":
-          "战时的承诺开始有人要求兑现。军队问重建怎样安排，工人问什么时候能回家，邻国问和平究竟意味着什么。",
-        "a4-end":
-          "晚年的会谈越来越短。人们在离开书房之后，开始互相猜测下一份文件上的签名。",
-        "a5-intro":
-          "领导人的生命有终点，国家的记忆却会继续。门外的人逐渐改变了说话的方式。",
-        "5-0":
-          "斯大林的视角在这里结束。你作为国家意志经历交接；继承争论结束后，将从新的最高领导席位继续看待同一个国家。",
-      }[S.curId] ||
-      (sc.decisions
-        ? "大会议结束了，具体任务还没有自动完成。各部门把需要资源的议题送进办公室，等待一次次单独交谈。"
-        : "");
-    if (bridge && heading)
-      heading.insertAdjacentHTML(
-        "afterend",
-        `<div class="vn-connecting"><p>${esc(bridge)}</p></div>`,
-      );
     saveGame();
   }
   function openLog() {
@@ -485,14 +440,16 @@ const Novel = (() => {
         policy: "尚未形成最终决定",
         answers: S._novel.answers,
       });
-    document.getElementById("novel-log-content").innerHTML = history.length
-      ? history
-          .map(
-            (h) =>
-              `<section><h3>${esc(h.title)}</h3><p class="hint">${esc(h.policy)}</p>${h.answers.map((a) => `<div class="vn-log-line"><small>${esc(a.place)} · ${esc(a.time)}</small><p><strong>${esc(a.speaker)}</strong>：${esc(a.prompt)}</p><p><strong>${esc(a.leader)}</strong>：${esc(a.text)}</p></div>`).join("")}</section>`,
-          )
-          .join("")
-      : "<p>开始交谈后，人物的提问与你的回应会保存在这里。</p>";
+    document.getElementById("novel-log-content").innerHTML =
+      World.archiveHTML() +
+      (history.length
+        ? history
+            .map(
+              (h) =>
+                `<section><h3>${esc(h.title)}</h3><p class="hint">${esc(h.policy)}</p>${h.answers.map((a) => `<div class="vn-log-line"><small>${esc(a.place)} · ${esc(a.time)}</small><p><strong>${esc(a.speaker)}</strong>：${esc(a.prompt)}</p><p><strong>${esc(a.leader)}</strong>：${esc(a.text)}</p></div>`).join("")}</section>`,
+            )
+            .join("")
+        : "<p>案头还没有留下会谈记录。</p>");
     dialog.showModal();
   }
   return {
