@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:44925/",
+  "url": "http://127.0.0.1:44499/",
   "passed": true,
   "checks": [
     "first annual review restores without replaying events; shortcuts blocked; nine indicators and keyboard event inspection match actual ledger; 320/390/768/1440px fit",
