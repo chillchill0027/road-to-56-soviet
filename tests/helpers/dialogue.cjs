@@ -6,11 +6,16 @@ async function observeSources(page) {
     .evaluateAll((nodes) => nodes.map((n) => n.dataset.kind)))
     sourceKinds.add(kind);
 }
+async function continueReports(page) {
+  for (let n=0; n<25 && await page.locator('#annual-dialog[open]').count(); n++)
+    await page.click('#annual-continue');
+}
 async function advanceScene(page) {
   const scene = await page.evaluate(() => S.curId);
   for (let n = 0; n < 8; n++) {
     await observeSources(page);
     await page.click("#next");
+    await continueReports(page);
     if (await page.evaluate((id) => ENDED || S.curId !== id, scene)) return;
   }
   throw new Error("interlude did not finish");
@@ -39,6 +44,7 @@ async function executeAgenda(page, id) {
   return replyPolicy(page, 0);
 }
 module.exports = {
+  continueReports,
   replyPolicy,
   choosePolicy,
   executeAgenda,

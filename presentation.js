@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", () =>
       document.getElementById("restart-dialog").close(),
     );
-  document.querySelectorAll("dialog").forEach((d) =>
+  document.querySelectorAll("dialog:not(#annual-dialog)").forEach((d) =>
     d.addEventListener("click", (e) => {
       if (e.target === d) {
         const r = d.getBoundingClientRect();

@@ -66,7 +66,7 @@ function runtime(options = {}) {
     "utf8",
   );
   vm.runInContext(
-    source + (options.novel ? ['novel-content.js','world-content.js','world.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
+    source + (options.statistics ? fs.readFileSync(path.join(__dirname,'../../statistics.js'),'utf8') : '') + (options.novel ? ['novel-content.js','world-content.js','world.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
       `
     const renderRealResult = renderResult;
     renderHUD = () => {};
@@ -80,6 +80,7 @@ function runtime(options = {}) {
       optionHTML, effectsHTML, enterScene, enterDecisionPhase,
       meta:META, names:EFFECT_NAMES, limits:RAW_LIMITS, endings:ENDINGS, purgeTargets:PURGE_TARGETS, legacyFlow:FLOW_V1,
       scenes: SCENES, get flow(){ return FLOW; }, decisions: DECISIONS,
+      statistics:typeof Statistics==='undefined'?null:Statistics,
       novel:typeof Novel==='undefined'?null:Novel,
       world:typeof World==='undefined'?null:World,
       worldEvents:typeof WORLD_EVENTS==='undefined'?null:WORLD_EVENTS,

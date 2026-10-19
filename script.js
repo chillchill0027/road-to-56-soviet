@@ -152,6 +152,7 @@ function fresh(){
   };
   i = -1; LOG = []; ENDED = false; S.curId = null;
   document.getElementById('stage').innerHTML = '';
+  if (typeof Statistics!=='undefined') Statistics.ensure();
 }
 
 const clamp = (k,v) => Math.max(0, Math.min(META[k].cap, v));
@@ -326,6 +327,7 @@ function sceneText(sc, value){
   return campaignScene(sc) && S.warYear===1942 ? String(text).replace(/194[1-5]/g,y=>String(Number(y)+1)) : String(text);
 }
 function enterScene(sc, options = {}){
+  if (typeof Statistics!=='undefined') Statistics.beforeYear(sceneYear(sc));
   S.act = sc.act !== undefined ? sc.act : S.act;
   S.year = sceneYear(sc);
   let ex = '', dl = [];
@@ -349,6 +351,7 @@ function enterScene(sc, options = {}){
     S._enteredScene = S.curId;
     S._entryHTML = ex;
   }
+  if (!options.restoring && !entered && typeof Statistics!=='undefined') Statistics.record('阶段',sceneText(sc,sc.title));
   return {ex, deltas:S._entryDeltas||[], applied:!options.restoring && !entered};
 }
 function renderScene(sc, options = {}){
@@ -427,6 +430,7 @@ function logHTML(){
 
 /* ---------- 渲染：决议台 ---------- */
 function enterDecisionPhase(phase){
+  if (typeof Statistics!=='undefined') Statistics.beforeYear(sceneYear(phase));
   S.act = phase.act !== undefined ? phase.act : S.act;
   S.year = sceneYear(phase);
 }
@@ -506,6 +510,7 @@ function executeDecision(d){
   LOG.push(d.name);
   const deltas = effectChanges(before);
   S._lastDecision = {sceneId:S.curId, name:d.name, deltas};
+  if (typeof Statistics!=='undefined') Statistics.record('决议',d.name);
   saveGame();
   return deltas;
 }
@@ -598,6 +603,7 @@ function resume(){
   if (!sc){ renderEnding(); return; }
   S.curId = id;
   if (sc.decisions) renderDecisions(sc); else renderScene(sc, {restoring:true});
+  if (typeof Statistics!=='undefined') Statistics.present();
 }
 
 /* ---------- 主推进 ---------- */
@@ -609,8 +615,8 @@ function advance(){
     const id = FLOW[i];
     S.curId = id;
     const sc = SCENES[id];
-    if (sc && sc.decisions) { renderDecisions(sc); return; }
-    if (sc && (!sc.when || sc.when(S))) { renderScene(sc); return; }
+    if (sc && sc.decisions) { renderDecisions(sc); if (typeof Statistics!=='undefined') Statistics.present(); return; }
+    if (sc && (!sc.when || sc.when(S))) { renderScene(sc); if (typeof Statistics!=='undefined') Statistics.present(); return; }
     i++;
   }
   renderEnding();
@@ -643,6 +649,7 @@ function choose(sc, o){
     if (j >= 0){ i = j - 1; }
   }
   const deltas = effectChanges(before);
+  if (typeof Statistics!=='undefined') Statistics.record('政策',`${sceneText(sc,sc.title)} · ${o.label}`);
   S._pendingResult = {sceneId:S.curId, optionIndex:sc.options.indexOf(o), deltas, battles, extra, nextIndex:i, nextSceneId:FLOW[i+1]||null};
   saveGame();
   renderResult(sc, o, deltas, battles, extra);
@@ -2094,6 +2101,7 @@ function loadGame(){
     S.purgeCount = (S.purgeCount||0) + LOG.filter(label => purgeNames.has(label)).length;
     S._purgeAccounting = 2;
   }
+  if (typeof Statistics!=='undefined') Statistics.ensure();
   return true;
 }
 function hasSave(){ return validSave(store.get(SAVE_KEY)); }
@@ -2215,6 +2223,7 @@ function decideEnding(){
 }
 
 function renderEnding(){
+  if (typeof Statistics!=='undefined') Statistics.finish();
   const e = decideEnding();
   ENDED = true;
   unlockEnding(e.heads[0].id);
@@ -2242,6 +2251,7 @@ function renderEnding(){
     fresh(); renderHUD(); advance();
   });
   document.getElementById('to-menu').addEventListener('click', renderTitle);
+  if (typeof Statistics!=='undefined') Statistics.present();
   scrollToStart();
 }
 

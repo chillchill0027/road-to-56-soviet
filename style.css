@@ -2287,3 +2287,84 @@ dialog p {
     display: none;
   }
 }
+
+/* National ledger and the incumbent's New Year notebook. */
+#statistics-dialog { width:min(1120px,calc(100% - 32px)); max-width:1120px; }
+#annual-dialog { width:min(780px,calc(100% - 32px)); max-width:780px; }
+#statistics-title { margin-bottom:24px; }
+.statistics-tabs { display:flex; gap:24px; border-bottom:1px solid var(--line,#c9bfad); margin:0 0 24px; }
+.statistics-tabs button { background:none; border:0; border-bottom:3px solid transparent; padding:12px 0; color:#736b5b; font:inherit; cursor:pointer; }
+.statistics-tabs button[aria-pressed=true] { color:#8d2725; border-bottom-color:#8d2725; }
+.statistics-tabs button span { font-size:12px; margin-left:5px; }
+.stat-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.stat-metric { position:relative; overflow:hidden; text-align:left; background:#eee8dc; border:1px solid #d6cdbd; padding:14px 16px; color:#686452; cursor:pointer; font:inherit; min-height:115px; }
+.stat-metric[aria-pressed=true] { border-color:#913733; background:#f4e9dc; color:#8e302c; box-shadow:inset 3px 0 currentColor; }
+.stat-metric > span,.stat-metric b,.stat-metric small { display:block; position:relative; z-index:1; }
+.stat-metric > span { font-size:12px; letter-spacing:.1em; }
+.stat-metric b { font-family:Georgia,serif; font-size:30px; line-height:1.4; font-weight:400; }
+.stat-metric small { font-size:11px; }
+.stat-metric svg { position:absolute; bottom:8px; right:8px; width:44%; opacity:.4; }
+.stat-plot { margin-top:24px; padding:22px; background:#f8f4ec; border:1px solid #d4caba; }
+.stat-plot-title { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+.stat-plot-title h3 { font-size:18px; margin:0; }
+.stat-plot-title > span,.stats-note { font-size:12px; color:#766f62; line-height:1.8; }
+.stat-chart { display:block; width:100%; margin:16px 0; overflow:visible; }
+.stat-chart text { font-family:system-ui,sans-serif; font-size:12px; fill:#726a5c; }
+.chart-grid { stroke:#ded5c8; stroke-width:1; }
+.chart-line { fill:none; stroke:#8f302d; stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round; }
+.chart-cursor { stroke:#92866f; stroke-dasharray:4 4; }
+.chart-point { fill:#8f302d; stroke:#fff8ed; stroke-width:2; }
+.stat-plot label { font-size:12px; display:flex; justify-content:space-between; gap:8px; }
+.stat-plot label span { color:#7f786a; }
+#stat-position { width:100%; margin:16px 0; accent-color:#8f302d; min-height:28px; cursor:ew-resize; }
+.stat-event { display:flex; justify-content:space-between; align-items:center; gap:16px; border-top:1px solid #d4caba; padding-top:20px; }
+.stat-event span,.stat-event p { font-size:12px; color:#746c5e; }
+.stat-event h3 { font-size:16px; margin:6px 0; }
+.stat-event p { margin:0; }
+.stat-event-number { flex-shrink:0; text-align:right; }
+.stat-event-number b { display:block; font:34px Georgia,serif; color:#8f302d; }
+.stat-event-number span { display:block; }
+.stat-table { margin-top:24px; }
+.stat-table summary { cursor:pointer; padding:12px 0; font-size:13px; }
+.stat-table-scroll { overflow:auto; max-height:400px; }
+.stat-table table { border-collapse:collapse; font-size:12px; width:100%; }
+.stat-table caption { text-align:left; padding:12px; }
+.stat-table td,.stat-table th { padding:10px; border:1px solid #d4caba; white-space:nowrap; text-align:right; }
+.stat-table th:first-child { text-align:left; white-space:normal; min-width:180px; }
+.stat-table thead { position:sticky; top:0; background:#eee7da; }
+.annual-select { display:flex; align-items:center; justify-content:flex-end; gap:12px; font-size:13px; margin-bottom:24px; }
+.annual-select select { background:#f5f0e5; padding:10px; border:1px solid #cabeaa; color:#3c382f; font:inherit; max-width:75%; }
+.annual-page h2 { font-size:clamp(24px,4vw,36px); line-height:1.5; margin:10px 0 20px; }
+.annual-author { display:flex; align-items:center; gap:14px; padding-bottom:20px; border-bottom:1px solid #cfc3af; margin-bottom:24px; }
+.annual-author .vn-portrait { width:56px; height:64px; flex-shrink:0; }
+.annual-author > span:last-child { color:#76664f; font-size:13px; }
+.annual-page > p { line-height:2; margin:16px 0; }
+.annual-opening { font-size:18px; font-family:var(--serif,serif); }
+.annual-numbers { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid #cfc3af; border-left:1px solid #cfc3af; margin:24px 0; }
+.annual-numbers > div { padding:15px; border-bottom:1px solid #cfc3af; border-right:1px solid #cfc3af; }
+.annual-numbers span,.annual-numbers small { display:block; font-size:12px; color:#716858; }
+.annual-numbers b { display:block; font:30px Georgia,serif; margin:8px 0; }
+.annual-numbers .gain { color:#526b44; }
+.annual-numbers .loss { color:#933b31; }
+.annual-page h3 { font-size:16px; margin-top:24px; }
+.annual-events { padding-left:22px; font-size:14px; line-height:1.8; }
+.annual-events li { padding:5px 0; }
+.annual-closing { border-left:3px solid #9c3430; padding-left:18px; }
+#annual-continue { width:100%; margin-top:18px; }
+.stats-empty { padding:30px 0; color:#716858; }
+@media(max-width:600px) {
+  #statistics-dialog,#annual-dialog { width:calc(100% - 16px); padding:24px 16px; max-height:calc(100dvh - 16px); }
+  .stat-metrics { gap:6px; }
+  .stat-metric { padding:10px; min-height:100px; }
+  .stat-metric > span { letter-spacing:0; font-size:11px; }
+  .stat-metric b { font-size:26px; }
+  .stat-metric small { font-size:10px; }
+  .stat-metric svg { opacity:.2; }
+  .stat-plot { padding:12px; }
+  .stat-event { align-items:flex-start; gap:10px; }
+  .stat-event h3 { font-size:14px; }
+  .stat-event-number b { font-size:28px; }
+  .stat-event-number span { font-size:10px; }
+  .annual-numbers > div { padding:12px; }
+  .nav-actions { flex-wrap:wrap; }
+}
