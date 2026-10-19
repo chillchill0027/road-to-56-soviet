@@ -1,0 +1,23 @@
+{
+  "url": "http://127.0.0.1:41749/",
+  "fixture": "route-2",
+  "passed": true,
+  "checks": [
+    "all eight new photo atlases load",
+    "actual battle rating controls report, image and geography",
+    "frontline, logistics and civilian sources; five war outcome categories accounted by full-route suite",
+    "southern offensive uses Iasi–Chisinau and Prut geography",
+    "exact battle reload and immutable archive; unique map IDs",
+    "320/390/768/1440px fit; full campaign and ending remain playable"
+  ],
+  "sectors": [
+    "frontier",
+    "moscow",
+    "volga",
+    "kursk",
+    "romania",
+    "berlin"
+  ],
+  "errors": [],
+  "resourceFailures": []
+}

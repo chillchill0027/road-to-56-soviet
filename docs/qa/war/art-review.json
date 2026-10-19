@@ -1,0 +1,87 @@
+{
+  "atlases": 8,
+  "photographs": 32,
+  "review": "逐组检查镜头主题、构图与战果语境；南线坦克和步兵同向，边境骑兵与装甲车同向，莫斯科骑兵与滑雪队同向，柏林突击组朝同一门洞行动。",
+  "sets": [
+    {
+      "sector": "moscow",
+      "file": "assets/images/battle-moscow-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-7486d954-c2bd-4b5b-8945-5125d4b3b475.png",
+      "sha256": "b9958f682e474413c8d3a7ddcebb1a70c13ea4e2cc97a126b78e647409ad6aa5"
+    },
+    {
+      "sector": "romania",
+      "file": "assets/images/battle-romania-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-5cbb5c87-5816-44ea-982b-a0913d768aa6.png",
+      "sha256": "faa100a0daee059d98e61571d12faeb5d1f151638ae78ee7539da0c200786ab5"
+    },
+    {
+      "sector": "frontier",
+      "file": "assets/images/battle-frontier-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-e3a34cd8-6629-43b9-a7c1-33f9f67f2482.png",
+      "sha256": "dabc3505310300dde62f71c450822205d617c2ca49b59c9f0269cc4effeb9cae"
+    },
+    {
+      "sector": "belarus",
+      "file": "assets/images/battle-belarus-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-13b10f4a-0cbb-46a0-b6b8-cab7f47ac9d7.png",
+      "sha256": "8284e5859cf65197b14e0be3c3d5b07474a6db2522c2f7da10352b3b0733b299"
+    },
+    {
+      "sector": "volga",
+      "file": "assets/images/battle-volga-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-e04b5cad-a1fe-48a4-a857-72439ce62004.png",
+      "sha256": "e478291cb1edf317f305f89a7c568fb5fe2e3d2ad4c263694c18bc8491a3688c"
+    },
+    {
+      "sector": "kursk",
+      "file": "assets/images/battle-kursk-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-82e31e38-c76f-4fe6-954f-c36a44c81cae.png",
+      "sha256": "00610e30228f45804ed4c555c5806de2b4afea45c766113fe0667d229b7dea55"
+    },
+    {
+      "sector": "berlin",
+      "file": "assets/images/battle-berlin-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-f3aec726-8839-4d77-8bd1-14a1fd11a341.png",
+      "sha256": "9720366b43f484ce4b53dd379e6e7391d537a638f80e34855f51f1d1a4c06c02"
+    },
+    {
+      "sector": "aftermath",
+      "file": "assets/images/battle-aftermath-sheet.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "source": "exec-599aa5f1-2123-48ce-b4cd-14b429f505c4.png",
+      "sha256": "9ed165bb07d0af6880ed4cc99f5d1dd845e533b2b59d9cb95c3f4a4c59ee1a42"
+    }
+  ]
+}

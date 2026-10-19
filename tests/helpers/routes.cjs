@@ -177,7 +177,7 @@ function decide(game, id, covered, verify = false) {
   if (verify) checkDeltas(game, before, deltas);
 }
 function replay(fixture, options = {}) {
-  const run = runtime({ fast: !!options.fast, statistics: !!options.statistics });
+  const run = runtime({ fast: !!options.fast, statistics: !!options.statistics, war: !!options.war });
   const { game, math, storage } = run;
   math.random = rng(fixture.eventSeed);
   const covered = new Set();

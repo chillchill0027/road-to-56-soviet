@@ -66,7 +66,7 @@ function runtime(options = {}) {
     "utf8",
   );
   vm.runInContext(
-    source + (options.statistics ? fs.readFileSync(path.join(__dirname,'../../statistics.js'),'utf8') : '') + (options.novel ? ['novel-content.js','world-content.js','world.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
+    source + (options.war ? ['war-content.js','war.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') + (options.statistics ? fs.readFileSync(path.join(__dirname,'../../statistics.js'),'utf8') : '') + (options.novel ? ['novel-content.js','world-content.js','world.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
       `
     const renderRealResult = renderResult;
     renderHUD = () => {};
@@ -80,6 +80,10 @@ function runtime(options = {}) {
       optionHTML, effectsHTML, enterScene, enterDecisionPhase,
       meta:META, names:EFFECT_NAMES, limits:RAW_LIMITS, endings:ENDINGS, purgeTargets:PURGE_TARGETS, legacyFlow:FLOW_V1,
       scenes: SCENES, get flow(){ return FLOW; }, decisions: DECISIONS,
+      war:typeof WarReports==='undefined'?null:WarReports,
+      warSectors:typeof WAR_SECTORS==='undefined'?null:WAR_SECTORS,
+      warEndings:typeof WAR_ENDINGS==='undefined'?null:WAR_ENDINGS,
+      warIncidents:typeof WAR_INCIDENTS==='undefined'?null:WAR_INCIDENTS,
       statistics:typeof Statistics==='undefined'?null:Statistics,
       novel:typeof Novel==='undefined'?null:Novel,
       world:typeof World==='undefined'?null:World,

@@ -18,6 +18,8 @@ npm run dev
 
 ## 游玩与存档
 
+v1.6新增战地卷：32张写实场景图、七个战区的差异化战报、实际战果对应的地点示意与档案回看。详见[战地卷与地理](docs/war-dispatches.md)。
+
 v1.5新增“国家统计”：九项指标折线图、逐次事件数值表，以及1936—1956年的新年手记。新年回望上一年，使用年末在任领导人的第一人称；继承后切换人物。详见[统计与年度总结](docs/statistics-and-yearbook.md)。
 
 v1.4通过30类新闻、密电、来信、报告和身边谈话交代实时背景，补充147条情境材料与12张场景图。开场先读消息再进入会见；玩法说明集中在指南，收到的材料可在“见闻档案”回看。见[案头与耳畔](docs/in-world-sources.md)。
@@ -40,6 +42,7 @@ npm ci
 npx playwright install chromium
 npm run test:browser
 npm run test:browser:novel
+npm run test:browser:war
 npm run test:browser:statistics
 npm run test:browser:immersion
 npm run test:browser:routes
@@ -55,7 +58,7 @@ v1.3 的轮数依据、自动决策规则、人物语气与领导席位见 [视�
 
 ## 视觉与素材
 
-档案纸、深橄榄黑与暗红组成视觉系统。桌面采用左图右文，手机采用纵向阅读。37张场景照片、12个人物肖像存储于11个WebP文件中。人物在不同场景复用同一档案肖像；三张领袖背景使用相同人物、服装、军帽与背影/侧影设定。所有照片均为AI生成的历史形象与场景演绎，不是真实档案照片；文学化对白不是真实引语。
+档案纸、深橄榄黑与暗红组成视觉系统。桌面采用左图右文，手机采用纵向阅读。69张场景照片、12个人物肖像存储于19个WebP文件中。人物在不同场景复用同一档案肖像；三张领袖背景使用相同人物、服装、军帽与背影/侧影设定。所有照片均为AI生成的历史形象与场景演绎，不是真实档案照片；文学化对白不是真实引语。
 
 `assets/fonts/archival-serif.woff2` 是 Noto Serif CJK SC SemiBold 的项目字符子集，字体许可见 `assets/fonts/OFL.txt`。其余界面文字使用系统中文字体。素材均在本地托管，不依赖图片 CDN 或在线字体服务。
 
@@ -66,6 +69,7 @@ v1.3 的轮数依据、自动决策规则、人物语气与领导席位见 [视�
 - `novel-content.js`：37段情景对话、23项议题与人物资料。
 - `world-content.js`、`world.js`：30类情境消息、过场阅读、消息快照与见闻档案。
 - `novel.js`：多轮互动、自动归纳、领导视角、对话记忆与回看。
+- `war-content.js`、`war.js`：分战区和实际战果的图文报告、地点示意与战地卷。
 - `statistics.js`：结算快照、折线图、事件查阅与领导人年度手记。
 - `style.css`：响应式视觉样式及减少动态效果支持。
 - `assets/images/`：封面与场景图集。
