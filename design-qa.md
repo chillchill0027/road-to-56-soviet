@@ -60,3 +60,13 @@ final result: passed
 关键截图：`docs/qa/all-endings-gallery.png`（正常游玩收集14/14）、`successor-beria.png`、`successor-left.png`、`successor-mediocre.png`、`decision-party-debate.png`、`decision-nkvd-delegate.png`、`battle-costs.png`。新截图已实际打开检查。手机和减少动态效果模式隐藏遮挡数字的HUD飞字；账本持续显示真实变化。
 
 全路线与数值规范见 `docs/routes-and-balance.md`。自动验收见 `docs/qa/route-coverage.json`、`docs/qa/browser-routes.json`。以上更新补充原验收，原版截图与记录保留用于历史对照。
+
+## v1.3 视觉小说复验（2026-10-19）
+
+设计依据为用户确认的玩法：3／5／7轮按决策酝酿时间安排，多轮回应自动形成政策，斯大林之后切换继承人视角，人物语气随关系与场合变化。沿用既有档案纸、橄榄黑和暗红视觉；桌面保留左图右文，新增统一人物档案肖像、地点、轮次、文学化对话与回应。手机纵向阅读；连续轮次自动定位到当前对白。
+
+本地视觉与交互结果：通过。实际打开检查 `docs/qa/novel-desktop.png` 与 `docs/qa/novel-mobile.png`；1440、768、390、320px均无横向溢出。320px导航溢出已修复。人物12格肖像逐人复用；新图集与原有场景照片均有历史演绎说明。
+
+新增交互检查验证七轮4:3混合表态采用多数倾向、最后一轮不能独自覆盖结果、对话中不重复结算资源、常设议题暂缓不扣款、对话及暂缓结果刷新恢复、对话记录阻断背景快捷键。继承分支逐一测试；延续斯大林路线显示马林科夫，玩家不会与自己的肖像对谈。锁定选项缺席时，数字快捷键不会误选另一项回应。
+
+115项回归通过；全路线浏览器检查在新的回应按钮上逐轮完成政策，验证原有250项目标与14种结局。发布后的同一套验收会在公开网址再次执行，线上报告保存在对应GitHub Actions产物中。玩法、轮数依据与领导席位详见 `docs/visual-novel.md`。

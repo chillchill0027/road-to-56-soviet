@@ -21,6 +21,8 @@ function runtime(options = {}) {
     },
     setAttribute() {},
     appendChild() {},
+    insertAdjacentHTML() {},
+    scrollIntoView() {},
   });
   const document = {
     options: [],
@@ -64,7 +66,7 @@ function runtime(options = {}) {
     "utf8",
   );
   vm.runInContext(
-    source +
+    source + (options.novel ? ['novel-content.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
       `
     const renderRealResult = renderResult;
     renderHUD = () => {};
@@ -78,6 +80,9 @@ function runtime(options = {}) {
       optionHTML, effectsHTML, enterScene, enterDecisionPhase,
       meta:META, names:EFFECT_NAMES, limits:RAW_LIMITS, endings:ENDINGS, purgeTargets:PURGE_TARGETS, legacyFlow:FLOW_V1,
       scenes: SCENES, get flow(){ return FLOW; }, decisions: DECISIONS,
+      novel:typeof Novel==='undefined'?null:Novel,
+      novelEvents:typeof NOVEL_EVENTS==='undefined'?null:NOVEL_EVENTS,
+      novelDecisions:typeof NOVEL_DECISIONS==='undefined'?null:NOVEL_DECISIONS,
       saveKey: SAVE_KEY, galleryKey: GALLERY_KEY,
       state: () => S, ended: () => ENDED, index: () => i,
       results: () => globalThis.resultCalls,

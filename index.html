@@ -6,11 +6,11 @@
       name="viewport"
       content="width=device-width,initial-scale=1,viewport-fit=cover"
     />
-    <title>56之路：苏维埃 —— 苏联国策抉择 RPG</title>
+    <title>56之路：苏维埃 —— 历史视觉小说</title>
 
     <meta
       name="description"
-      content="扮演国家意志本身，从 1936 年执掌苏联到 1956 年。五幕、56 个场景、124 个选项、14 种结局。基于《钢铁雄心4》Road to 56 的苏联国策树与核心决议。"
+      content="在斯大林与继承人的视角中经历1936—1956。37段重大决策、3／5／7轮文学化对话，回应自动形成政策，通向14种结局。"
     />
     <meta name="theme-color" content="#211E1B" />
     <meta name="color-scheme" content="light" />
@@ -20,7 +20,7 @@
     <meta property="og:title" content="56之路：苏维埃" />
     <meta
       property="og:description"
-      content="从 1936 到 1956，五幕 124 个选项，14 种结局。你扮演的不是斯大林，是国家意志本身。"
+      content="国家意志贯穿始终，领导席位随历史交接。通过3／5／7轮情景对话形成政策，书写通向14种结局的历史视觉小说。"
     />
     <meta property="og:locale" content="zh_CN" />
     <meta name="twitter:card" content="summary" />
@@ -36,10 +36,11 @@
         <span>56</span
         ><span>之路 <b>·</b> 苏维埃<small>ROAD TO 56 / SOVIET</small></span>
       </button>
-      <span class="nav-edition">历史抉择 RPG <span>1936 — 1956</span></span>
+      <span class="nav-edition">历史视觉小说 <span>1936 — 1956</span></span>
       <div class="nav-actions">
         <span id="save-status" role="status"></span
         ><button class="nav-button" id="nav-help">游玩指南</button
+        ><button class="nav-button" id="nav-dialogue">对话记录</button
         ><button class="nav-button" id="nav-gallery">结局图鉴</button>
       </div>
     </nav>
@@ -67,8 +68,13 @@
       <div class="eyebrow">FIELD GUIDE / 游玩指南</div>
       <h2 id="help-title">每一次抉择，都有代价。</h2>
       <p>
-        你扮演的是国家意志。从 1936 年到 1956
-        年，在工业、民心、军队与政治之间寻找平衡。
+        你扮演约瑟夫·斯大林，继承事件后转入新的最高领导席位；国家意志贯穿1936—1956。每项重大决策包含3、5或7轮情景互动，轮数取决于决策的酝酿时间。短期战场命令与长期制度筹划有不同的阅读节奏。
+      </p>
+      <p>
+        每轮回应会累计形成政策，最后自动执行累计次数最多的倾向；最高次数相同时，以其中最近一次明确表态为准。你可以中途改变立场。国家资源在最终政策结算时扣除，不会因多轮对话重复扣款。常设议题也通过交谈决定推进或维持现状。
+      </p>
+      <p>
+        文学化对白与人物关系均为原创历史演绎，不是历史人物的真实引语。架空路线会改变历史；左翼执行书记等继承席位会明确标注。肖像复用同一套人物形象。轮数不代表真实会议次数。
       </p>
       <dl class="guide-stats">
         <div>
@@ -91,7 +97,7 @@
       <p>
         战力比 R = 红军 × 工事系数 × 民心系数 ÷（敌军 × 预警系数 ×
         战术系数）。有效敌军强度包含游击、外交等修正，下限为 20；工事有效上限为
-        48。选项标签显示即时变化，胜利专属奖励只在守住或反攻时发放。
+        48。结算账本显示实际变化，胜利专属奖励只在守住或反攻时发放。
       </p>
       <p>
         数值达到上限时只计入实际变化。偏执、民族问题与阵营动荡上升表示风险增加；派系和人物势力的变化保持中性标记。恢复党内讨论、内务部授权等准备会消耗政治资本，并影响后续路线资格。
@@ -114,7 +120,17 @@
         ><button class="btn ghost" id="restart-cancel">保留当前进度</button>
       </div>
     </dialog>
+    <dialog id="novel-log" aria-labelledby="novel-log-title">
+      <form method="dialog">
+        <button class="dialog-close" aria-label="关闭对话记录">关闭</button>
+      </form>
+      <div class="eyebrow">CONVERSATION ARCHIVE</div>
+      <h2 id="novel-log-title">说过的话，留下的决定。</h2>
+      <div id="novel-log-content"></div>
+    </dialog>
     <script src="script.js"></script>
+    <script src="novel-content.js"></script>
+    <script src="novel.js"></script>
     <script src="presentation.js"></script>
   </body>
 </html>

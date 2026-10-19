@@ -20,6 +20,8 @@ jobs:
         run: node tests/live-page.cjs
       - name: Replay every route on the published page
         run: ROUTE_BROWSER_OUTPUT=docs/qa/live/browser-routes.json node tests/browser-routes.cjs https://chillchill0027.github.io/road-to-56-soviet/
+      - name: Verify dialogue and automatic policy formation on the published page
+        run: NOVEL_BROWSER_OUTPUT=docs/qa/live/novel-browser.json node tests/browser-novel.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - uses: actions/upload-artifact@v4
         if: always()
         with:
