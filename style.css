@@ -2600,8 +2600,11 @@ body.is-menu dialog :focus-visible { outline-color: var(--red); }
 .opt:disabled { cursor: not-allowed; }
 .dcard { background: var(--white); border-color: var(--line); }
 .db2 { background: var(--red); color: var(--white); border-color: var(--red); min-height: 44px; }
-.gal-card { background: var(--white); border-color: var(--line); }
-.gal-card.locked { background: var(--paper-d); }
+.gal-item { background: var(--white); border-color: var(--line); color: var(--ink); }
+.gal-item:not(.got) { background: var(--paper-d); }
+.gallery .ts-kicker { color: var(--red-light); }
+.gallery #gal-back { background: var(--red); border-color: var(--red); }
+.gallery #gal-back:hover { background: var(--red-d); border-color: var(--red-d); }
 .ending { border-top: 5px solid var(--red); }
 /* Dialogs are paper documents, including when opened from the dark title. */
 dialog { background: var(--white); color: var(--ink); border: 0; border-top: 5px solid var(--red); padding: 36px 40px; box-shadow: 0 20px 100px #0008; }

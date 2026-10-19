@@ -1,0 +1,66 @@
+[
+  {
+    "width": 1440,
+    "unlocked": false,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(102, 91, 72)",
+    "background": "rgb(217, 201, 165)"
+  },
+  {
+    "width": 1440,
+    "unlocked": true,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(27, 24, 21)",
+    "background": "rgb(242, 231, 205)"
+  },
+  {
+    "width": 768,
+    "unlocked": false,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(102, 91, 72)",
+    "background": "rgb(217, 201, 165)"
+  },
+  {
+    "width": 768,
+    "unlocked": true,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(27, 24, 21)",
+    "background": "rgb(242, 231, 205)"
+  },
+  {
+    "width": 390,
+    "unlocked": false,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(102, 91, 72)",
+    "background": "rgb(217, 201, 165)"
+  },
+  {
+    "width": 390,
+    "unlocked": true,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(27, 24, 21)",
+    "background": "rgb(242, 231, 205)"
+  },
+  {
+    "width": 320,
+    "unlocked": false,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(102, 91, 72)",
+    "background": "rgb(217, 201, 165)"
+  },
+  {
+    "width": 320,
+    "unlocked": true,
+    "overflow": 0,
+    "items": 14,
+    "foreground": "rgb(27, 24, 21)",
+    "background": "rgb(242, 231, 205)"
+  }
+]
