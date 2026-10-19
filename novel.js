@@ -253,9 +253,10 @@ const Novel = (() => {
     const stage = document.getElementById("stage");
     stage.innerHTML = `<div class="fade novel-layout">
       <div class="vn-heading"><div><div class="tag">${esc(sc.chapter)} · ${esc(S.year)}</div><h1 class="scene">${esc(title)}</h1></div>${seatHTML()}</div>
-      <div class="vn-film">${artHTML(context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(context?.show ? context.record.from : r.place)}</span><span>${esc(context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
       <div class="vn-progress" aria-label="对话进度，第${session.round + 1}轮，共${p.rounds.length}轮"><span>第 ${session.round + 1} / ${p.rounds.length} 轮</span><div>${p.rounds.map((_, n) => `<span class="${n < session.round ? "done" : n === session.round ? "now" : ""}"></span>`).join("")}</div><button class="nav-button" id="vn-log">见闻档案</button></div>
-      <div class="vn-body">${context?.show ? World.card(context.record) : ""}
+      ${context?.show ? `<div class="vn-context">${World.card(context.record)}</div>` : ""}
+      <div class="vn-film">${artHTML(context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(context?.show ? context.record.from : r.place)}</span><span>${esc(context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
+      <div class="vn-body">
       <p class="vn-aside">${esc(r.aside)}${reaction ? " " + esc(reaction) : ""}</p>
       <section class="vn-dialogue" aria-label="${esc(actor.name)}的对话">${portrait(actor.key)}<div><div class="vn-speaker">${esc(actor.name)}<small>${esc(actor.role)}</small></div><p class="vn-line">“${esc(text)}”</p></div></section>
       <div class="prompt">${esc(leader().name)} · 你的回应</div><div class="vn-options">${enabled
