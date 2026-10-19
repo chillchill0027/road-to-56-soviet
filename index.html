@@ -41,6 +41,7 @@
         <span id="save-status" role="status"></span
         ><button class="nav-button" id="nav-help">游玩指南</button
         ><button class="nav-button" id="nav-dialogue">见闻档案</button
+        ><button class="nav-button" id="nav-statistics">国家统计</button
         ><button class="nav-button" id="nav-gallery">结局图鉴</button>
       </div>
     </nav>
@@ -131,11 +132,22 @@
       <h2 id="novel-log-title">案头与耳畔。</h2>
       <div id="novel-log-content"></div>
     </dialog>
+    <dialog id="statistics-dialog" aria-labelledby="statistics-title">
+      <form method="dialog"><button class="dialog-close" aria-label="关闭国家统计">关闭</button></form>
+      <div class="eyebrow">STATE LEDGER / 国家统计</div>
+      <h2 id="statistics-title">数字背后的二十年。</h2>
+      <div id="statistics-content"></div>
+    </dialog>
+    <dialog id="annual-dialog" aria-label="新年手记">
+      <div id="annual-content"></div>
+      <button class="btn primary" id="annual-continue">收起手记，继续</button>
+    </dialog>
     <script src="script.js"></script>
     <script src="novel-content.js"></script>
     <script src="world-content.js"></script>
     <script src="world.js"></script>
     <script src="novel.js"></script>
+    <script src="statistics.js"></script>
     <script src="presentation.js"></script>
   </body>
 </html>
