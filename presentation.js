@@ -55,12 +55,10 @@ function enhanceStage() {
     !document.body.classList.contains("is-menu") && !ENDED
       ? "进度自动保存"
       : "";
-  document
-    .getElementById("nav-home")
-    .setAttribute(
-      "aria-current",
-      document.body.classList.contains("is-menu") ? "page" : "false",
-    );
+  const home = root.classList.contains('title-screen');
+  for (const id of ['nav-home','nav-start'])
+    document.getElementById(id)?.setAttribute('aria-current', home ? 'page' : 'false');
+  document.getElementById('nav-gallery')?.setAttribute('aria-current', root.classList.contains('gallery') ? 'page' : 'false');
 }
 const statGuide = {
   PP: "用于执行国家决议的政治资本。",
@@ -72,6 +70,7 @@ const statGuide = {
 };
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nav-home").addEventListener("click", renderTitle);
+  document.getElementById("nav-start").addEventListener("click", renderTitle);
   document
     .getElementById("nav-dialogue")
     .addEventListener("click", Novel.openLog);

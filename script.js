@@ -191,7 +191,7 @@ function renderHUD(){
     document.getElementById('hud-fac').innerHTML =
       [['STAL','斯大林派','f-stal'],['LEFT','左翼','f-left'],['RIGHT','右翼','f-right']]
       .map(([k,n,c]) =>
-        `<div class="fac"><span class="n">${n}</span><span class="bar"><i id="b-${k}"></i></span><span class="num" id="fn-${k}">0</span></div>`
+        `<div class="fac ${c}"><span class="n">${n}</span><span class="bar"><i id="b-${k}"></i></span><span class="num" id="fn-${k}">0</span></div>`
       ).join('');
   }
   KEYS.forEach(k => {
@@ -412,6 +412,7 @@ function renderResult(sc, o, deltas, battles, extra){
     ${warReport ? WarReports.heroHTML(warReport) : artForCurrent()}
     <div class="verdict ${failed?'bad':tone}">${esc(sceneText(sc,verdict))}</div>
     <div class="brief">${paragraphs.map(p=>`<p>${sceneText(sc,p)}</p>`).join('')}</div>
+    ${S.novelVersion && typeof Novel!=='undefined' ? Novel.aftermathHTML(sc) : ''}
     ${warReport ? WarReports.bodyHTML(warReport) : ''}
     ${(battles||[]).map(battleHTML).join('')}
     ${extra||''}
@@ -455,7 +456,7 @@ function renderDecisions(phase){
     <div class="sub">${esc(phase.sub||'')}</div>
     ${artForCurrent()}
     <div class="brief">${(phase.brief||[]).map(p=>`<p>${sceneText(phase,p)}</p>`).join('')}</div>
-    ${S._lastDecision?.sceneId===S.curId?`<div class="decision-result" role="status"><div class="hint">已执行：${esc(S._lastDecision.name)}</div><div class="deltas">${effectsHTML(S._lastDecision.deltas)}</div></div>`:''}
+    ${!S.novelVersion && S._lastDecision?.sceneId===S.curId?`<div class="decision-result" role="status"><div class="hint">已执行：${esc(S._lastDecision.name)}</div><div class="deltas">${effectsHTML(S._lastDecision.deltas)}</div></div>`:''}
     ${S.novelVersion && typeof Novel!=='undefined' ? Novel.decisionOutcomeHTML() : ''}
     <div class="dpanel">
       <div class="dhead">
@@ -554,7 +555,7 @@ function renderTitle(){
       <figure class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><figcaption><span>莫斯科，1936 年</span><span>AI 生成的历史场景演绎</span></figcaption></figure>
     </section>
     <div class="article-intro"><p>一份未签署的文件，一场没有旁观者的谈话。故事从这里开始。</p><p>你既是国家意志，也是此刻坐在书桌后的最高领导人。听取消息，与来访者交谈，让一次次回应逐渐形成决定。</p></div>
-    <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件，一场没有旁观者的谈话开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><span class="chapter-num">0${n+1}</span><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
+    <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件，一场没有旁观者的谈话开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><div class="chapter-cover">${artHTML(['steel','summit-table','advance','housing','hall'][n], [1936,1939,1941,1945,1953][n])}<span class="chapter-num">0${n+1}</span></div><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
     <section class="title-bottom"><p><span class="eyebrow">你的决定，组成历史</span><br>发展工业，平衡派系，迎战时代。与人物交谈，让每一次表态逐渐形成政策。</p><button class="archive-link" id="ts-gallery"><span>结局档案</span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span>查阅</span></button></section>
     <div class="ts-note"><span><kbd>A–H</kbd> / <kbd>1–8</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>
   </div>`;

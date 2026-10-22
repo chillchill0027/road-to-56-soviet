@@ -148,7 +148,7 @@ const output = path.resolve(
               );
             summary.paidDecisions++;
             assert.match(
-              await page.locator(".decision-result").innerText(),
+              await page.locator(".vn-decision-outcome, .decision-result").innerText(),
               new RegExp(model.decisions.find((d) => d.id === decisionId).name),
             );
             if (["party-debate", "nkvd-delegate"].includes(decisionId))
