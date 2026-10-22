@@ -101,7 +101,7 @@ const EndingArchive = (() => {
       <p id="runs-message" role="status">${writeError?esc(saveMessage()):''}</p>
       <div class="gal-grid">${ENDINGS.map(e=>{
         const got=unlockedIds.includes(e.id), count=runs.filter(r=>r.endingId===e.id).length;
-        return got?`<button type="button" class="gal-item got" data-ending="${e.id}" aria-label="${esc(e.t.replaceAll(' ',''))}，${count?count+'次游玩，查看数值曲线':'旧版已解锁，查看结局'}">${imageHTML(e.id,true)}<span class="gal-copy"><span class="gal-name">${e.t}</span><span class="gal-hint">${esc(e.h)}</span><span class="gal-records">${count?`${count} 次游玩 · 查看曲线`:'旧版已解锁 · 查看结局'} <span aria-hidden="true">↗</span></span></span></button>`:
+        return got?`<button type="button" class="gal-item got" data-ending="${e.id}" aria-label="${esc(e.t.replaceAll(' ',''))}，${count?count+'次游玩，查看数值曲线':'旧版已解锁，查看结局'}">${imageHTML(e.id,true)}<span class="gal-copy"><span class="gal-name">${e.t.replaceAll(' ','')}</span><span class="gal-hint">${esc(e.h)}</span><span class="gal-records"><span>${count?`${count} 次游玩`:'旧版解锁'}</span><span aria-hidden="true">查看 ↗</span></span></span></button>`:
           '<div class="gal-item locked"><div class="ending-locked-art" aria-hidden="true">？</div><div class="gal-copy"><div class="gal-name">未解锁的历史</div><div class="gal-hint">在下一段历史中，找到另一种可能。</div></div></div>';
       }).join('')}</div><div class="acts"><button class="btn" id="gal-back">返回阅读首页</button></div></div>`;
     document.querySelectorAll('[data-ending]').forEach(b=>b.addEventListener('click',()=>open(b.dataset.ending)));
@@ -130,7 +130,7 @@ const EndingArchive = (() => {
     const run=runs.find(r=>r.id===runId)||runs[0];
     menuMode(true);
     document.getElementById('stage').innerHTML=`<div class="ending-detail fade"><button class="nav-button ending-back" id="ending-back">← 返回结局图鉴</button><div class="eyebrow">ENDING ARCHIVE / 结局档案</div>
-      <h1 class="scene">${ending.t}</h1>${run?'<button class="btn ghost run-chart-jump" id="run-chart-jump">直接查看本次数值曲线 ↓</button>':''}${imageHTML(id)}
+      <h1 class="scene">${ending.t.replaceAll(' ','')}</h1>${run?'<button class="btn ghost run-chart-jump" id="run-chart-jump">直接查看本次数值曲线 ↓</button>':''}${imageHTML(id)}
       ${run?`<section class="run-identity"><label for="ending-run-select">这一次历史 <select id="ending-run-select">${runs.map((r,n)=>`<option value="${esc(r.id)}" ${r.id===run.id?'selected':''}>${esc(date(r.completedAt))} · 第 ${runs.length-n} 次达成</option>`).join('')}</select></label><p>1956年末在任：${esc(run.statistics.events.at(-1).leader.name)} · ${run.statistics.events.length} 条数值记录</p></section><div class="ending-run-story"><p>${esc(run.body)}</p>${run.modifiers.length?`<ul>${run.modifiers.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''}</div><section class="ending-run-ledger" aria-labelledby="ending-ledger-title"><div class="eyebrow">YOUR PLAYTHROUGH / 当次游玩</div><h2 id="ending-ledger-title">这条道路，怎样走到这里。</h2><div id="ending-run-statistics"></div></section><details class="run-decisions"><summary>本次签下的决定 · ${run.decisions.length} 项</summary><ol>${run.decisions.map(d=>`<li>${esc(d)}</li>`).join('')}</ol></details><button class="btn ghost" id="run-export">导出这次游玩</button>`:
         `<p class="ending-run-story">${esc(ending.h)}</p><div class="archive-legacy" role="note"><h2>这是一份旧版解锁记录。</h2><p>当时的版本没有按结局留存游玩数据，无法还原那次的数值曲线。此后的每次通关都会分别归档；已有解锁仍然保留。</p></div>`}
       <p class="archive-storage-note">查阅档案不会替换正在进行的游玩，也不会改变任何数值。</p><div class="acts"><button class="btn" id="ending-detail-back">返回结局图鉴</button></div></div>`;

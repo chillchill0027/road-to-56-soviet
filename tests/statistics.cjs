@@ -3,6 +3,20 @@ const assert=require('node:assert/strict');
 const {runtime}=require('./helpers/runtime.cjs');
 const {replay}=require('./helpers/routes.cjs');
 const fixtures=require('./fixtures/routes.json').routes;
+test('annual combined charts include all nine actual indicators and never mutate the ledger',()=>{
+ const {state}=replay(fixtures[0],{statistics:true});
+ const {game}=runtime({statistics:true});const data=state._statistics,before=JSON.stringify(data);
+ for(const report of data.years){
+  const samples=game.statistics.annualSamples(report,data);
+  for(const k of game.statistics.keys){assert.equal(samples[0].values[k],report.start[k]);assert.equal(samples.at(-1).values[k],report.end[k]);}
+  const html=game.statistics.annualCombinedHTML(report,data);
+  assert.equal((html.match(/data-annual-line=/g)||[]).length,9);
+  assert.equal((html.match(/data-annual-toggle=/g)||[]).length,9);
+  assert.doesNotMatch(html,/NaN|Infinity/);
+  if(report.carried){assert.equal(samples.length,2);assert.equal(JSON.stringify(samples[0].values),JSON.stringify(samples[1].values));assert.match(html,/没有新结算/);}
+ }
+ assert.equal(JSON.stringify(data),before);
+});
 for (const fixture of fixtures) test(`statistics preserve ${fixture.id} and account for every year`,()=>{
   const old=replay(fixture), next=replay(fixture,{statistics:true});
   const clean=structuredClone(next.state);delete clean._statistics;

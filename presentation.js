@@ -56,9 +56,12 @@ function enhanceStage() {
       ? "进度自动保存"
       : "";
   const home = root.classList.contains('title-screen');
-  for (const id of ['nav-home','nav-start'])
-    document.getElementById(id)?.setAttribute('aria-current', home ? 'page' : 'false');
-  document.getElementById('nav-gallery')?.setAttribute('aria-current', root.classList.contains('gallery') ? 'page' : 'false');
+  const gallery=root.classList.contains('gallery')||root.classList.contains('ending-detail');
+  document.getElementById('nav-home')?.setAttribute('aria-current',home?'page':'false');
+  document.getElementById('nav-start')?.setAttribute('aria-current',gallery?'false':'page');
+  document.getElementById('nav-gallery')?.setAttribute('aria-current',gallery?'page':'false');
+  const position=document.getElementById('sidebar-position');
+  if(position)position.textContent=home?'国家意志 · 1936—1956':gallery?'你的历史档案':`${S.year} · ${(ACT_LINE[S.act]||ACT_LINE[0]).split(' · ')[0]}`;
 }
 const statGuide = {
   PP: "用于执行国家决议的政治资本。",
@@ -69,6 +72,17 @@ const statGuide = {
   COM: "国际阵营影响力，影响战后道路。",
 };
 document.addEventListener("DOMContentLoaded", () => {
+  const icons={
+    'nav-start':'<path d="m9 5 10 7-10 7V5Z"/>',
+    'nav-dialogue':'<path d="M4 5h16v12H9l-5 4V5Z"/><path d="M8 9h8M8 13h5"/>',
+    'nav-statistics':'<path d="M4 4v16h16M8 15l4-6 4 3 4-7"/>',
+    'nav-gallery':'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="m4 15 5-5 6 7 3-3 2 2"/><circle cx="15.5" cy="8.5" r="1"/>',
+    'nav-help':'<circle cx="12" cy="12" r="8"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4M12 16v.1"/>',
+  };
+  for(const[id,paths]of Object.entries(icons)){
+    const button=document.getElementById(id),label=button.textContent;
+    button.innerHTML=`<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg><span>${label}</span>`;
+  }
   document.getElementById("nav-home").addEventListener("click", renderTitle);
   document.getElementById("nav-start").addEventListener("click", renderTitle);
   document

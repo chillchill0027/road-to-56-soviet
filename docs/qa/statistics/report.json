@@ -1,7 +1,8 @@
 {
-  "url": "http://127.0.0.1:33859/",
+  "url": "http://127.0.0.1:41717/",
   "passed": true,
   "checks": [
+    "annual combined chart includes nine original indicators; legend toggles, all-hidden state and chronological inspection preserve exact yearly values and game state",
     "first annual review restores without replaying events; shortcuts blocked; nine indicators and keyboard event inspection match actual ledger; 320/390/768/1440px fit",
     "all 21 years including skipped years; Stalin-to-successor viewpoint; final year review; completed archive survives reload"
   ],

@@ -1,0 +1,217 @@
+{
+  "phase": "after",
+  "passed": true,
+  "errors": [],
+  "states": [
+    {
+      "name": "home",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "detail",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "detail",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "detail",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "detail",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "detail",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    }
+  ]
+}
