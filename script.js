@@ -533,32 +533,29 @@ function scrollToStart(){
 const ACT_LINE = ['序幕 · 遗产与偏执','第一幕 · 钢铁与血','第二幕 · 魔鬼的交易',
                   '第三幕 · 伟大的卫国战争','第四幕 · 胜利的代价','第五幕 · 走向 56'];
 function menuMode(on){
+  document.body.classList.remove('is-cover');
   document.body.classList.toggle('is-menu', !!on);
   const w = document.querySelector('.wrap');
   if (w) w.classList.toggle('is-menu', !!on);
 }
 function renderTitle(){
   menuMode(true);
+  document.body.classList.add('is-cover');
   const g = unlocked();
   const st = document.getElementById('stage');
   st.innerHTML = `<div class="title-screen fade">
-    <section class="title-hero">
-      <div class="hero-copy"><div class="eyebrow"><span class="hero-star" aria-hidden="true">★</span> 一部可交互的国家编年史</div>
+    <section class="title-hero" aria-label="56之路：苏维埃 · 开始封面">
+      <div class="hero-copy">
+        <div class="cover-edition"><span aria-hidden="true">★</span> 历史视觉小说 <i></i> 1936 — 1956</div>
         <h1 class="ts-title" aria-label="56之路：苏维埃"><span>56之路</span><span>苏维埃</span></h1>
-        <div class="article-byline"><span>历史视觉小说</span><span>1936 — 1956</span></div>
-        <p class="hero-quote">历史没有如果。<br>直到你做出选择。</p>
-        <p class="ts-lede">从斯大林的书房，到继承人的会议桌。报上的消息未散，门外已有人等候。</p>
-        <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span>继续</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span>开始</span></button>`}</div>
+        <p class="hero-quote">历史没有如果，直到你做出选择。</p>
+        <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span aria-hidden="true">↗</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span aria-hidden="true">↗</span></button>`}</div>
         ${hasSave()&&!store.get(SAVE_KEY)?.S?.novelVersion?'<p class="hint">此存档沿用旧版国策流程；新周目启用完整情景对话，结局图鉴保留。</p>':''}
-        <div class="hero-small"><span class="live-dot" aria-hidden="true"></span>你的每一次回应，都将留在历史里。</div>
+        <button class="cover-archive" id="ts-gallery">结局图鉴 <small>${g.length} / ${ENDINGS.length}</small><span aria-hidden="true">→</span></button>
+        <p class="cover-note">基于 Road to 56 的架空历史 · 非官方同人作品</p>
       </div>
       <figure class="hero-image"><img src="assets/images/cover.webp" alt="从克里姆林宫的办公桌眺望冬日莫斯科，AI 生成的历史场景演绎" fetchpriority="high"><figcaption><span>莫斯科，1936 年</span><span>AI 生成的历史场景演绎</span></figcaption></figure>
     </section>
-    <div class="journey-facts" aria-label="这段历史"><div><b>1936—1956</b><span>二十年，国家意志贯穿始终</span></div><div><b>37 <small>段</small></b><span>历史会谈，在回应中形成决定</span></div><div><b>14 <small>种</small></b><span>历史结局，保存你的每次抵达</span></div></div>
-    <div class="article-intro"><p>历史的重量，落在一句回应里。</p><p>你既是国家意志，也是此刻坐在书桌后的最高领导人。一份未签署的文件，一场没有旁观者的谈话。故事从这里开始。</p></div>
-    <section class="chapter-index" aria-label="章节目录"><div class="index-label"><span class="eyebrow">THE CHRONICLE</span><h2>二十年，五幕风云</h2><p>从一份未签署的文件，一场没有旁观者的谈话开始。</p></div><div class="chapter-list">${ACT_LINE.slice(1).map((a,n)=>`<div class="chapter-item"><div class="chapter-cover">${artHTML(['steel','summit-table','advance','housing','hall'][n], [1936,1939,1941,1945,1953][n])}<span class="chapter-num">0${n+1}</span></div><span class="chapter-name">${a.split(' · ')[1]}</span><span class="chapter-year">${['1936 — 1938','1939 — 1941','1941 — 1945','1945 — 1953','1953 — 1956'][n]}</span></div>`).join('')}</div></section>
-    <section class="title-bottom"><p><span class="eyebrow">YOUR HISTORY, PRESERVED</span><strong>每一次抵达，都值得留存。</strong><span>重访通关的历史，回看当时的国家曲线与新年手记。</span></p><button class="archive-link" id="ts-gallery"><span>打开结局档案 <span aria-hidden="true">↗</span></span><small>已解锁 ${g.length} / ${ENDINGS.length}</small><span class="library-progress" aria-hidden="true"><i style="width:${g.length/ENDINGS.length*100}%"></i></span></button></section>
-    <div class="ts-note"><span><kbd>A–H</kbd> / <kbd>1–8</kbd> 选择 <span class="key-sep">·</span> <kbd>Enter</kbd> 继续</span><span>自动存档于当前浏览器</span></div>
   </div>`;
   const nw = document.getElementById('ts-new');
   if (nw) nw.addEventListener('click', requestNewGame);

@@ -1,0 +1,55 @@
+{
+  "phase": "before",
+  "passed": true,
+  "errors": [],
+  "states": [
+    {
+      "name": "home",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "statistics",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    }
+  ]
+}

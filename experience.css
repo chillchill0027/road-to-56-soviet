@@ -1,7 +1,7 @@
 /* Modern Soviet palette: expressive covers, quiet reading, consistent controls. */
 :root {
-  --paper: #efebe2; --white: #fffdf7; --paper-d: #e6e0d3;
-  --ink: #242527; --ink2: #52514e; --mut: #6c675f; --line: #d9d3c6;
+  --paper: #f1ede5; --white: #fffdf8; --paper-d: #e7e0d3;
+  --ink: #272523; --ink2: #514c46; --mut: #686159; --line: #d9d1c4;
   --red: #ad2635; --red-d: #861f2c; --red-light: #cf4854;
   --dark: #18191b; --on-dark: #f6f0e3; --gold: #a57c39;
   --shadow-soft: 0 8px 28px #27231c08;
@@ -251,3 +251,163 @@ dialog > h2 { font: 650 30px/1.5 var(--sans); letter-spacing: -.025em; }
 }
 @media (max-width: 350px) { .hero-copy { padding: 28px 22px; }.ts-title { font-size: 47px; }.hero-copy .eyebrow { font-size: 10px; }.chapter-name { font-size: 12px; }.title-bottom strong { font-size: 20px; }.annual-chart-legend button { font-size: 9px; gap: 4px; }.annual-chart-legend i { width: 10px; } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; }.btn,.masthead .nav-button,.vn-options .vn-choice { transition: none; } }
+
+/* Reading edition: shared rhythm for the council, ledger and dispatches. */
+body { text-rendering: optimizeLegibility; }
+.masthead { background: linear-gradient(160deg,#202021,#171819 65%); }
+.masthead .nav-button { min-height: 50px; font-size: 14px; border-radius: 12px; }
+.masthead .nav-button[aria-current=page] { background: #ad354030; border-color: #d56b7133; color: #ffe9e0; }
+.masthead .nav-button[aria-current=page] .nav-icon { color: #ed9298; }
+.nav-edition { font-size: 12px; }
+.sidebar-foot { font-size: 12px; }
+.wrap:not(.is-menu) { padding-top: 38px; }
+body.is-menu:not(.is-cover) #stage :focus-visible { outline-color: var(--red); }
+input:focus-visible,select:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.btn { box-shadow: 0 1px 2px #24211a08; }
+.btn:not(:disabled):active,.db2:not(:disabled):active { transform: translateY(1px); }
+.btn:disabled { opacity: .5; }
+.site-footer { font-size: 11px; line-height: 1.9; }
+
+/* A quiet overview leaves the story as the main focus. */
+#hud { border-radius: 16px; border-color: #d9d1c480; box-shadow: 0 4px 20px #332b2004; }
+.hud-in { padding: 18px 24px; gap: 13px; }
+.hud-top { align-items: center; }
+.hud-title { font-size: 12px; letter-spacing: .035em; }
+.hud-act { font-size: 11px; line-height: 1.7; }
+.stats { gap: 12px; }
+.stat { padding-left: 13px; }
+.stat .k { font-size: 11px; line-height: 1.7; }
+.stat .v { font-size: 23px; font-weight: 550; letter-spacing: -.03em; }
+.fac .n,.fac .num { font-size: 11px; }
+.stat .fly { padding: 2px 5px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); font-size: 11px; }
+.fly.up { color: #42614c; }.fly.dn { color: var(--red); }
+
+/* Headings, source material and literary dialogue have distinct voices. */
+.vn-heading { gap: 24px; margin-bottom: 24px; }
+.vn-heading .scene,.play-layout > .scene,.scene { font: 650 clamp(29px,3.2vw,40px)/1.4 var(--serif); letter-spacing: .015em; }
+.tag { font-size: 12px; letter-spacing: .08em; }
+.vn-seat { padding: 10px 12px; border: 1px solid #d9d1c480; border-radius: 12px; background: #fffdf870; }
+.vn-seat .vn-seat-portrait { width: 39px; }
+.vn-seat small,.vn-seat > span > span { font-size: 10px; line-height: 1.7; }
+.vn-seat strong { font-size: 12px; }
+.vn-progress { margin-bottom: 24px; padding: 8px 0 19px; font-size: 12px; }
+.vn-progress .nav-button { min-height: 44px; padding-inline: 9px; font-size: 12px; }
+.vn-context .world-source { position: relative; background: #fffdf89c; border-color: #d9d1c499; border-radius: 12px; border-left: 3px solid #b76566; padding: 23px 26px; }
+.vn-context .world-source h2 { font: 650 22px/1.6 var(--serif); margin: 9px 0 12px; }
+.world-source-meta { font-size: 12px; color: var(--mut); }
+.world-source-kind { font-size: 11px; letter-spacing: .12em; }
+.vn-context .world-source p { font-size: 15px; line-height: 1.95; }
+.vn-film .art-window,.visual-rail .art-window,.world-scene-frame .art-window { border-radius: 14px; box-shadow: 0 8px 24px #2e241c0a; }
+.vn-location { font-size: 11px; line-height: 1.8; padding-block: 12px; }
+.vn-opening p,.vn-aside { font: 17px/2.05 var(--serif); color: var(--ink2); }
+.vn-opening { margin-block: 22px 28px; }
+.vn-dialogue { padding: 28px; gap: 20px; background: var(--white); border-color: #d9d1c488; border-radius: 16px; box-shadow: 0 6px 24px #332b2005; }
+.vn-dialogue > .vn-portrait { width: 48px; border-radius: 10px; }
+.vn-speaker { color: var(--red-d); font-size: 15px; margin-bottom: 12px; }
+.vn-speaker small { font-size: 11px; margin-top: 5px; }
+.vn-line { padding: 0; border: 0; min-height: 0; font: 20px/1.95 var(--serif); }
+.vn-aside { margin-block: 24px; }
+.prompt { font-size: 12px; letter-spacing: .03em; margin-bottom: 15px; }
+.vn-options { gap: 12px; }
+.vn-options .vn-choice { position: relative; padding: 20px 54px 20px 20px; border-color: #d9d1c4; border-radius: 12px; box-shadow: 0 2px 8px #332b2003; }
+.vn-options .vn-choice::after { content: '↗'; position: absolute; right: 21px; top: 50%; transform: translateY(-50%); font: 19px/1 var(--sans); color: #9a8a7c; pointer-events: none; }
+.vn-options .vn-choice:hover::after { color: var(--red); }
+.vn-options .vn-choice:disabled::after { content: ''; }
+.vn-options .vn-choice:disabled { background: #e9e3d8; box-shadow: none; }
+.vn-choice > span:last-child { font-size: 16px; line-height: 1.85; }
+.vn-choice .key { width: 30px; min-width: 30px; height: 30px; border-radius: 8px; background: #efe4dc; }
+.vn-echo { border-left: 3px solid #c39d82; background: #e9e1d454; border-radius: 0 10px 10px 0; }
+.vn-echo > span,.vn-carry-note { font-size: 12px; }
+.vn-resolution { font-size: 13px; line-height: 1.95; }
+.vn-aftermath { margin-top: 32px; }
+.vn-aftermath blockquote { padding: 22px 24px; border-left: 2px solid #b76566; border-radius: 0 12px 12px 0; }
+.vn-aftermath blockquote span { font-size: 11px; }
+.vn-decision-outcome { border-left-width: 3px; padding: 26px; box-shadow: 0 5px 20px #332b2004; }
+.vn-decision-outcome h2 { font-family: var(--serif); font-size: 25px; }
+.deltas { gap: 7px; }.deltas span { padding: 6px 10px; border-radius: 6px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.deltas .up { background: #eef2e9; color: #3d5b44; }.deltas .dn { background: #f7eae3; color: #913d37; }
+.dpanel { box-shadow: 0 5px 20px #332b2004; border-radius: 14px; }
+.dhead { background: #e8e0d3; padding: 21px 24px; }.dhead .dt { font-size: 16px; }.dhead .db { font-size: 13px; }
+.di { padding: 24px; }.dn { font-size: 16px; }.df { font-size: 13px; }.db2 { font-size: 13px; min-height: 46px; }
+.hint { font-size: 12px; }
+
+/* Reports feel like part of the same book, with clear figures and captions. */
+.world-scene-heading { font-size: 12px; padding-bottom: 18px; }
+.world-scene-copy .world-source { border-radius: 14px; border-color: #d9d1c480; padding: 28px; }
+.world-scene-copy .world-source h1 { font: 650 clamp(29px,3.2vw,38px)/1.5 var(--serif); }
+.world-scene-copy .world-source p { font-size: 17px; line-height: 2; }
+.war-report { border-top-width: 2px; padding-top: 24px; margin-top: 36px; }
+.war-report-heading h2 { font: 650 28px/1.5 var(--serif); }
+.war-report-heading h2 span { padding: 6px 11px; border: 0; border-radius: 6px; background: #e5e6db; color: #4f604b; font-size: 12px; letter-spacing: .04em; }
+.war-date,.war-report-heading > p { font-size: 12px; }
+.war-map { border-radius: 13px; overflow: hidden; border-color: var(--line); background: #ebe5d9; }
+.war-map-head { padding: 18px 22px; }.war-map-head b { font-size: 18px; }.war-map-head span,.war-map-head .war-terrain,.war-map figcaption { font-size: 11px; }
+.war-source { padding: 25px 0; }.war-source h3 { font-size: 21px; }.war-source-meta { font-size: 12px; }.war-source p { font-size: 16px; line-height: 2; }
+.war-counts { gap: 8px; }.war-counts > div { border-radius: 10px; background: var(--white); padding-block: 15px; }.war-counts span { font-size: 11px; }.war-counts b { font-family: var(--sans); font-size: 27px; }
+.war-outlook { border-radius: 0 12px 12px 0; padding: 20px 22px; }.war-outlook p { font-size: 14px; }
+.war-archive-note { font-size: 12px; }.war-archive-note .nav-button { min-height: 44px; }
+.battle { padding: 24px; border-radius: 13px; background: #222224; }.battle .bt { font-size: 11px; }.battle .bd { font-size: 12px; line-height: 1.95; }.battle .rr { font-size: 27px; }
+.war-archive-entry > summary,.world-archive summary { min-height: 52px; align-items: center; font-size: 14px; }
+.world-archive summary small { font-size: 11px; }
+.vn-log-line { padding: 20px; margin-block: 14px; border: 1px solid var(--line); border-radius: 12px; background: #f3eee5; }.vn-log-line small { font-size: 12px; }.vn-log-line p { font-size: 16px; }
+
+/* Calm sheets, touch-sized controls and readable small data labels. */
+dialog { scrollbar-width: thin; scrollbar-color: #c6b8a5 transparent; overscroll-behavior: contain; border-radius: 22px; }
+dialog > form { position: sticky; top: 0; height: 55px; margin-bottom: 18px; border-bottom: 1px solid var(--line); background: var(--white); z-index: 5; }
+dialog > .eyebrow { line-height: 1.9; font-size: 11px; }
+dialog > h2 { font-family: var(--serif); font-size: 32px; text-wrap: balance; }
+.dialog-close { min-width: 48px; min-height: 44px; margin: 0; padding: 10px; font-size: 12px; background: #eee8de; border-color: #d9d1c4; box-shadow: 0 2px 8px #332b2008; }
+.guide-heading { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); font: 650 20px/1.6 var(--serif); }
+.guide-stats { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #f6f1e8; }.guide-stats > div { padding: 15px 17px; font-size: 13px; }.guide-stats > div:last-child { border-bottom: 0; }
+.guide-keys { border-radius: 10px; padding: 16px; line-height: 2; font-size: 12px; }.guide-note { font-size: 12px; }
+.statistics-tabs { width: fit-content; max-width: 100%; gap: 4px; padding: 4px; background: #ebe4d9; border: 1px solid #e1d7c8; border-radius: 11px; }
+.statistics-tabs button { min-height: 44px; padding: 10px 18px; border: 0; border-radius: 7px; font-size: 13px; color: var(--ink2); }
+.statistics-tabs button[aria-pressed=true] { background: var(--white); color: var(--red-d); box-shadow: 0 1px 4px #332b2010; }
+.stat-metrics { gap: 10px; }.stat-metric { padding: 13px 17px; min-height: 103px; border-color: #ddd4c6; background: #f3eee5; }
+.stat-metric b { font-size: 30px; line-height: 1.45; }.stat-metric > span { font-size: 12px; }.stat-metric small { font-size: 11px; }
+.stat-metric[aria-pressed=true] { background: #872833; border-color: #872833; }.stat-metric[aria-pressed=true]::after { content: ''; position: absolute; right: 13px; top: 15px; width: 5px; height: 5px; border-radius: 50%; background: #efc1ac; }
+.stat-plot { padding: 26px; background: #fcf9f2; }.stat-plot-title h3 { font-family: var(--serif); font-size: 22px; }
+.stat-plot input[type=range],.annual-chart-position input { min-height: 44px; accent-color: var(--red); cursor: ew-resize; }
+.stat-table summary { min-height: 48px; }.stat-table-scroll { border-radius: 9px; border: 1px solid var(--line); }
+.annual-page h2 { font-family: var(--serif); line-height: 1.6; }.annual-author { font-size: 13px; }.annual-page > p { font-family: var(--serif); font-size: 17px; }
+.annual-synthesis { background: #f7f2e9; border-color: #ddd4c6; border-radius: 16px; }.annual-chart-heading h3 { font-family: var(--serif); font-size: 24px; }.annual-chart-heading > span { font-size: 11px; }
+.annual-chart-legend button { min-height: 44px; font-size: 12px; border-radius: 8px; background: var(--white); }.annual-chart-legend button[aria-pressed=false] { opacity: .55; border-style: dashed; }
+.annual-chart-values dt,.annual-chart-values small { font-size: 11px; }.annual-chart-values dd { font-size: 22px; }.annual-chart-values > div { padding: 13px; border-radius: 10px; }
+.annual-chart-position,.annual-chart-event { font-size: 13px; }.annual-numbers { margin-block: 28px; }.annual-numbers span,.annual-numbers small { font-size: 12px; }
+.annual-events { font-size: 14px; line-height: 2; }.annual-events li { padding-block: 4px; }.annual-select select { min-height: 44px; }
+
+@media (max-width: 900px) {
+  .masthead .nav-button { font-size: 11px; min-height: 60px; }
+  .wrap:not(.is-menu) { padding-top: 28px; }
+}
+@media (max-width: 700px) {
+  #hud { margin-top: 18px; }.hud-in { padding: 16px; gap: 13px; }.hud-act { font-size: 10px; }
+  .stats { gap: 12px 8px; }.stat { padding-left: 9px; }.stat .k { font-size: 10px; }.stat .v { font-size: 21px; }.fac .n,.fac .num { font-size: 10px; }
+  .vn-heading .scene,.play-layout > .scene,.scene { font-size: 31px; }.vn-seat { width: fit-content; padding: 8px 10px; }.vn-seat .vn-seat-portrait { width: 33px; }
+  .vn-progress { gap: 9px; font-size: 11px; }.vn-progress .nav-button { font-size: 11px; }
+  .vn-context .world-source { padding: 20px; }.vn-context .world-source h2 { font-size: 22px; }.vn-context .world-source p { font-size: 15px; }
+  .world-source-meta { font-size: 11px; gap: 7px; }.vn-location { font-size: 11px; }
+  .vn-opening p,.vn-aside { font-size: 16px; }.vn-dialogue { padding: 22px 20px; gap: 14px; }.vn-dialogue > .vn-portrait { width: 43px; }.vn-line { font-size: 19px; line-height: 1.95; }
+  .vn-options .vn-choice { padding: 18px 40px 18px 15px; gap: 12px; }.vn-options .vn-choice::after { right: 14px; font-size: 17px; }.vn-choice > span:last-child { font-size: 15px; }
+  .vn-decision-outcome { padding: 22px 19px; }.vn-decision-outcome h2 { font-size: 23px; }.deltas span { font-size: 11px; }
+  .di { padding: 21px 18px; }.dhead { padding: 19px 18px; }.df { font-size: 12px; }.db2 { font-size: 12px; }
+  .world-scene-copy .world-source { padding: 22px; }.world-scene-copy .world-source h1 { font-size: 29px; }.world-scene-copy .world-source p { font-size: 16px; }
+  .war-report-heading h2 { font-size: 25px; }.war-source h3 { font-size: 20px; }.war-source p { font-size: 15px; }.war-source-meta { font-size: 11px; }.war-counts { gap: 5px; }.war-counts > div { padding-inline: 4px; }
+  .war-map-head { padding: 17px; }.war-map-head b { font-size: 17px; }.war-outlook { padding: 18px; }
+  .battle { padding: 21px 18px; }.battle .bd { font-size: 11px; }
+  dialog { border-radius: 18px; }.dialog-close { margin: 0; }dialog > h2 { font-size: 28px; }dialog > .eyebrow { font-size: 10px; }
+  .guide-stats > div { grid-template-columns: 1fr; gap: 5px; padding: 14px 16px; }.guide-heading { font-size: 20px; }
+  .stat-metrics { gap: 7px; }.stat-metric { padding: 12px 10px; min-height: 106px; }.stat-metric > span { font-size: 11px; }.stat-metric small { font-size: 10px; }.stat-metric b { font-size: 27px; }.stat-metric[aria-pressed=true]::after { right: 8px; top: 10px; width: 4px; height: 4px; }
+  .stat-plot { padding: 20px 12px; }.stat-plot-title h3 { font-size: 21px; }.stat-plot-title > span { font-size: 11px; }
+  .annual-page > p { font-size: 16px; }.annual-chart-heading h3 { font-size: 23px; }.annual-synthesis { padding: 20px 12px; }
+  .annual-chart-legend button { padding: 8px 6px; font-size: 11px; gap: 5px; }.annual-chart-values > div { padding: 11px 8px; }.annual-chart-values dd { font-size: 21px; }.annual-chart-values dt,.annual-chart-values small { font-size: 10px; }
+  .annual-numbers > div { padding: 13px 10px; }.annual-numbers span,.annual-numbers small { font-size: 11px; }
+}
+@media (max-width: 350px) {
+  .masthead .nav-button { font-size: 10px; }.stat .k { font-size: 10px; }.fac .n,.fac .num { font-size: 9px; }
+  .vn-dialogue { padding-inline: 17px; }.vn-line { font-size: 18px; }.vn-choice > span:last-child { font-size: 14px; }
+  .annual-chart-legend button { font-size: 10px; }.annual-chart-legend i { width: 10px; }.stat-metric > span { font-size: 10px; }.stat-metric small { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn:not(:disabled):active,.db2:not(:disabled):active { transform: none; }
+}

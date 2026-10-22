@@ -1,0 +1,346 @@
+[
+  {
+    "name": "home",
+    "width": 320,
+    "height": 568,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "help-top",
+    "width": 320,
+    "height": 568,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-bottom",
+    "width": 320,
+    "height": 568,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-close-box",
+    "width": 320,
+    "height": 568,
+    "box": {
+      "x": 234,
+      "y": 37,
+      "width": 48,
+      "height": 44
+    }
+  },
+  {
+    "name": "empty-statistics",
+    "width": 320,
+    "height": 568,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "empty-log",
+    "width": 320,
+    "height": 568,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "saved-home",
+    "width": 320,
+    "height": 568,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "continue-box",
+    "width": 320,
+    "height": 568,
+    "box": {
+      "x": 22,
+      "y": 498.828125,
+      "width": 276,
+      "height": 59
+    }
+  },
+  {
+    "name": "gallery",
+    "width": 320,
+    "height": 568,
+    "cover": false,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "游玩指南",
+    "width": 320,
+    "height": 568,
+    "outline": "rgb(225, 218, 207)",
+    "style": "none",
+    "errors": []
+  },
+  {
+    "name": "home",
+    "width": 390,
+    "height": 844,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "help-top",
+    "width": 390,
+    "height": 844,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-bottom",
+    "width": 390,
+    "height": 844,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-close-box",
+    "width": 390,
+    "height": 844,
+    "box": {
+      "x": 304,
+      "y": 37,
+      "width": 48,
+      "height": 44
+    }
+  },
+  {
+    "name": "empty-statistics",
+    "width": 390,
+    "height": 844,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "empty-log",
+    "width": 390,
+    "height": 844,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "saved-home",
+    "width": 390,
+    "height": 844,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "continue-box",
+    "width": 390,
+    "height": 844,
+    "box": {
+      "x": 28,
+      "y": 520.703125,
+      "width": 334,
+      "height": 59
+    }
+  },
+  {
+    "name": "gallery",
+    "width": 390,
+    "height": 844,
+    "cover": false,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "游玩指南",
+    "width": 390,
+    "height": 844,
+    "outline": "rgb(225, 218, 207)",
+    "style": "none",
+    "errors": []
+  },
+  {
+    "name": "home",
+    "width": 844,
+    "height": 390,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "help-top",
+    "width": 844,
+    "height": 390,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-bottom",
+    "width": 844,
+    "height": 390,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-close-box",
+    "width": 844,
+    "height": 390,
+    "box": {
+      "x": 634,
+      "y": 64.25,
+      "width": 48,
+      "height": 44
+    }
+  },
+  {
+    "name": "empty-statistics",
+    "width": 844,
+    "height": 390,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "empty-log",
+    "width": 844,
+    "height": 390,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "saved-home",
+    "width": 844,
+    "height": 390,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "continue-box",
+    "width": 844,
+    "height": 390,
+    "box": {
+      "x": 59.078125,
+      "y": 440.703125,
+      "width": 220,
+      "height": 59
+    }
+  },
+  {
+    "name": "gallery",
+    "width": 844,
+    "height": 390,
+    "cover": false,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "游玩指南",
+    "width": 844,
+    "height": 390,
+    "outline": "rgb(225, 218, 207)",
+    "style": "none",
+    "errors": []
+  },
+  {
+    "name": "home",
+    "width": 1440,
+    "height": 1000,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "help-top",
+    "width": 1440,
+    "height": 1000,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-bottom",
+    "width": 1440,
+    "height": 1000,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "help-close-box",
+    "width": 1440,
+    "height": 1000,
+    "box": {
+      "x": 932,
+      "y": 110,
+      "width": 48,
+      "height": 44
+    }
+  },
+  {
+    "name": "empty-statistics",
+    "width": 1440,
+    "height": 1000,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "empty-log",
+    "width": 1440,
+    "height": 1000,
+    "cover": true,
+    "overflow": 0,
+    "focus": "BUTTON"
+  },
+  {
+    "name": "saved-home",
+    "width": 1440,
+    "height": 1000,
+    "cover": true,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "continue-box",
+    "width": 1440,
+    "height": 1000,
+    "box": {
+      "x": 106.546875,
+      "y": 643.515625,
+      "width": 220,
+      "height": 59
+    }
+  },
+  {
+    "name": "gallery",
+    "width": 1440,
+    "height": 1000,
+    "cover": false,
+    "overflow": 0,
+    "focus": "H1"
+  },
+  {
+    "name": "游玩指南",
+    "width": 1440,
+    "height": 1000,
+    "outline": "rgb(225, 218, 207)",
+    "style": "none",
+    "errors": []
+  }
+]
