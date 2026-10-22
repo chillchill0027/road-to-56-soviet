@@ -1,0 +1,216 @@
+{
+  "states": [
+    {
+      "name": "home",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "reply",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "approved",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "deferred",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "reply",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "approved",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "deferred",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "reply",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "approved",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "deferred",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "reply",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "approved",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "deferred",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "home",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "conversation",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "reply",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "result",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "agenda",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "approved",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "deferred",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

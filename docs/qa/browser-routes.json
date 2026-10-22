@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:45951/",
+  "url": "http://127.0.0.1:38803/",
   "passed": true,
   "routes": [
     {
@@ -11,7 +11,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 199,
+      "dialogueRounds": 147,
       "successor": "马林科夫",
       "passed": true
     },
@@ -24,7 +24,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 206,
+      "dialogueRounds": 150,
       "successor": "马林科夫",
       "passed": true
     },
@@ -37,7 +37,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 274,
+      "dialogueRounds": 198,
       "successor": "马林科夫",
       "passed": true
     },
@@ -50,7 +50,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 269,
+      "dialogueRounds": 193,
       "successor": "贝利亚",
       "passed": true
     },
@@ -63,7 +63,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 253,
+      "dialogueRounds": 191,
       "successor": "赫鲁晓夫",
       "passed": true
     },
@@ -89,7 +89,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 211,
+      "dialogueRounds": 151,
       "successor": "马林科夫",
       "passed": true
     },
@@ -102,7 +102,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 208,
+      "dialogueRounds": 150,
       "successor": "贝利亚",
       "passed": true
     },
@@ -115,7 +115,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 258,
+      "dialogueRounds": 194,
       "successor": "马林科夫",
       "passed": true
     },
@@ -128,7 +128,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 272,
+      "dialogueRounds": 198,
       "successor": "最高苏维埃主席",
       "passed": true
     },
@@ -141,7 +141,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 263,
+      "dialogueRounds": 197,
       "successor": "左翼执行书记",
       "passed": true
     },
@@ -154,7 +154,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 262,
+      "dialogueRounds": 196,
       "successor": "图哈切夫斯基",
       "passed": true
     },
@@ -167,7 +167,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 259,
+      "dialogueRounds": 191,
       "successor": "马林科夫",
       "passed": true
     },
@@ -180,7 +180,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 260,
+      "dialogueRounds": 196,
       "successor": "马林科夫",
       "passed": true
     },
@@ -193,7 +193,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 282,
+      "dialogueRounds": 200,
       "successor": "朱可夫",
       "passed": true
     },
@@ -206,7 +206,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 269,
+      "dialogueRounds": 197,
       "successor": "赫鲁晓夫",
       "passed": true
     },
@@ -219,7 +219,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 239,
+      "dialogueRounds": 193,
       "successor": "马林科夫",
       "passed": true
     },
@@ -232,7 +232,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 282,
+      "dialogueRounds": 202,
       "successor": "左翼执行书记",
       "passed": true
     },
@@ -245,7 +245,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 273,
+      "dialogueRounds": 199,
       "successor": "马林科夫",
       "passed": true
     },
@@ -258,7 +258,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 218,
+      "dialogueRounds": 152,
       "successor": "马林科夫",
       "passed": true
     },
@@ -271,7 +271,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 210,
+      "dialogueRounds": 150,
       "successor": "左翼执行书记",
       "passed": true
     },
@@ -284,7 +284,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 257,
+      "dialogueRounds": 197,
       "successor": "米高扬",
       "passed": true
     },
@@ -297,7 +297,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 248,
+      "dialogueRounds": 190,
       "successor": "朱可夫",
       "passed": true
     },
@@ -310,7 +310,7 @@
       "resultRestored": true,
       "decisionRestored": true,
       "dialogueRestored": true,
-      "dialogueRounds": 249,
+      "dialogueRounds": 193,
       "successor": "马林科夫",
       "passed": true
     }

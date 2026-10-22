@@ -1,9 +1,9 @@
 {
-  "url": "http://127.0.0.1:42617/",
+  "url": "http://127.0.0.1:43853/",
   "passed": true,
   "checks": [
     "seven mixed replies form a 4:3 majority, not the final reply; no interim resource changes; exact dialogue reload; transcript modal blocks shortcuts",
-    "agenda deferral pays nothing; approved agenda survives a mid-dialogue reload and pays exactly once",
+    "one-reply agenda approval charges exactly once; deferral charges nothing; pending and settled saves both restore",
     "desktop, tablet, 390px and 320px layouts fit; character portraits load"
   ],
   "errors": []

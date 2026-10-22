@@ -16,7 +16,7 @@ const output = path.resolve(__dirname, '../docs/qa/live');
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
     const root = path.resolve(__dirname, '..');
-    const expected = ['script.js', 'novel.js', 'novel-content.js', 'world.js', 'world-content.js', 'war.js', 'war-content.js', 'presentation.js', 'statistics.js', 'style.css'].map(file => ({file, body:fs.readFileSync(path.join(root, file))}));
+    const expected = ['script.js', 'novel.js', 'novel-content.js', 'world.js', 'world-content.js', 'war.js', 'war-content.js', 'presentation.js', 'statistics.js', 'style.css', 'experience.css'].map(file => ({file, body:fs.readFileSync(path.join(root, file))}));
     let current = false;
     for (let attempt = 0; attempt < 24; attempt++) {
       const checks = await Promise.all(expected.map(async asset => {

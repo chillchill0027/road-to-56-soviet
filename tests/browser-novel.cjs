@@ -71,8 +71,9 @@ const { choosePolicy, replyPolicy,advanceScene } = require("./helpers/dialogue.c
     assert.equal(await page.evaluate(() => S.curId), "dec-prologue");
     await page.click('.db2[data-id="religion"]');
     const before = await core();
-    for (const option of [0, 1, 1, 0, 1])
-      await page.locator(`.vn-choice[data-i="${option}"]`).click();
+    assert.equal(await page.locator('.vn-choice').count(), 2);
+    assert.match(await page.locator('.vn-progress').innerText(), /一次批示/);
+    await page.locator('.vn-choice[data-i="1"]').click();
     assert.equal(await core(), before);
     assert.equal(await page.evaluate(() => S._c_religion || 0), 0);
     assert.match(
@@ -88,15 +89,15 @@ const { choosePolicy, replyPolicy,advanceScene } = require("./helpers/dialogue.c
       /维持现状/,
     );
     await page.click('.db2[data-id="religion"]');
-    await page.click('.vn-choice[data-i="0"]');
     const midway = await page.evaluate(() => JSON.stringify(S));
     await page.reload({ waitUntil: "load" });
     await page.click("#ts-continue");
     assert.equal(await page.evaluate(() => JSON.stringify(S)), midway);
-    await replyPolicy(page, 0);
+    await page.click('.vn-choice[data-i="0"]');
+    assert.equal(await page.locator('.vn-choice').count(), 0, 'one reply settles the agenda');
     assert.equal(await page.evaluate(() => S._c_religion), 1);
     report.checks.push(
-      "agenda deferral pays nothing; approved agenda survives a mid-dialogue reload and pays exactly once",
+      "one-reply agenda approval charges exactly once; deferral charges nothing; pending and settled saves both restore",
     );
     await advanceScene(page);
     await advanceScene(page);

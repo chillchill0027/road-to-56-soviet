@@ -166,9 +166,10 @@ for (const id of [
       g.cursor(phase);
       g.renderDecisions(g.scenes[phase]);
       const before = snapshot(g);
+      const effectBefore = g.effectSnapshot();
       assert.equal(g.novel.startDecision(d), true);
       const n = g.novel.profile().rounds.length;
-      assert.ok([3, 5, 7].includes(n));
+      assert.equal(n, 1, "standing agendas need exactly one reply");
       for (let r = 0; r < n - 1; r++) {
         g.novel.respond(approve ? 0 : 1, r);
         assert.equal(snapshot(g), before);
@@ -181,6 +182,12 @@ for (const id of [
       }
       g.novel.respond(approve ? 0 : 1, n - 1);
       assert.equal(g.state()["_c_" + id] || 0, approve ? 1 : 0);
+      assert.equal(g.state()._novelResolution.answers.length, 1);
+      assert.equal(JSON.stringify(g.state()._novelResolution.resultDeltas), JSON.stringify(g.effectChanges(effectBefore)));
+      const settled = JSON.stringify(g.state());
+      assert.equal(g.novel.respond(0, 0), false);
+      g.fresh(); g.resume();
+      assert.equal(JSON.stringify(g.state()), settled, "reload never repeats an agenda settlement");
       if (!approve) assert.equal(snapshot(g), before);
       else {
         const direct = runtime().game;
@@ -188,6 +195,7 @@ for (const id of [
         direct.cursor(phase);
         direct.executeDecision(direct.decisions.find((d) => d.id === id));
         assert.equal(snapshot(g), snapshot(direct));
+        assert.equal(JSON.stringify(g.effectSnapshot()), JSON.stringify(direct.effectSnapshot()));
       }
     }
   });
@@ -259,4 +267,38 @@ test("a successor receives reports from a different person, never their own port
   g.novel.respond(0, 0);
   assert.match(nodes.get("stage").innerHTML, /vn-speaker">主席团秘书/);
   assert.doesNotMatch(nodes.get("stage").innerHTML, /vn-speaker">米高扬/);
+});
+
+test('all 23 agendas have distinct authored places, introductions, replies and outcomes',()=>{
+  const {game:g}=runtime({novel:true});const seen={place:new Set(),arrival:new Set(),line:new Set(),yes:new Set(),no:new Set(),approved:new Set(),deferred:new Set()};
+  for(const d of g.decisions){
+    const p=g.novel.profile({kind:'decision',decisionId:d.id});
+    assert.equal(p.rounds.length,1);
+    assert.ok(p.arrival.length>30);assert.ok(p.rounds[0].line.length>40);
+    assert.ok(p.approved.length>30);assert.ok(p.deferred.length>20);
+    for(const[key,value]of Object.entries({place:p.rounds[0].place,arrival:p.arrival,line:p.rounds[0].line,yes:p.voices[0][0],no:p.voices[1][0],approved:p.approved,deferred:p.deferred})){
+      assert.ok(!seen[key].has(value),`${d.id}: reused ${key}`);seen[key].add(value);
+    }
+  }
+});
+test('an unfinished old multi-round agenda becomes one uncharged final decision and keeps prior discussion',()=>{
+  const{game:g}=prepare('dec-prologue');const before=JSON.stringify(g.effectSnapshot());
+  g.state()._novel={v:1,kind:'decision',sceneId:'dec-prologue',decisionId:'religion',round:2,answers:[0,1].map((option,round)=>({round,option,text:'旧会谈回应'+round,speaker:'莫洛托夫',prompt:'旧会谈问题',leader:'约瑟夫·斯大林',place:'办公厅',time:'会谈中'}))};
+  g.saveGame();g.fresh();g.resume();
+  assert.equal(JSON.stringify(g.effectSnapshot()),before);
+  assert.equal(g.state()._novel.round,0);assert.equal(g.novel.profile().rounds.length,1);
+  assert.equal(g.state()._novel.previousDiscussion.length,2);
+  const pending=JSON.stringify(g.state());g.fresh();g.resume();assert.equal(JSON.stringify(g.state()),pending);
+  assert.equal(g.novel.respond(1,0),true);
+  assert.equal(JSON.stringify(g.effectSnapshot()),before);
+  assert.equal(g.state()._novelResolution.previousDiscussion.length,2);
+  assert.equal(g.state()._novelResolution.answers.length,1);
+  assert.match(g.novel.decisionOutcomeHTML(),/未拨付资源/);
+});
+test('deferring after an approval reports this deferral without a stale charged ledger',()=>{
+ const{game:g}=prepare('dec-prologue');const d=g.decisions.find(d=>d.id==='religion');
+ g.novel.startDecision(d);g.novel.respond(0,0);
+ g.novel.startDecision(d);const before=JSON.stringify(g.effectSnapshot());g.novel.respond(1,0);
+ assert.equal(JSON.stringify(g.effectSnapshot()),before);
+ const html=g.novel.decisionOutcomeHTML();assert.match(html,/本期暂缓/);assert.match(html,/未拨付资源/);assert.doesNotMatch(html,/政治资本.*−15/);
 });

@@ -57,80 +57,35 @@ const Novel = (() => {
   function profile(session = S._novel) {
     if (!session) return null;
     if (session.kind === "event") return NOVEL_EVENTS[session.sceneId];
-    const d = DECISIONS.find((d) => d.id === session.decisionId),
-      spec = NOVEL_DECISIONS[session.decisionId];
-    if (!d || !spec) return null;
-    const [actor, count, pace, line, yes, no] = spec;
-    const cost = Object.entries(decisionCost(d))
-      .map(([k, v]) => `${META[k].n}${v}`)
-      .join("、");
-    const scenes = [
-      ["工作汇报", "议题提出", line, yes, no],
-      [
-        "预算会商",
-        "资源核算",
-        `这次需要${cost}。资源一旦拨出，其他项目就要后退。`,
-        "为这件事预留资源。",
-        "先把资源留给其他项目。",
-      ],
-      [
-        "执行机关",
-        "实施准备",
-        `关于“${d.name}”，执行机关需要确定的工作范围，而不是一句口号。`,
-        "让执行机关开始准备。",
-        "保持现有工作安排。",
-      ],
-      [
-        "会后走廊",
-        "责任与代价",
-        `${spec[3]} 发生后果时，地方会把它理解为最高层的态度。`,
-        "我承担推动它的责任。",
-        "此时不扩大最高层的承诺。",
-      ],
-      [
-        "办公厅",
-        "本期安排",
-        `这项工作的承诺，需要在下一份计划里兑现。您准备维持投入吗？`,
-        "把这项工作保留在投入序列里。",
-        "不为它保留追加投入。",
-      ],
-      [
-        "筹备部门",
-        "持续性复核",
-        `“${d.name}”不能只靠第一次动员。后续人员和资源也要有着落。`,
-        "让团队按持续投入作准备。",
-        "先不锁定后续安排。",
-      ],
-      [
-        "办公厅",
-        "授权定稿",
-        `综合此前的表态，我们应当推进“${d.name}”，还是维持原来的安排？`,
-        "把推进写入本期工作安排。",
-        "让现行安排继续。",
-      ],
-    ];
-    // Short processes use proposal, cost, mandate. Longer ones include implementation review.
-    const pick =
-      count === 3
-        ? [0, 1, 6]
-        : count === 5
-          ? [0, 1, 2, 3, 6]
-          : [0, 1, 2, 3, 4, 5, 6];
+    const d = DECISIONS.find((d) => d.id === session.decisionId);
+    const encounter = NOVEL_AGENDA_SCENES[session.decisionId];
+    if (!d || !encounter) return null;
     return {
-      pace,
-      reason: `${pace}：议题、成本、执行条件与授权依次形成。`,
-      arrival: `${d.name}的文件被单独抽出来。${d.note}。`,
-      rounds: pick.map((n) => ({
-        actor,
-        place: scenes[n][0],
-        time: scenes[n][1],
-        aside: n
-          ? "门外的人仍在等待这一期的安排。"
-          : "汇报人先讲了方案最难承担的部分。",
-        line: scenes[n][2],
-      })),
-      voices: [pick.map((n) => scenes[n][3]), pick.map((n) => scenes[n][4])],
+      agenda: true,
+      pace: "本次批示",
+      reason: "听取具体汇报后，一次回应决定本期执行或暂缓。",
+      arrival: encounter.arrival,
+      art: encounter.art,
+      approved: encounter.approved,
+      deferred: encounter.deferred,
+      rounds: [{ actor: encounter.actor, place: encounter.place,
+        time: '本期安排', aside: encounter.aside, line: encounter.line }],
+      voices: [[encounter.yes], [encounter.no]],
+      cost: decisionCost(d),
     };
+  }
+  function normalizeDecisionSession() {
+    const s = S._novel;
+    if (!s || s.kind !== "decision" || s.agendaVersion === 2 || S._pendingResult) return;
+    const oldCount = NOVEL_DECISIONS[s.decisionId]?.[1];
+    if (!oldCount || !Array.isArray(s.answers) || !Number.isInteger(s.round) ||
+        s.round !== s.answers.length || s.round < 0 || s.round >= oldCount ||
+        s.answers.some((a,n) => a.round !== n || ![0,1].includes(a.option))) return;
+    // Earlier replies were never charged. Keep them as discussion; request one final decision.
+    s.previousDiscussion = s.answers.map(a => ({...a}));
+    s.answers = [];
+    s.round = 0;
+    s.agendaVersion = 2;
   }
   function candidates(session = S._novel) {
     if (!session) return [];
@@ -215,6 +170,7 @@ const Novel = (() => {
     return ART[S.curId];
   }
   function renderActive() {
+    normalizeDecisionSession();
     const session = S._novel,
       p = profile();
     if (!p || !validSession(session, S.curId)) {
@@ -253,13 +209,17 @@ const Novel = (() => {
     const stage = document.getElementById("stage");
     stage.innerHTML = `<div class="fade novel-layout">
       <div class="vn-heading"><div><div class="tag">${esc(sc.chapter)} · ${esc(S.year)}</div><h1 class="scene">${esc(title)}</h1></div>${seatHTML()}</div>
-      <div class="vn-progress" aria-label="对话进度，第${session.round + 1}轮，共${p.rounds.length}轮"><span>第 ${session.round + 1} / ${p.rounds.length} 轮</span><div>${p.rounds.map((_, n) => `<span class="${n < session.round ? "done" : n === session.round ? "now" : ""}"></span>`).join("")}</div><button class="nav-button" id="vn-log">见闻档案</button></div>
+      <div class="vn-progress" aria-label="${p.agenda ? '本项决议一次批示' : `对话进度，第${session.round + 1}轮，共${p.rounds.length}轮`}"><span>${p.agenda ? '听取汇报 · 一次批示' : `第 ${session.round + 1} / ${p.rounds.length} 轮`}</span><div>${p.agenda ? '' : p.rounds.map((_, n) => `<span class="${n < session.round ? "done" : n === session.round ? "now" : ""}"></span>`).join("")}</div><button class="nav-button" id="vn-log">见闻档案</button></div>
       ${context?.show ? `<div class="vn-context">${World.card(context.record)}</div>` : ""}
-      <div class="vn-film">${artHTML(context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(context?.show ? context.record.from : r.place)}</span><span>${esc(context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
+      <div class="vn-film">${artHTML(p.agenda ? p.art : context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(p.agenda ? r.place : context?.show ? context.record.from : r.place)}</span><span>${esc(context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
       <div class="vn-body">
+      ${session.round === 0 ? `<div class="vn-opening"><p>${esc(p.arrival)}</p>${!p.agenda && NOVEL_SCENE_MOMENTS[S.curId] ? `<p>${esc(NOVEL_SCENE_MOMENTS[S.curId][0])}</p>` : ''}</div>` : ''}
+      ${previous ? `<div class="vn-echo"><span>你刚才的回应</span><p>“${esc(previous.text)}”</p></div>` : ''}
+      ${session.previousDiscussion?.length ? '<p class="vn-carry-note">此前的会谈记录已归档。请对这项议题作最后批示。</p>' : ''}
       <p class="vn-aside">${esc(r.aside)}${reaction ? " " + esc(reaction) : ""}</p>
       <section class="vn-dialogue" aria-label="${esc(actor.name)}的对话">${portrait(actor.key)}<div><div class="vn-speaker">${esc(actor.name)}<small>${esc(actor.role)}</small></div><p class="vn-line">“${esc(text)}”</p></div></section>
-      <div class="prompt">${esc(leader().name)} · 你的回应</div><div class="vn-options">${enabled
+      ${p.agenda ? `<div class="vn-policy-cost"><span>本次投入</span><b>${Object.entries(p.cost).map(([k,v]) => `${esc(META[k].n)} ${v}`).join(' · ')}</b><small>批准后执行并结算，暂缓不拨付资源。</small></div>` : ''}
+      <div class="prompt">${esc(leader().name)} · ${p.agenda ? '你的批示' : '你的回应'}</div><div class="vn-options">${enabled
         .filter((o) => o.enabled)
         .map(
           (o) =>
@@ -341,6 +301,7 @@ const Novel = (() => {
       title,
       policy,
       answers: session.answers.map((a) => ({ ...a })),
+      previousDiscussion: (session.previousDiscussion || []).map(a => ({...a})),
       scores: tallyResult.scores.map((row) => ({
         ...row,
         label:
@@ -375,10 +336,14 @@ const Novel = (() => {
       saveGame();
     } else {
       const result = selected === 0 ? executeDecision(d) : null;
-      record.consequence =
-        selected === 0 && result
-          ? "投入已经结算。"
-          : "资源未拨出，现行安排继续。";
+      record.approved = selected === 0 && !!result;
+      record.resultDeltas = result || [];
+      record.consequence = selected === 0
+        ? result ? p.approved : "执行条件已经改变，文件暂未发出，资源没有拨付。"
+        : p.deferred;
+      if (record.approved && d.id === 'fort-molotov') {
+        record.consequence += ` 当前已完成${S['_c_fort-molotov'] || 0}／3期。`;
+      }
       if (selected === 0 && !result)
         record.policy = "条件变化，本次未执行" + d.name;
       renderDecisions(sc);
@@ -404,6 +369,7 @@ const Novel = (() => {
       kind: "decision",
       sceneId: S.curId,
       decisionId: d.id,
+      agendaVersion: 2,
       round: 0,
       answers: [],
     };
@@ -413,7 +379,7 @@ const Novel = (() => {
   function resolutionHTML() {
     const r = S._novelResolution;
     if (!r || r.sceneId !== S.curId) return "";
-    return `<details class="vn-resolution"><summary>会谈记录 · ${r.answers.length} 次回应</summary><p>累计倾向自动形成：${esc(r.policy)}。${r.tied ? "最高次数相同，采用其中最近一次明确表态。" : "采用累计次数最多的倾向。"}</p><div class="vn-tally">${r.scores
+    return `<details class="vn-resolution"><summary>${r.kind === 'decision' ? '批示记录' : '会谈记录'} · ${r.answers.length} 次回应</summary><p>${r.kind === 'decision' ? `本期批示：${esc(r.policy)}。` : `累计倾向自动形成：${esc(r.policy)}。${r.tied ? "最高次数相同，采用其中最近一次明确表态。" : "采用累计次数最多的倾向。"}`}</p><div class="vn-tally">${r.scores
       .filter((s) => s.votes)
       .map((s) => `<span>${esc(s.label)} · ${s.votes} 次</span>`)
       .join(
@@ -422,9 +388,18 @@ const Novel = (() => {
   }
   function decisionOutcomeHTML() {
     const r = S._novelResolution;
-    return r?.kind === "decision" && r.sceneId === S.curId
-      ? `<div class="vn-decision-outcome"><p>${esc(r.policy)}</p>${resolutionHTML()}</div>`
-      : "";
+    if (r?.kind !== "decision" || r.sceneId !== S.curId) return "";
+    const approved = r.approved ?? !/^(维持现状|条件变化)/.test(r.policy);
+    const deltas = r.resultDeltas ?? (S._lastDecision?.sceneId === S.curId && S._lastDecision.name === r.policy ? S._lastDecision.deltas : []);
+    const ledger = approved ? effectsHTML(deltas) : '<span>未拨付资源</span>';
+    return `<section class="vn-decision-outcome" role="status"><div class="eyebrow">${approved ? '批示已记录' : '本期暂缓'}</div><h2>${esc(r.policy)}</h2><p>${esc(r.consequence || '')}</p><div class="deltas">${ledger}</div>${resolutionHTML()}</section>`;
+  }
+  function aftermathHTML(sc) {
+    const moment = NOVEL_SCENE_MOMENTS[S.curId];
+    const r = S._novelResolution;
+    if (!moment || r?.kind !== 'event' || r.sceneId !== S.curId) return '';
+    const last = r.answers.at(-1);
+    return `<section class="vn-aftermath"><div class="eyebrow">会谈之后</div>${last ? `<blockquote><span>${esc(last.leader)}的最后回应</span><p>“${esc(last.text)}”</p></blockquote>` : ''}<p>${esc(moment[1])}</p></section>`;
   }
   function connectScene(sc) {
     const root = document.querySelector("#stage > .fade"),
@@ -448,7 +423,7 @@ const Novel = (() => {
         ? history
             .map(
               (h) =>
-                `<section><h3>${esc(h.title)}</h3><p class="hint">${esc(h.policy)}</p>${h.answers.map((a) => `<div class="vn-log-line"><small>${esc(a.place)} · ${esc(a.time)}</small><p><strong>${esc(a.speaker)}</strong>：${esc(a.prompt)}</p><p><strong>${esc(a.leader)}</strong>：${esc(a.text)}</p></div>`).join("")}</section>`,
+                `<section><h3>${esc(h.title)}</h3><p class="hint">${esc(h.policy)}</p>${[...(h.previousDiscussion || []), ...h.answers].map((a) => `<div class="vn-log-line"><small>${esc(a.place)} · ${esc(a.time)}</small><p><strong>${esc(a.speaker)}</strong>：${esc(a.prompt)}</p><p><strong>${esc(a.leader)}</strong>：${esc(a.text)}</p></div>`).join("")}</section>`,
             )
             .join("")
         : "<p>案头还没有留下会谈记录。</p>");
@@ -467,6 +442,7 @@ const Novel = (() => {
     startDecision,
     resolutionHTML,
     decisionOutcomeHTML,
+    aftermathHTML,
     connectScene,
     openLog,
     seatHTML,
