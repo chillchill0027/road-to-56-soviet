@@ -4,7 +4,9 @@ const Statistics = (() => {
   const NAMES = {PP:'政治资本',PAR:'偏执',IND:'工业',ARMY:'红军',MOR:'民心',COM:'阵营影响',STAL:'斯大林派',LEFT:'左翼',RIGHT:'右翼'};
   const context = () => ({nuclear:S.nuclear||0,purges:S.purgeCount||0,war:S.warOutcome||null});
   const LAST_KEY = 'r56sov.statistics.last.v1';
-  let selected = 'IND', cursor = -1, tab = 'chart';
+  const liveView = {selected:'IND',cursor:-1,tab:'chart'};
+  let runSerial = 0;
+  const newRunId = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `run-${Date.now().toString(36)}-${++runSerial}`;
   const values = () => Object.fromEntries(KEYS.map(k=>[k,S[k]]));
   const signed = n => n > 0 ? `+${n}` : String(n);
   function leader(){
@@ -18,6 +20,7 @@ const Statistics = (() => {
       S._statistics = {v:1,firstYear:S.year,year:S.year,baseline:values(),initialContext:context(),events:[],years:[],pending:[]};
       record('起点',S.year===1936 && !S.curId ? '1936 · 新的历史' : `${S.year} · 接续案头报告`);
     }
+    S._statistics.runId ||= newRunId();
     return S._statistics;
   }
   function record(kind,title){
@@ -56,7 +59,7 @@ const Statistics = (() => {
     const changes = KEYS.slice(0,6).map(k=>({k,d:end[k]-start[k]}));
     const events = report.events.map(i=>data.events[i]).filter(e=>e && ['政策','决议'].includes(e.kind));
     const changed = changes.filter(c=>c.d!==0);
-    const opening = person.key==='beria' ? '新年的报告到了。机关的效率、工厂的进度、街头的情绪，我要一项项看清。权力已经交到我手里，不能只有新的签名，没有新的结果。' : person.key==='khrushchev' ? '又是一年。我把报告拉到面前：会上说得再热闹，也得看工厂开不开工，百姓日子过得怎么样。前任留下的账，现在得由我们来回答。' : ['zhukov','tukh'].includes(person.key) ? '新年的国家报告，像一张新的态势图摊在桌上。可治理国家不能只看箭头；军队、工厂和普通人的生活，都要算在同一份责任里。' : person.key==='stalin' ? '又一个新年。送到书房的报告已经摊开，我必须看看，这个国家究竟走到了哪里。' : person.key==='vacant' ? '新年到来，最高席位仍然空着。个人的命运已经改变，国家却还要把这一年的账翻过去。' : `新年的报告摆在我面前。我是${person.name}，如今这些数字背后的责任，也落在了我的肩上。`;
+    const opening = person.key==='beria' ? '新年的报告到了。机关的效率、工厂的进度、街头的情绪，我要一项项看清。权力已经交到我手里，不能只有新的签名，没有新的结果。' : person.key==='khrushchev' ? '又是一年。我把报告拉到面前：会上说得再热闹，也得看工厂开不开工，百姓日子过得怎么样。前任留下的账，现在得由我们来回答。' : ['zhukov','tukh'].includes(person.key) ? '新年的国家报告，像一张新的态势图摊在桌上。可治理国家不能只看箭头；军队、工厂和普通人的生活，都要算在同一份责任里。' : person.key==='stalin' ? '又一个新年。送到书房的报告已经摊开，我必须看看，这个国家究竟走到了哪里。' : person.key==='vacant' ? '新年到来，最高席位仍然空着。个人的命运已经改变，国家却还要把这一年的账翻过去。' : `新年的报告摆在我面前。我是${esc(person.name)}，如今这些数字背后的责任，也落在了我的肩上。`;
     const industry = end.IND>start.IND ? '工业的底子比年初厚了。但机器多了，不等于每张餐桌都更丰盛。' : end.IND<start.IND ? '工业退了下去。我不能拿一张漂亮的计划表，遮住车间里失去的东西。' : '工业的数字没有变化。既有的基础还在，新的突破却不能凭一句命令写进报告。';
     const people = end.MOR>start.MOR ? '民心回升了。我应当记住，信任也要靠下一年的生活来兑现。' : end.MOR<start.MOR ? '民心下降了。会议室里安静，并不意味着街上没有怨言。' : '民心停在原处。沉默的人群，仍然需要我去听。';
     const army = end.ARMY>start.ARMY ? '红军比年初更有力量；我仍要衡量，这份力量该用于守住边境，还是又一次冒险。' : end.ARMY<start.ARMY ? '红军的账面力量下降了。我必须分清，这是前线的损耗，还是我们自己的整顿削弱了它。' : '红军的账面力量未变。保持战备，仍然是留给来年的事。';
@@ -90,7 +93,7 @@ const Statistics = (() => {
     if (S?.curId && S._statistics) return S._statistics;
     return store.get(SAVE_KEY)?.S?._statistics || store.get(LAST_KEY) || null;
   }
-  function chart(data,key,small=false){
+  function chart(data,key,small=false,cursor=0,prefix=''){
     const list=data.events, w=760,h=260,left=48,right=20,top=20,bottom=40;
     const max=Math.max(10,...list.map(e=>e.values[key]));
     const ceiling=Math.ceil(max/10)*10;
@@ -98,29 +101,32 @@ const Statistics = (() => {
     const points=list.map((e,i)=>`${x(i)},${y(e.values[key])}`).join(' ');
     if(small) return `<svg viewBox="0 0 ${w} ${h}" aria-hidden="true"><polyline points="${points}" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/></svg>`;
     const labels = list.map((e,i)=>({e,i})).filter(({e,i})=>i===0||i===list.length-1||e.year!==list[i-1].year);
-    const ticks=labels.filter((_,i)=>i===0||i===labels.length-1||i%Math.max(1,Math.ceil(labels.length/6))===0);
-    return `<svg class="stat-chart" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">${NAMES[key]}变化折线图</title><desc id="chart-desc">从 ${list[0].year} 年的 ${list[0].values[key]} 到 ${list.at(-1).year} 年的 ${list.at(-1).values[key]}，共 ${list.length} 次记录。用下方滑块逐条查看准确数值与事件。</desc>${[0,.25,.5,.75,1].map(t=>`<line x1="${left}" x2="${w-right}" y1="${y(Math.round(t*ceiling))}" y2="${y(Math.round(t*ceiling))}" class="chart-grid"/><text x="${left-10}" y="${y(Math.round(t*ceiling))+4}" text-anchor="end">${Math.round(t*ceiling)}</text>`).join('')}<polyline points="${points}" class="chart-line"/>${ticks.map(({e,i})=>`<text x="${x(i)}" y="${h-12}" text-anchor="${i===0?'start':i===list.length-1?'end':'middle'}">${e.year}</text>`).join('')}<line class="chart-cursor" x1="${x(cursor)}" x2="${x(cursor)}" y1="${top}" y2="${h-bottom}"/><circle class="chart-point" cx="${x(cursor)}" cy="${y(list[cursor].values[key])}" r="5"/></svg>`;
+    const ticks=[labels[0]];
+    for(const point of labels.slice(1,-1))
+      if(x(point.i)-x(ticks.at(-1).i)>=140 && x(list.length-1)-x(point.i)>=140) ticks.push(point);
+    if(labels.length>1) ticks.push(labels.at(-1));
+    return `<svg class="stat-chart" viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${prefix}chart-title ${prefix}chart-desc"><title id="${prefix}chart-title">${NAMES[key]}变化折线图</title><desc id="${prefix}chart-desc">从 ${list[0].year} 年的 ${list[0].values[key]} 到 ${list.at(-1).year} 年的 ${list.at(-1).values[key]}，共 ${list.length} 次记录。用下方滑块逐条查看准确数值与事件。</desc>${[0,.25,.5,.75,1].map(t=>`<line x1="${left}" x2="${w-right}" y1="${y(Math.round(t*ceiling))}" y2="${y(Math.round(t*ceiling))}" class="chart-grid"/><text x="${left-10}" y="${y(Math.round(t*ceiling))+4}" text-anchor="end">${Math.round(t*ceiling)}</text>`).join('')}<polyline points="${points}" class="chart-line"/>${ticks.map(({e,i})=>`<text x="${x(i)}" y="${h-12}" text-anchor="${i===0?'start':i===list.length-1?'end':'middle'}">${e.year}</text>`).join('')}<line class="chart-cursor" x1="${x(cursor)}" x2="${x(cursor)}" y1="${top}" y2="${h-bottom}"/><circle class="chart-point" cx="${x(cursor)}" cy="${y(list[cursor].values[key])}" r="5"/></svg>`;
   }
-  function detail(data){
+  function detail(data,cursor,selected){
     const e=data.events[cursor],before=data.events[cursor-1]?.values||e.values;
     return `<div class="stat-event"><div><span>${e.year} · ${esc(e.kind)} · 第 ${cursor+1} / ${data.events.length} 条</span><h3>${esc(e.title)}</h3><p>${esc(e.leader.name)}在任</p></div><div class="stat-event-number"><b>${e.values[selected]}</b><span>${NAMES[selected]} / 本次 ${signed(e.values[selected]-before[selected])}</span></div></div>`;
   }
-  function renderDashboard(){
-    const data=viewData(), target=document.getElementById('statistics-content');
+  function renderDashboard(data=viewData(), target=document.getElementById('statistics-content'), view=liveView){
+    const {selected,tab}=view, prefix=view.prefix||'';
     if(!data?.events?.length){target.innerHTML='<p class="stats-empty">开启一段历史后，国家报告会随每次事件结算累积。</p>';return;}
-    cursor=Math.max(0,Math.min(cursor<0?data.events.length-1:cursor,data.events.length-1));
+    const cursor=view.cursor=Math.max(0,Math.min(view.cursor<0?data.events.length-1:view.cursor,data.events.length-1));
     const last=data.events.at(-1),first=data.events[0];
-    target.innerHTML=`<div class="statistics-tabs" role="group" aria-label="统计内容"><button type="button" data-stats-tab="chart" aria-pressed="${tab==='chart'}">国家曲线</button><button type="button" data-stats-tab="years" aria-pressed="${tab==='years'}">新年手记 <span>${data.years.length}</span></button></div>${tab==='chart'?`<div class="stat-metrics">${KEYS.map(k=>`<button class="stat-metric" data-metric="${k}" aria-pressed="${selected===k}"><span>${NAMES[k]}${k==='PAR'?' ↓':''}</span><b>${last.values[k]}</b><small>自统计起点 ${signed(last.values[k]-first.values[k])}</small>${chart(data,k,true)}</button>`).join('')}</div><section class="stat-plot"><div class="stat-plot-title"><h3>${NAMES[selected]} · 变化轨迹</h3><span>${first.year} — ${last.year} / ${data.events.length} 次记录</span></div><div id="stat-chart-holder">${chart(data,selected)}</div><label for="stat-position">沿时间线查阅事件 <span>← → 逐条查看</span></label><input id="stat-position" type="range" min="0" max="${data.events.length-1}" value="${cursor}" aria-label="选择事件记录"/><div id="stat-event-detail" aria-live="polite">${detail(data)}</div><p class="stats-note">横轴按实际结算顺序排列，同年可有多次变化；纵轴为所选指标的实际值。偏执越低越好，派系影响不表示好坏。没有新记录的年份不插入虚构数据。</p></section><details class="stat-table"><summary>查阅完整数值表</summary><div class="stat-table-scroll" tabindex="0" role="region" aria-label="国家指标数据表"><table><caption>本周目逐次结算记录</caption><thead><tr><th scope="col">年份 / 事件</th>${KEYS.map(k=>`<th scope="col">${NAMES[k]}</th>`).join('')}</tr></thead><tbody>${data.events.map(e=>`<tr><th scope="row">${e.year} · ${esc(e.title)}</th>${KEYS.map(k=>`<td>${e.values[k]}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`:data.years.length?`<label class="annual-select" for="annual-year">翻阅年份 <select id="annual-year">${data.years.slice().reverse().map(r=>`<option value="${r.year}">${r.year} · ${esc(r.leader.name)}</option>`).join('')}</select></label><div id="annual-archive">${reportHTML(data.years.at(-1),data)}</div>`:'<p class="stats-empty">第一个新年到来时，你会在这里收到上一年的手记。</p>'}`;
-    target.querySelectorAll('[data-stats-tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.statsTab;renderDashboard();}));
-    target.querySelectorAll('[data-metric]').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.metric;renderDashboard();document.querySelector(`[data-metric="${selected}"]`).focus();}));
-    document.getElementById('stat-position')?.addEventListener('input',e=>{cursor=Number(e.target.value);document.getElementById('stat-chart-holder').innerHTML=chart(data,selected);document.getElementById('stat-event-detail').innerHTML=detail(data);});
-    document.getElementById('annual-year')?.addEventListener('change',e=>{document.getElementById('annual-archive').innerHTML=reportHTML(data.years.find(r=>r.year===Number(e.target.value)),data);});
+    target.innerHTML=`<div class="statistics-tabs" role="group" aria-label="统计内容"><button type="button" data-stats-tab="chart" aria-pressed="${tab==='chart'}">国家曲线</button><button type="button" data-stats-tab="years" aria-pressed="${tab==='years'}">新年手记 <span>${data.years.length}</span></button></div>${tab==='chart'?`<div class="stat-metrics">${KEYS.map(k=>`<button class="stat-metric" data-metric="${k}" aria-pressed="${selected===k}"><span>${NAMES[k]}${k==='PAR'?' ↓':''}</span><b>${last.values[k]}</b><small>自统计起点 ${signed(last.values[k]-first.values[k])}</small>${chart(data,k,true,cursor)}</button>`).join('')}</div><section class="stat-plot"><div class="stat-plot-title"><h3>${NAMES[selected]} · 变化轨迹</h3><span>${first.year} — ${last.year} / ${data.events.length} 次记录</span></div><div id="${prefix}stat-chart-holder">${chart(data,selected,false,cursor,prefix)}</div><label for="${prefix}stat-position">沿时间线查阅事件 <span>← → 逐条查看</span></label><input id="${prefix}stat-position" type="range" min="0" max="${data.events.length-1}" value="${cursor}" aria-label="选择事件记录"/><div id="${prefix}stat-event-detail" aria-live="polite">${detail(data,cursor,selected)}</div><p class="stats-note">横轴按实际结算顺序排列，同年可有多次变化；纵轴为所选指标的实际值。偏执越低越好，派系影响不表示好坏。没有新记录的年份不插入虚构数据。</p></section><details class="stat-table"><summary>查阅完整数值表</summary><div class="stat-table-scroll" tabindex="0" role="region" aria-label="国家指标数据表"><table><caption>本周目逐次结算记录</caption><thead><tr><th scope="col">年份 / 事件</th>${KEYS.map(k=>`<th scope="col">${NAMES[k]}</th>`).join('')}</tr></thead><tbody>${data.events.map(e=>`<tr><th scope="row">${e.year} · ${esc(e.title)}</th>${KEYS.map(k=>`<td>${e.values[k]}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`:data.years.length?`<label class="annual-select" for="${prefix}annual-year">翻阅年份 <select id="${prefix}annual-year">${data.years.slice().reverse().map(r=>`<option value="${r.year}">${r.year} · ${esc(r.leader.name)}</option>`).join('')}</select></label><div id="${prefix}annual-archive">${reportHTML(data.years.at(-1),data)}</div>`:'<p class="stats-empty">第一个新年到来时，你会在这里收到上一年的手记。</p>'}`;
+    target.querySelectorAll('[data-stats-tab]').forEach(b=>b.addEventListener('click',()=>{view.tab=b.dataset.statsTab;renderDashboard(data,target,view);}));
+    target.querySelectorAll('[data-metric]').forEach(b=>b.addEventListener('click',()=>{view.selected=b.dataset.metric;renderDashboard(data,target,view);target.querySelector(`[data-metric="${view.selected}"]`).focus();}));
+    target.querySelector(`#${prefix}stat-position`)?.addEventListener('input',e=>{view.cursor=Number(e.target.value);target.querySelector(`#${prefix}stat-chart-holder`).innerHTML=chart(data,selected,false,view.cursor,prefix);target.querySelector(`#${prefix}stat-event-detail`).innerHTML=detail(data,view.cursor,selected);});
+    target.querySelector(`#${prefix}annual-year`)?.addEventListener('change',e=>{target.querySelector(`#${prefix}annual-archive`).innerHTML=reportHTML(data.years.find(r=>r.year===Number(e.target.value)),data);});
   }
-  function open(){cursor=-1;renderDashboard();document.getElementById('statistics-dialog').showModal();}
+  function open(){liveView.cursor=-1;renderDashboard();document.getElementById('statistics-dialog').showModal();}
   document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('nav-statistics').addEventListener('click',open);
     document.getElementById('annual-continue').addEventListener('click',acknowledge);
     document.getElementById('annual-dialog').addEventListener('cancel',e=>{e.preventDefault();acknowledge();});
   });
-  return {ensure,record,beforeYear,finish,present,acknowledge,open,reportHTML,keys:KEYS};
+  return {ensure,record,beforeYear,finish,present,acknowledge,open,reportHTML,keys:KEYS, mount:(data,target)=>renderDashboard(data,target,{selected:'IND',cursor:-1,tab:'chart',prefix:'run-'})};
 })();

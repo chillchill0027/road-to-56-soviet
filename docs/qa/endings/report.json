@@ -1,0 +1,75 @@
+{
+  "url": "http://127.0.0.1:45287/",
+  "passed": true,
+  "checks": [
+    "24 engine-completed backups import through file chooser; duplicate imports do not duplicate runs; malformed backup preserves all records",
+    "same ending retains different runs; all nine final metrics, chronological event slider and 21 annual reviews match the selected historical ledger",
+    "completed records survive reload; downloaded backup restores all runs in a separate browser profile",
+    "archive browsing and live statistics remain independent; starting a new game preserves all completed histories and viewing a run never changes the active save",
+    "legacy unlocks retain artwork and access, with an explicit missing-history note and no fabricated chart"
+  ],
+  "errors": [],
+  "resourceFailures": [],
+  "layouts": [
+    {
+      "name": "gallery",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "gallery",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "playthrough",
+      "width": 1440,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "playthrough",
+      "width": 1024,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "playthrough",
+      "width": 768,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "playthrough",
+      "width": 390,
+      "overflow": 0,
+      "broken": []
+    },
+    {
+      "name": "playthrough",
+      "width": 320,
+      "overflow": 0,
+      "broken": []
+    }
+  ]
+}

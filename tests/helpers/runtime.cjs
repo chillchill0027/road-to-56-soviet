@@ -112,6 +112,7 @@ function runtime(options = {}) {
   `,
       context,
     );
+  if(options.endings) vm.runInContext(fs.readFileSync(path.join(__dirname,'../../endings.js'),'utf8')+'\ngame.archive=EndingArchive; game.renderEnding=renderEnding; game.unlockEnding=unlockEnding; game.renderGallery=renderGallery;',context);
   const game = context.game;
   game.fresh();
   return { game, document, storage, listeners, nodes, math };

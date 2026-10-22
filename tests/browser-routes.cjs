@@ -272,6 +272,11 @@ const output = path.resolve(
         /\s/g,
         "",
       );
+      const archived = await page.evaluate(()=>EndingArchive.all().find(r=>r.id===S._statistics.runId));
+      assert.ok(archived, 'completed playthrough is archived');
+      assert.equal(archived.endingId,fixture.ending);
+      for(const k of Object.keys(archived.final)) assert.equal(archived.final[k],await page.evaluate(k=>S[k],k));
+      assert.match(await page.locator('.ending .ending-art img').getAttribute('src'),/ending-.*-sheet.webp/);
       assert.equal(
         title,
         model.endings.find((e) => e.id === fixture.ending).t.replace(/\s/g, ""),
@@ -297,6 +302,8 @@ const output = path.resolve(
       await page.click("#to-menu");
     }
     await page.click("#ts-gallery");
+    assert.equal(await page.evaluate(()=>EndingArchive.all().length),fixtures.length,'every completed run remains, including repeated endings');
+    assert.equal(await page.locator('.gal-item.got img').count(),14,'unlocked covers have ending-specific images');
     assert.equal(
       await page.locator(".gal-item.got").count(),
       14,

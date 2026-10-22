@@ -568,6 +568,7 @@ function renderTitle(){
   scrollToStart();
 }
 function renderGallery(){
+  if(typeof EndingArchive!=='undefined'){ EndingArchive.renderGallery(); return; }
   menuMode(true);
   const g = unlocked();
   const st = document.getElementById('stage');
@@ -2234,11 +2235,12 @@ function renderEnding(){
   const e = decideEnding();
   ENDED = true;
   unlockEnding(e.heads[0].id);
+  const archivedRun = typeof EndingArchive!=='undefined' ? EndingArchive.capture(e) : null;
   clearSave();
   menuMode(false); renderHUD();
   const st = document.getElementById('stage');
   st.innerHTML = `<div class="ending fade">
-    ${artHTML(ENDING_ART, 1956)}
+    ${typeof EndingArchive!=='undefined' ? EndingArchive.imageHTML(e.heads[0].id) : artHTML(ENDING_ART, 1956)}
     <div class="ey">1 9 5 6 年 1 2 月 · 结 算</div>
     <h2>${e.heads[0].t}</h2>
     <div class="etxt">${e.heads[0].b}</div>
@@ -2250,10 +2252,13 @@ function renderEnding(){
       ${e.report.map(([k,v,d])=>`<div class="rrow"><div class="rk">${k}</div><div class="rv">${v}</div><div class="rd">${d}</div></div>`).join('')}
     </div>
     <div class="acts" style="margin-top:30px">
+      ${archivedRun?'<button class="btn" id="ending-review">查看本次数值曲线</button>':''}
       <button class="btn" id="again" style="background:#9E1B1B;border-color:#9E1B1B">再 走 一 次</button>
       <button class="btn ghost" id="to-menu" style="background:transparent;color:#C6BBA9;border-color:#463F37">回 到 标 题</button>
     </div>
+    ${archivedRun?`<p class="ending-save-status" role="status">${esc(EndingArchive.saveMessage())}</p>`:''}
   </div>`;
+  document.getElementById('ending-review')?.addEventListener('click',()=>EndingArchive.open(e.heads[0].id,archivedRun.id,true));
   document.getElementById('again').addEventListener('click', () => {
     fresh(); renderHUD(); advance();
   });

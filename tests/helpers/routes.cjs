@@ -177,7 +177,7 @@ function decide(game, id, covered, verify = false) {
   if (verify) checkDeltas(game, before, deltas);
 }
 function replay(fixture, options = {}) {
-  const run = runtime({ fast: !!options.fast, statistics: !!options.statistics, war: !!options.war });
+  const run = runtime({ fast: !!options.fast, statistics: !!options.statistics, war: !!options.war, endings: !!options.endings });
   const { game, math, storage } = run;
   math.random = rng(fixture.eventSeed);
   const covered = new Set();
@@ -265,7 +265,7 @@ function replay(fixture, options = {}) {
     false,
     "completion clears the in-progress save",
   );
-  return { ending, covered, state: JSON.parse(JSON.stringify(game.state())) };
+  return { ending, covered, state: JSON.parse(JSON.stringify(game.state())), ...(options.endings ? {game,storage} : {}) };
 }
 module.exports = {
   optionPaths,
