@@ -59,7 +59,7 @@ function previewEffects(o){
 
 /* ============================================================
    图版素材（assets/images/<key>.jpg）
-   同一场景族共用一张图，重复使用是设计的一部分。
+   旧版通用图版保留作兼容；当前画面优先使用专属场景图。
    含"同一位男性"的三张图（leader-map / leader-corridor / leader-night）
    使用完全一致的人物锚点，保证跨图形象相同。
    ============================================================ */
@@ -134,7 +134,21 @@ function artHTML(key, year){
     <figcaption><span>${cap} <span class="art-fiction">/ 历史场景演绎</span></span><span>${y}</span></figcaption>
   </figure>`;
 }
-function artForCurrent(){ return artHTML(S.curId ? ART[S.curId] : null, S.year); }
+function artForCurrent(){
+  if (S.curId && typeof SceneArt !== 'undefined') {
+    const resolution = S._novelResolution;
+    if (SCENES[S.curId]?.decisions && resolution?.kind === 'decision' && resolution.sceneId === S.curId) {
+      const decision = DECISIONS.find(d => d.name === resolution.title);
+      const approved = resolution.approved ?? !/^(维持现状|条件变化)/.test(resolution.policy);
+      const outcome = decision && SceneArt.html(`agenda/${decision.id}/${approved ? 'approved' : 'deferred'}`, S.year);
+      if (outcome) return outcome;
+    }
+    const key = SCENES[S.curId]?.decisions ? `phase/${S.curId}` : `scene/${S.curId}`;
+    const dedicated = SceneArt.html(key, S.year) || SceneArt.html(`event/${S.curId}/round/0`, S.year) || SceneArt.html(`interlude/${S.curId}/page/0`, S.year);
+    if (dedicated) return dedicated;
+  }
+  return artHTML(S.curId ? ART[S.curId] : null, S.year);
+}
 
 /* ---------- 初始状态 ---------- */
 let S, i, LOG, ENDED;
@@ -409,7 +423,7 @@ function renderResult(sc, o, deltas, battles, extra){
     <h1 class="scene">${esc(o.label)}</h1>
     ${S.novelVersion && typeof Novel!=='undefined' ? Novel.seatHTML() : ''}
     ${o.flavor?`<div class="sub">${esc(o.flavor)}</div>`:'<div class="sub"></div>'}
-    ${warReport ? WarReports.heroHTML(warReport) : artForCurrent()}
+    ${warReport ? WarReports.heroHTML(warReport) : (typeof SceneArt !== 'undefined' && SceneArt.html(`result/${S.curId}/option/${sc.options.indexOf(o)}`,S.year)) || artForCurrent()}
     <div class="verdict ${failed?'bad':tone}">${esc(sceneText(sc,verdict))}</div>
     <div class="brief">${paragraphs.map(p=>`<p>${sceneText(sc,p)}</p>`).join('')}</div>
     ${S.novelVersion && typeof Novel!=='undefined' ? Novel.aftermathHTML(sc) : ''}

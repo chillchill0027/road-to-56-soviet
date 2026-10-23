@@ -1,0 +1,1108 @@
+{
+  "url": "http://127.0.0.1:43877/",
+  "fixture": "route-1",
+  "mode": "local-preliminary",
+  "passed": false,
+  "interactionsPassed": true,
+  "fullAssetAcceptance": false,
+  "checks": [
+    "94 available image sources return HTTP 200 and decode; every dedicated atlas has the expected native ratio",
+    "preliminary only: 30 known missing image sources and 1 open visual review issues remain; full release acceptance is not passed",
+    "opening page, seven live dialogue rounds and the chosen result use dedicated photographs; the pending result restores exactly",
+    "decision hub, specific meeting, deferral and approved work select their own image bindings; phone and desktop framing remains complete; unavailable images are listed separately as not visually verified",
+    "a real campaign result selects its tactic and actual rating image; its archive repeats that recorded moment without changing the save"
+  ],
+  "assets": [
+    {
+      "file": "assets/images/scenes/batch-000.webp",
+      "status": 200,
+      "bytes": 227804,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-001.webp",
+      "status": 200,
+      "bytes": 185006,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-002.webp",
+      "status": 200,
+      "bytes": 250318,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-003.webp",
+      "status": 200,
+      "bytes": 168264,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-004.webp",
+      "status": 200,
+      "bytes": 247492,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-005.webp",
+      "status": 200,
+      "bytes": 271506,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-006.webp",
+      "status": 200,
+      "bytes": 199942,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-007.webp",
+      "status": 200,
+      "bytes": 160146,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-008.webp",
+      "status": 200,
+      "bytes": 203808,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-009.webp",
+      "status": 200,
+      "bytes": 181464,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-010.webp",
+      "status": 200,
+      "bytes": 237090,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-011.webp",
+      "status": 200,
+      "bytes": 192586,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-012.webp",
+      "status": 200,
+      "bytes": 250698,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-013.webp",
+      "status": 200,
+      "bytes": 191228,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-014.webp",
+      "status": 200,
+      "bytes": 249592,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-015.webp",
+      "status": 200,
+      "bytes": 186030,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-016.webp",
+      "status": 200,
+      "bytes": 237902,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-017.webp",
+      "status": 200,
+      "bytes": 192222,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-023.webp",
+      "status": 200,
+      "bytes": 275100,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-024.webp",
+      "status": 200,
+      "bytes": 268264,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-025.webp",
+      "status": 200,
+      "bytes": 155606,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-026.webp",
+      "status": 200,
+      "bytes": 292480,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-027.webp",
+      "status": 200,
+      "bytes": 207812,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-028.webp",
+      "status": 200,
+      "bytes": 278772,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-029.webp",
+      "status": 200,
+      "bytes": 213242,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-030.webp",
+      "status": 200,
+      "bytes": 212064,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-031.webp",
+      "status": 200,
+      "bytes": 173990,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-032.webp",
+      "status": 200,
+      "bytes": 217820,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-033.webp",
+      "status": 200,
+      "bytes": 225398,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-034.webp",
+      "status": 200,
+      "bytes": 224234,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-035.webp",
+      "status": 200,
+      "bytes": 196378,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-036.webp",
+      "status": 200,
+      "bytes": 250402,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-037.webp",
+      "status": 200,
+      "bytes": 184222,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-038.webp",
+      "status": 200,
+      "bytes": 221554,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-039.webp",
+      "status": 200,
+      "bytes": 172532,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-040.webp",
+      "status": 200,
+      "bytes": 201736,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-041.webp",
+      "status": 200,
+      "bytes": 142906,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-042.webp",
+      "status": 200,
+      "bytes": 213480,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-049.webp",
+      "status": 200,
+      "bytes": 196852,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-050.webp",
+      "status": 200,
+      "bytes": 267546,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-051.webp",
+      "status": 200,
+      "bytes": 198230,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-052.webp",
+      "status": 200,
+      "bytes": 247950,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-053.webp",
+      "status": 200,
+      "bytes": 183614,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-054.webp",
+      "status": 200,
+      "bytes": 287360,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-055.webp",
+      "status": 200,
+      "bytes": 258452,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-056.webp",
+      "status": 200,
+      "bytes": 242306,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-057.webp",
+      "status": 200,
+      "bytes": 344944,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-058.webp",
+      "status": 200,
+      "bytes": 315652,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-059.webp",
+      "status": 200,
+      "bytes": 240310,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-060.webp",
+      "status": 200,
+      "bytes": 327668,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-061.webp",
+      "status": 200,
+      "bytes": 228806,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-062.webp",
+      "status": 200,
+      "bytes": 420608,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-063.webp",
+      "status": 200,
+      "bytes": 207080,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-064.webp",
+      "status": 200,
+      "bytes": 438462,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-069.webp",
+      "status": 200,
+      "bytes": 406608,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-070.webp",
+      "status": 200,
+      "bytes": 394194,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-071.webp",
+      "status": 200,
+      "bytes": 407028,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-072.webp",
+      "status": 200,
+      "bytes": 463714,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-073.webp",
+      "status": 200,
+      "bytes": 299718,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-074.webp",
+      "status": 200,
+      "bytes": 408272,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-075.webp",
+      "status": 200,
+      "bytes": 383794,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-076.webp",
+      "status": 200,
+      "bytes": 465150,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-077.webp",
+      "status": 200,
+      "bytes": 399934,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-078.webp",
+      "status": 200,
+      "bytes": 367702,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-079.webp",
+      "status": 200,
+      "bytes": 363494,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-080.webp",
+      "status": 200,
+      "bytes": 349770,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-081.webp",
+      "status": 200,
+      "bytes": 331712,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-082.webp",
+      "status": 200,
+      "bytes": 445834,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-083.webp",
+      "status": 200,
+      "bytes": 387556,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-084.webp",
+      "status": 200,
+      "bytes": 488896,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-085.webp",
+      "status": 200,
+      "bytes": 419158,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-086.webp",
+      "status": 200,
+      "bytes": 312494,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-093.webp",
+      "status": 200,
+      "bytes": 214108,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-094.webp",
+      "status": 200,
+      "bytes": 462670,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-095.webp",
+      "status": 200,
+      "bytes": 257722,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-097.webp",
+      "status": 200,
+      "bytes": 381012,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-098.webp",
+      "status": 200,
+      "bytes": 272446,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-099.webp",
+      "status": 200,
+      "bytes": 273622,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-100.webp",
+      "status": 200,
+      "bytes": 298710,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-101.webp",
+      "status": 200,
+      "bytes": 236870,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-102.webp",
+      "status": 200,
+      "bytes": 214706,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-103.webp",
+      "status": 200,
+      "bytes": 281316,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-104.webp",
+      "status": 200,
+      "bytes": 268818,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-105.webp",
+      "status": 200,
+      "bytes": 307904,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-106.webp",
+      "status": 200,
+      "bytes": 277756,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-107.webp",
+      "status": 200,
+      "bytes": 211472,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-108.webp",
+      "status": 200,
+      "bytes": 252856,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-109.webp",
+      "status": 200,
+      "bytes": 322728,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/scenes/batch-111.webp",
+      "status": 200,
+      "bytes": 334458,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/cover.webp",
+      "status": 200,
+      "bytes": 209320,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/ending-leadership-sheet.webp",
+      "status": 200,
+      "bytes": 233408,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/ending-society-sheet.webp",
+      "status": 200,
+      "bytes": 398110,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/ending-continuity-sheet.webp",
+      "status": 200,
+      "bytes": 257256,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "file": "assets/images/ending-rupture-sheet.webp",
+      "status": 200,
+      "bytes": 262560,
+      "width": 1024,
+      "height": 1536
+    }
+  ],
+  "skippedAssets": [
+    "assets/images/scenes/batch-018.webp",
+    "assets/images/scenes/batch-019.webp",
+    "assets/images/scenes/batch-020.webp",
+    "assets/images/scenes/batch-021.webp",
+    "assets/images/scenes/batch-022.webp",
+    "assets/images/scenes/batch-043.webp",
+    "assets/images/scenes/batch-044.webp",
+    "assets/images/scenes/batch-045.webp",
+    "assets/images/scenes/batch-046.webp",
+    "assets/images/scenes/batch-047.webp",
+    "assets/images/scenes/batch-048.webp",
+    "assets/images/scenes/batch-065.webp",
+    "assets/images/scenes/batch-066.webp",
+    "assets/images/scenes/batch-067.webp",
+    "assets/images/scenes/batch-068.webp",
+    "assets/images/scenes/batch-087.webp",
+    "assets/images/scenes/batch-088.webp",
+    "assets/images/scenes/batch-089.webp",
+    "assets/images/scenes/batch-090.webp",
+    "assets/images/scenes/batch-091.webp",
+    "assets/images/scenes/batch-092.webp",
+    "assets/images/scenes/batch-096.webp",
+    "assets/images/scenes/batch-110.webp",
+    "assets/images/scenes/batch-112.webp",
+    "assets/images/scenes/batch-113.webp",
+    "assets/images/scenes/batch-114.webp",
+    "assets/images/scenes/batch-115.webp",
+    "assets/images/scenes/batch-116.webp",
+    "assets/images/scenes/batch-117.webp",
+    "assets/images/scenes/batch-118.webp"
+  ],
+  "skippedSceneImages": [
+    "agenda/religion/deferred",
+    "agenda/religion/approved"
+  ],
+  "layouts": [
+    {
+      "key": "event/0-1/round/0",
+      "width": 320,
+      "imageWidth": 288,
+      "imageHeight": 192,
+      "overflow": 0,
+      "bodyWidth": 280,
+      "visible": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "width": 390,
+      "imageWidth": 358,
+      "imageHeight": 238.65625,
+      "overflow": 0,
+      "bodyWidth": 350,
+      "visible": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "width": 768,
+      "imageWidth": 712,
+      "imageHeight": 474.65625,
+      "overflow": 0,
+      "bodyWidth": 712,
+      "visible": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "width": 1440,
+      "imageWidth": 1040,
+      "imageHeight": 693.328125,
+      "overflow": 0,
+      "bodyWidth": 760,
+      "visible": true
+    },
+    {
+      "key": "agenda/religion/approved",
+      "width": 320,
+      "imageWidth": 288,
+      "imageHeight": 192,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "agenda/religion/approved",
+      "width": 390,
+      "imageWidth": 358,
+      "imageHeight": 238.65625,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "agenda/religion/approved",
+      "width": 768,
+      "imageWidth": 712,
+      "imageHeight": 474.65625,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "agenda/religion/approved",
+      "width": 1440,
+      "imageWidth": 1040,
+      "imageHeight": 693.328125,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "width": 320,
+      "imageWidth": 288,
+      "imageHeight": 192,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "width": 390,
+      "imageWidth": 358,
+      "imageHeight": 238.65625,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "width": 768,
+      "imageWidth": 712,
+      "imageHeight": 474.65625,
+      "overflow": 0,
+      "visible": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "width": 1440,
+      "imageWidth": 1040,
+      "imageHeight": 693.328125,
+      "overflow": 0,
+      "visible": true
+    }
+  ],
+  "scenes": [
+    {
+      "key": "interlude/p0-intro/page/0",
+      "file": "assets/images/scenes/batch-052.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/0",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/1",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/2",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-0%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/3",
+      "file": "assets/images/scenes/batch-000.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/4",
+      "file": "assets/images/scenes/batch-001.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/5",
+      "file": "assets/images/scenes/batch-001.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "event/0-1/round/6",
+      "file": "assets/images/scenes/batch-001.webp",
+      "position": "left:-0%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "result/0-1/option/1",
+      "file": "assets/images/scenes/batch-056.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "result/0-1/option/1",
+      "file": "assets/images/scenes/batch-056.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "phase/dec-prologue",
+      "file": "assets/images/scenes/batch-058.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "agenda/religion",
+      "file": "assets/images/scenes/batch-049.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": true
+    },
+    {
+      "key": "agenda/religion/deferred",
+      "file": "assets/images/scenes/batch-114.webp",
+      "position": "left:-0%;top:-0%",
+      "loaded": false
+    },
+    {
+      "key": "agenda/religion/approved",
+      "file": "assets/images/scenes/batch-113.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": false
+    },
+    {
+      "key": "agenda/religion/approved",
+      "file": "assets/images/scenes/batch-113.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": false
+    },
+    {
+      "key": "agenda/religion/approved",
+      "file": "assets/images/scenes/batch-113.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": false
+    },
+    {
+      "key": "agenda/religion/approved",
+      "file": "assets/images/scenes/batch-113.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": false
+    },
+    {
+      "key": "agenda/religion/approved",
+      "file": "assets/images/scenes/batch-113.webp",
+      "position": "left:-100%;top:-100%",
+      "loaded": false
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "file": "assets/images/scenes/batch-070.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "file": "assets/images/scenes/batch-070.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "file": "assets/images/scenes/batch-070.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "file": "assets/images/scenes/batch-070.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "file": "assets/images/scenes/batch-070.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    },
+    {
+      "key": "result/3-1/option/2/tier/0",
+      "file": "assets/images/scenes/batch-070.webp",
+      "position": "left:-100%;top:-0%",
+      "loaded": true
+    }
+  ],
+  "errors": [],
+  "resourceFailures": [
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-114.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-113.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-046.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-113.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-047.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-047.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-065.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-065.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-066.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-067.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-047.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-018.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-018.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-018.webp",
+      "status": 404
+    }
+  ],
+  "expectedMissingResources": [
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-114.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-113.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-046.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-113.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-047.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-047.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-065.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-065.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-066.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-067.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-047.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-018.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-018.webp",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:43877/assets/images/scenes/batch-018.webp",
+      "status": 404
+    }
+  ],
+  "assetReviewIssues": [
+    {
+      "file": "assets/images/scenes/batch-081.webp",
+      "cell": 2,
+      "status": "open",
+      "reason": "近景门柱形成疑似拼接，需要仅重新生成左下格为明确连续镜头；其他三格保留。修正被图像服务429额度限制阻塞。"
+    }
+  ]
+}

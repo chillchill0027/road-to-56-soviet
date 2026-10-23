@@ -1,0 +1,196 @@
+{
+  "passed": true,
+  "kind": "art-preview-catalog-only",
+  "gameAcceptance": false,
+  "checks": [
+    "entry preview links to catalog; default filter shows 369 completed scenes",
+    "371 image paths exist; all 94 unique image sources decode in Chromium",
+    "all filter shows 488; pending filter shows 117 cards with no img elements or new image requests",
+    "needs-fix filter shows 2 correction notes; scene ID search and empty state work",
+    "320/390/1440px layouts fit without overflow and controls remain >=44px high; no JS errors or failed resources"
+  ],
+  "layouts": [
+    {
+      "width": 320,
+      "overflow": 0,
+      "controls": [
+        {
+          "left": 20,
+          "right": 300,
+          "width": 280,
+          "height": 53
+        },
+        {
+          "left": 20,
+          "right": 300,
+          "width": 280,
+          "height": 48
+        },
+        {
+          "left": 20,
+          "right": 300,
+          "width": 280,
+          "height": 48
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "overflow": 0,
+      "controls": [
+        {
+          "left": 20,
+          "right": 370,
+          "width": 350,
+          "height": 53
+        },
+        {
+          "left": 20,
+          "right": 370,
+          "width": 350,
+          "height": 48
+        },
+        {
+          "left": 20,
+          "right": 370,
+          "width": 350,
+          "height": 48
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "overflow": 0,
+      "controls": [
+        {
+          "left": 32,
+          "right": 1130,
+          "width": 1098,
+          "height": 53
+        },
+        {
+          "left": 1142,
+          "right": 1289,
+          "width": 147,
+          "height": 53
+        },
+        {
+          "left": 1301,
+          "right": 1408,
+          "width": 107,
+          "height": 53
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "resourceFailures": [],
+  "requests": [
+    "http://127.0.0.1:34031/assets/images/cover.webp",
+    "http://127.0.0.1:34031/assets/images/ending-leadership-sheet.webp",
+    "http://127.0.0.1:34031/assets/images/ending-society-sheet.webp",
+    "http://127.0.0.1:34031/assets/images/ending-continuity-sheet.webp",
+    "http://127.0.0.1:34031/assets/images/ending-rupture-sheet.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-000.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-001.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-002.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-003.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-004.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-005.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-006.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-007.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-008.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-009.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-010.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-011.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-012.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-013.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-014.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-015.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-016.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-017.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-023.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-024.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-025.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-026.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-027.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-028.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-029.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-030.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-031.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-032.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-033.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-034.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-035.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-036.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-037.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-038.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-039.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-040.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-041.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-042.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-049.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-050.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-051.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-052.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-053.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-054.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-055.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-056.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-057.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-058.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-059.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-060.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-061.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-062.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-063.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-064.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-069.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-070.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-071.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-072.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-073.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-074.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-075.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-076.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-077.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-078.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-079.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-080.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-081.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-082.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-083.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-084.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-085.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-086.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-093.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-094.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-095.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-097.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-098.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-099.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-100.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-101.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-102.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-103.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-104.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-105.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-106.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-107.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-108.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-109.webp",
+    "http://127.0.0.1:34031/assets/images/scenes/batch-111.webp"
+  ],
+  "url": "http://127.0.0.1:34031/",
+  "counts": {
+    "completed": 369,
+    "pending": 117,
+    "needs-fix": 2
+  },
+  "images": {
+    "elements": 371,
+    "uniqueSources": 94,
+    "allPathsExist": true,
+    "allSourcesDecoded": true
+  }
+}

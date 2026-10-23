@@ -1,0 +1,67 @@
+/* Each cell is an independent native 3:2 photograph, shown without stretching. */
+.vn-portrait { background-image: url("assets/images/cast-sheet.webp?v=1.11.0"); }
+.dedicated-scene-art .art-window {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #292724;
+}
+.dedicated-scene-art .art-cell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  transform: none;
+  overflow: hidden;
+}
+.dedicated-scene-art .art-cell > img {
+  position: absolute;
+  display: block;
+  width: calc(100% * var(--scene-cols));
+  height: calc(100% * var(--scene-rows));
+  max-width: none;
+  object-fit: fill;
+  filter: none;
+}
+.dedicated-scene-art figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 13px 2px 0;
+  border-bottom: 0;
+  color: var(--mut);
+  font: 11px/1.8 var(--sans);
+}
+.novel-layout, .world-interlude, .play-layout { margin-inline: auto; }
+.vn-film, .visual-rail, .world-scene-frame {
+  width: min(1040px, calc(100vw - 284px));
+  max-width: none;
+}
+.vn-film, .visual-rail { align-self: center; }
+.world-scene-frame { margin-left: 50%; transform: translateX(-50%); }
+.vn-film { order: 2; margin-block: 4px 28px; }
+.vn-context { order: 3; }
+.vn-film .dedicated-scene-art .art-window,
+.visual-rail .dedicated-scene-art .art-window,
+.world-scene-frame .dedicated-scene-art .art-window { aspect-ratio: 3 / 2; }
+.vn-film .dedicated-scene-art figcaption { display: none; }
+.vn-location { padding-inline: 2px; gap: 10px 24px; }
+.world-scene-frame { margin-bottom: 30px; }
+/* Archive dialog images remain inside the sheet that contains them. */
+dialog .dedicated-scene-art { width: 100%; }
+@media (min-width: 901px) and (max-width: 1160px) {
+  .vn-film, .visual-rail, .world-scene-frame { width: calc(100vw - 256px); }
+}
+@media (max-width: 900px) {
+  .vn-film, .visual-rail, .world-scene-frame { width: calc(100vw - 56px); }
+}
+@media (max-width: 700px) {
+  .vn-film, .visual-rail, .world-scene-frame { width: calc(100vw - 32px); }
+  .dedicated-scene-art .art-window { border-radius: 12px; }
+  .dedicated-scene-art figcaption { flex-wrap: wrap; gap: 3px 14px; font-size: 10px; padding-top: 10px; }
+  .vn-film { margin-block: 2px 24px; }
+  .vn-location { padding-inline: 4px; font-size: 11px; }
+}

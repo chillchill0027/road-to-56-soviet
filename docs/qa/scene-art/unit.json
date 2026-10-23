@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "tests": 194,
+  "pass": 194,
+  "fail": 0,
+  "execution": "Each file executed directly with node to run named tests under this sandbox.",
+  "suites": [
+    {
+      "file": "tests/game-logic.cjs",
+      "tests": 25,
+      "pass": 25,
+      "fail": 0
+    },
+    {
+      "file": "tests/event-effects.cjs",
+      "tests": 31,
+      "pass": 31,
+      "fail": 0
+    },
+    {
+      "file": "tests/route-coverage.cjs",
+      "tests": 25,
+      "pass": 25,
+      "fail": 0
+    },
+    {
+      "file": "tests/novel.cjs",
+      "tests": 37,
+      "pass": 37,
+      "fail": 0
+    },
+    {
+      "file": "tests/world.cjs",
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    {
+      "file": "tests/statistics.cjs",
+      "tests": 27,
+      "pass": 27,
+      "fail": 0
+    },
+    {
+      "file": "tests/war.cjs",
+      "tests": 30,
+      "pass": 30,
+      "fail": 0
+    },
+    {
+      "file": "tests/endings.cjs",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0
+    },
+    {
+      "file": "tests/scene-art.cjs",
+      "tests": 6,
+      "pass": 6,
+      "fail": 0
+    }
+  ],
+  "followup": "scene-art.cjs rerun passed 6/6 after requiring all 85 tactical outcome photographs explicitly.",
+  "browser": {
+    "status": "preliminary_interactions_passed_full_acceptance_pending",
+    "report": "docs/qa/scene-art/preliminary/report.json",
+    "reason": "Missing117 scene photographs and two open image corrections still block final acceptance."
+  },
+  "publication": {
+    "status": "independent_art_preview_published_full_game_pending",
+    "url": "https://road-to-56-soviet.chillchill0027.chatgpt.site/art-preview/",
+    "reason": "Full game is still blocked by117 missing illustrations and two image corrections. GitHub CLI token is invalid."
+  }
+}

@@ -30,6 +30,8 @@ jobs:
         run: STATISTICS_OUTPUT=docs/qa/live/statistics/report.json node tests/browser-statistics.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - name: Verify outcome covers, persistent playthroughs and backup restore
         run: ENDINGS_OUTPUT=docs/qa/live/endings/report.json node tests/browser-endings.cjs https://chillchill0027.github.io/road-to-56-soviet/
+      - name: Verify dedicated scene illustrations and enlarged framing
+        run: SCENE_ART_OUTPUT=docs/qa/live/scene-art/report.json node tests/browser-scene-art.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - uses: actions/upload-artifact@v4
         if: always()
         with:

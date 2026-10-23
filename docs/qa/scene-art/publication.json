@@ -1,0 +1,14 @@
+{
+  "status": "succeeded",
+  "scope": "independent_artwork_preview_only",
+  "url": "https://road-to-56-soviet.chillchill0027.chatgpt.site/art-preview/",
+  "project_id": "appgprj_6ad5fb754d9c8191b313bd55f47ff6b6",
+  "version_number": 8,
+  "version_id": "appgprj_6ad5fb754d9c8191b313bd55f47ff6b6~appgver_ebe24bfaa0d0819187bfd0ec48a96be7",
+  "deployment_id": "appgdep_6adaeeb5f9fc8191970564ccb891f950",
+  "source_commit": "d345d20b623aa3da7415bebbe603ad255ec5d960",
+  "deployed_at": "2026-10-23T05:21:11.922491Z",
+  "game_at_root": "v1.10 unchanged",
+  "full_game_acceptance": false,
+  "github_push": "unavailable_current_cli_token_invalid"
+}

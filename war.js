@@ -60,6 +60,13 @@ const WarReports = (() => {
     return S._warReports?.find(r=>r.sceneId===S.curId && r.optionIndex===sc.options.indexOf(o)) || create(sc,o,battles,deltas);
   }
   function heroHTML(report,lazy=false){
+    const legacyId = /^(.+):(\d+)$/.exec(report.id || '');
+    const sceneId = report.sceneId || legacyId?.[1] || WAR_SECTORS[report.sector]?.scene;
+    const optionIndex = Number.isInteger(report.optionIndex) ? report.optionIndex : legacyId ? Number(legacyId[2]) : -1;
+    const level = Number.isInteger(report.level) ? report.level : WAR_TIER_NOTES.findIndex(tier=>tier[0]===report.tier);
+    const key = `result/${sceneId}/option/${optionIndex}${report.kind === 'battle' ? `/tier/${level}` : ''}`;
+    const dedicated = typeof SceneArt !== 'undefined' ? SceneArt.html(key, report.year, {artKey:report.photo,lazy,captionClass:'war-photo-caption'}) : '';
+    if (dedicated) return dedicated;
     return artHTML(report.photo,report.year).replace('<figcaption>','<figcaption class="war-photo-caption">').replace('decoding="async"',`decoding="async"${lazy?' loading="lazy"':''}`);
   }
   function mapHTML(r,archive=false){

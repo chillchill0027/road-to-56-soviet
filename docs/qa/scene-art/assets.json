@@ -1,0 +1,718 @@
+{
+  "passed": false,
+  "scenes": 488,
+  "ready": 371,
+  "approvedScenes": 369,
+  "reviewIssues": [
+    {
+      "file": "assets/images/scenes/batch-080.webp",
+      "cell": 1,
+      "status": "open",
+      "reason": "厂区失守结果中，背景苏军背影朝带德军十字的坦克跑，撤收方向含混。保留前景女工交钥匙，仅将背景苏军改为向右前方或观众方向撤收，敌军坦克留在远后景；额度恢复后用ImageGen只修正此格。"
+    },
+    {
+      "file": "assets/images/scenes/batch-081.webp",
+      "cell": 2,
+      "status": "open",
+      "reason": "近景门柱形成疑似拼接，需要仅重新生成左下格为明确连续镜头；其他三格保留。修正被图像服务429额度限制阻塞。"
+    }
+  ],
+  "uniquePictures": 488,
+  "sourceFiles": 124,
+  "newScenePhotographs": 473,
+  "newAtlases": 89,
+  "bytes": 25891786,
+  "errors": [],
+  "missing": [
+    "assets/images/scenes/batch-018.webp",
+    "assets/images/scenes/batch-019.webp",
+    "assets/images/scenes/batch-020.webp",
+    "assets/images/scenes/batch-021.webp",
+    "assets/images/scenes/batch-022.webp",
+    "assets/images/scenes/batch-043.webp",
+    "assets/images/scenes/batch-044.webp",
+    "assets/images/scenes/batch-045.webp",
+    "assets/images/scenes/batch-046.webp",
+    "assets/images/scenes/batch-047.webp",
+    "assets/images/scenes/batch-048.webp",
+    "assets/images/scenes/batch-065.webp",
+    "assets/images/scenes/batch-066.webp",
+    "assets/images/scenes/batch-067.webp",
+    "assets/images/scenes/batch-068.webp",
+    "assets/images/scenes/batch-087.webp",
+    "assets/images/scenes/batch-088.webp",
+    "assets/images/scenes/batch-089.webp",
+    "assets/images/scenes/batch-090.webp",
+    "assets/images/scenes/batch-091.webp",
+    "assets/images/scenes/batch-092.webp",
+    "assets/images/scenes/batch-096.webp",
+    "assets/images/scenes/batch-110.webp",
+    "assets/images/scenes/batch-112.webp",
+    "assets/images/scenes/batch-113.webp",
+    "assets/images/scenes/batch-114.webp",
+    "assets/images/scenes/batch-115.webp",
+    "assets/images/scenes/batch-116.webp",
+    "assets/images/scenes/batch-117.webp",
+    "assets/images/scenes/batch-118.webp"
+  ],
+  "assets": [
+    {
+      "file": "assets/images/scenes/batch-000.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 227804,
+      "sha256": "3783ff0146138d54c69e410d3c5deeed7af13a1fe51f509d36542a56a9aba39b"
+    },
+    {
+      "file": "assets/images/scenes/batch-001.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 185006,
+      "sha256": "b2b6863b764e7df335e6901b04a40f18fa423ef3aa32896087a58bd0eda47e6e"
+    },
+    {
+      "file": "assets/images/scenes/batch-002.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 250318,
+      "sha256": "1cf9a3b2104ee94ccb0a46ca8e75a029d5154ddf5cd518e42bd251488ea6e108"
+    },
+    {
+      "file": "assets/images/scenes/batch-003.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 168264,
+      "sha256": "0ab388291a0105b72f2fdefd7d55534c94a5bc28b0ffe1f274b1633bb69cc342"
+    },
+    {
+      "file": "assets/images/scenes/batch-004.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 247492,
+      "sha256": "941737f1f63eef9d1e655d1b921a83b018924f6defc72d9f2ac7f7a31f47a9c7"
+    },
+    {
+      "file": "assets/images/scenes/batch-005.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 271506,
+      "sha256": "ab331dc6b80702022334d97abfdc0aebe4c436a03412c5354751764a6b95ff5d"
+    },
+    {
+      "file": "assets/images/scenes/batch-006.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 199942,
+      "sha256": "8c03243e6f87d35ea598ca0e98acbbf2a8b514f486b0adccc9b68cbee8371482"
+    },
+    {
+      "file": "assets/images/scenes/batch-007.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 160146,
+      "sha256": "38f94ce66183d16bf19026795ac75d268bfc03f1c5f2b4f18e7c2ac6b0148883"
+    },
+    {
+      "file": "assets/images/scenes/batch-008.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 203808,
+      "sha256": "521753687dd3e6443562d04926d21ab96d3f29cad021960755bd78534ed829b3"
+    },
+    {
+      "file": "assets/images/scenes/batch-009.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 181464,
+      "sha256": "855ae55aed598646c14b9bf4fef7374a2472a0b2c2ec1dcef1ac9703ae388098"
+    },
+    {
+      "file": "assets/images/scenes/batch-010.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 237090,
+      "sha256": "d797cb7c50ce2cd577c0259d4ed707b6c62e00175ebe8c28eb5af95e476cd21e"
+    },
+    {
+      "file": "assets/images/scenes/batch-011.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 192586,
+      "sha256": "39019033aedd73f1ef425bab5dc007c5760949a6c90d74423420c90bf396fdf7"
+    },
+    {
+      "file": "assets/images/scenes/batch-012.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 250698,
+      "sha256": "3ac36a569e3dd4089fe5f6756c497ec3950e8fd2fcdc40487b1bc7ab936e6a50"
+    },
+    {
+      "file": "assets/images/scenes/batch-013.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 191228,
+      "sha256": "c4ed7070c89428bffbfba43d88dfd731f0109cfd9006b30a6e2a9488a76257f9"
+    },
+    {
+      "file": "assets/images/scenes/batch-014.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 249592,
+      "sha256": "94034af72f75db1ac98deb228ac47b2b2baffa7773ee208f08abb6646618b333"
+    },
+    {
+      "file": "assets/images/scenes/batch-015.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 186030,
+      "sha256": "f215bb214c1f5b377ee587e319db307057f49f9c1cbc498737cce50a2b90f207"
+    },
+    {
+      "file": "assets/images/scenes/batch-016.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 237902,
+      "sha256": "fb5c317446552246109d91fd78eaa7b52e5aa50f33a029c98abd551276b5979e"
+    },
+    {
+      "file": "assets/images/scenes/batch-017.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 192222,
+      "sha256": "66cb74987ff31af01dfd935e5160c5369864d1fbf7893ef0872fea2d677349e4"
+    },
+    {
+      "file": "assets/images/scenes/batch-023.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 275100,
+      "sha256": "9c24f5660b3e20b51c646e59c5fb75de85bfad2e7ce718fcbc1cfcbf1925b4ff"
+    },
+    {
+      "file": "assets/images/scenes/batch-024.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 268264,
+      "sha256": "dab94b677978b0a89555ec2cf671eb5340e28c1474aeca9bc03a916048a39246"
+    },
+    {
+      "file": "assets/images/scenes/batch-025.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 155606,
+      "sha256": "ad302a89ea9d92cb69b795f5f7a50f66462663bd4008b6735a83461f6ff8e753"
+    },
+    {
+      "file": "assets/images/scenes/batch-026.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 292480,
+      "sha256": "4d51e9bc129fcfd2186a4de0e10b1ce0f8c4a9e0a71f0aa62ce747c007ebe989"
+    },
+    {
+      "file": "assets/images/scenes/batch-027.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 207812,
+      "sha256": "1dd7921d1d711e0860593810dc5c6e56d6f21a54c5fcb65142dd106ede3c6a25"
+    },
+    {
+      "file": "assets/images/scenes/batch-028.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 278772,
+      "sha256": "2fd1911135817c996e769f4e4a70fc63dde1ee6f5062784c73e2d055ac5212df"
+    },
+    {
+      "file": "assets/images/scenes/batch-029.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 213242,
+      "sha256": "658fefdb5d9b6aa6c36cf7a57ecade4f00a5e8a8936b00dc1b6b201dca1edddc"
+    },
+    {
+      "file": "assets/images/scenes/batch-030.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 212064,
+      "sha256": "487c881b683f53a213de94386ad30889b9e4b6c3f163f6af678e3e6556735bde"
+    },
+    {
+      "file": "assets/images/scenes/batch-031.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 173990,
+      "sha256": "aa9bff52be0d40b9df51cca4701ecf286d7090f49ef2c2ab80acd57f2e77aaa2"
+    },
+    {
+      "file": "assets/images/scenes/batch-032.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 217820,
+      "sha256": "41328674ffdadc131d8fa2ae30c32136ca0b3910df75c6da56c97afc3398758f"
+    },
+    {
+      "file": "assets/images/scenes/batch-033.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 225398,
+      "sha256": "d73c56cd7c51b44b789111d243efa8331481aff729ff8ef0a09e1cdd73aabad9"
+    },
+    {
+      "file": "assets/images/scenes/batch-034.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 224234,
+      "sha256": "87a26b0dac03d672a46157729a5799fdff6acbd896731951b921a6935ae12351"
+    },
+    {
+      "file": "assets/images/scenes/batch-035.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 196378,
+      "sha256": "cc1d2326a9cdc85e35d4514e8d697c6cd6148da03ccd6fe49dff51f3ed6c0127"
+    },
+    {
+      "file": "assets/images/scenes/batch-036.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 250402,
+      "sha256": "5a64574bb3dbb583cea2cb2e3a1952fee82075b4f1bd28aff8a70b4b8c9c4f4a"
+    },
+    {
+      "file": "assets/images/scenes/batch-037.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 184222,
+      "sha256": "26e185602a44009f191fb077b370716b28e732047e170eceae43369a67fc79ce"
+    },
+    {
+      "file": "assets/images/scenes/batch-038.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 221554,
+      "sha256": "47bdde2a2d030c848fe33738e26ea25616e9b5baa1fa699b4cb31c3f804fe5e3"
+    },
+    {
+      "file": "assets/images/scenes/batch-039.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 172532,
+      "sha256": "5675a2cc6c0815ac52ba800c2d7e2ae67b2866f300a1d03c90c8a4755e0e80f4"
+    },
+    {
+      "file": "assets/images/scenes/batch-040.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 201736,
+      "sha256": "1187a4b7494944e5497374f27f0517b0acd08d4588ab4ff5f07a3ebe8e2fd9c2"
+    },
+    {
+      "file": "assets/images/scenes/batch-041.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 142906,
+      "sha256": "75739ffed1160d2bba80023ce63b8c8cd745af0b08403d0aa3fa0ada6fbbf000"
+    },
+    {
+      "file": "assets/images/scenes/batch-042.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 213480,
+      "sha256": "0c619dcb1d157288d7f63b636dd98c57de8d9a66e0d13e697ead19160c803c5c"
+    },
+    {
+      "file": "assets/images/scenes/batch-049.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 196852,
+      "sha256": "994ef5f9d8a404901809e9a4aef3043efe0b0a7f1f2a13883bc9b2e7a4ec5309"
+    },
+    {
+      "file": "assets/images/scenes/batch-050.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 267546,
+      "sha256": "6d66fd1eeec68fb06e90291b8ae9f3cfa39c19380e5f2462b2c25b5722630fbd"
+    },
+    {
+      "file": "assets/images/scenes/batch-051.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 198230,
+      "sha256": "b6499217ca4f63c26a6c07c586e50315f47fed36215b01d68f25b1091ade4cd2"
+    },
+    {
+      "file": "assets/images/scenes/batch-052.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 247950,
+      "sha256": "7a681c9f679bcc537d6d86d2071717ab3e3d1379e7e3df750346442d020d5c3a"
+    },
+    {
+      "file": "assets/images/scenes/batch-053.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 183614,
+      "sha256": "06386a5bd74378073dc860894379d5a7c4d34e7a529593ddfabf72fcc5b7b2dd"
+    },
+    {
+      "file": "assets/images/scenes/batch-054.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 287360,
+      "sha256": "61b80508a5493e98974cb450ddddd7d820441a20aa48a4dd8a9d9538b658936b"
+    },
+    {
+      "file": "assets/images/scenes/batch-055.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 258452,
+      "sha256": "b8d0e5aa2881d9a4a5cba653f4ff9e38e5278b14ae8f2f926587b1ec83a92fa1"
+    },
+    {
+      "file": "assets/images/scenes/batch-056.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 242306,
+      "sha256": "0e42dd3feb1c44f01551d715b49190bb09108dc52e240506d8765e1d3ff52c6c"
+    },
+    {
+      "file": "assets/images/scenes/batch-057.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 344944,
+      "sha256": "6648e7bcd1525b40279bb006734a3e3ab737e42b134db23b7f23cf6996a1e016"
+    },
+    {
+      "file": "assets/images/scenes/batch-058.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 315652,
+      "sha256": "6e6c01a05e00293bea6858b707a17d06b50bd2f66f5b9d35704b21919264d214"
+    },
+    {
+      "file": "assets/images/scenes/batch-059.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 240310,
+      "sha256": "030c0398d84446184b9f5ca05d02b5c5d018558d7b89771b7a79343235689536"
+    },
+    {
+      "file": "assets/images/scenes/batch-060.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 327668,
+      "sha256": "bfe40217f22962b6f244e35f74ac49aee4868b5f31c434877d2208935dd10097"
+    },
+    {
+      "file": "assets/images/scenes/batch-061.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 228806,
+      "sha256": "af29b684a7ab1efce1ef61348718ce11f265a5f9dec56dd6932e6fca6d5ef917"
+    },
+    {
+      "file": "assets/images/scenes/batch-062.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 420608,
+      "sha256": "b7911c27be6efbc0e7e7e2ce774c38948b379c6d79e5a7dff76b741656f7ebe7"
+    },
+    {
+      "file": "assets/images/scenes/batch-063.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 207080,
+      "sha256": "fc9a4703b3a000ea8c1bd262adddf8032464d6d1695483d57e29b55b6889579c"
+    },
+    {
+      "file": "assets/images/scenes/batch-064.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 438462,
+      "sha256": "0f82619e9fd15cedfea6847617841e6d4e26a9811be458ba7c01cde701c24a63"
+    },
+    {
+      "file": "assets/images/scenes/batch-069.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 406608,
+      "sha256": "6c7c12a74ae551cd9f1f956c848e7ed3b4a1946342d85f12b837b229b9cf53f9"
+    },
+    {
+      "file": "assets/images/scenes/batch-070.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 394194,
+      "sha256": "5f454661789fe13adee369d7db88e333758a365801f6fd8cc2d122c6b5e05508"
+    },
+    {
+      "file": "assets/images/scenes/batch-071.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 407028,
+      "sha256": "f44f3864f98007f1c504ef7c67165c397e90455a00f5e77ea8f17534ada65e58"
+    },
+    {
+      "file": "assets/images/scenes/batch-072.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 463714,
+      "sha256": "66bc0b8797ae97f95559ceb1d6088753735dce486a8e9eb4187c1d8899cbf441"
+    },
+    {
+      "file": "assets/images/scenes/batch-073.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 299718,
+      "sha256": "58c38ad9f8c2a77e89c244fd5bc706b2f81b24df0b3f6bad91478eff9866fd61"
+    },
+    {
+      "file": "assets/images/scenes/batch-074.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 408272,
+      "sha256": "c9bb27e6ba549ddc70ac28c823ad1a8c4792b7a46bc29955cd8be1ed6b4b6dd6"
+    },
+    {
+      "file": "assets/images/scenes/batch-075.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 383794,
+      "sha256": "3c053fa2834188fe1db03effad4008ff3585e7c60a9ca5210b5dec324804feb8"
+    },
+    {
+      "file": "assets/images/scenes/batch-076.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 465150,
+      "sha256": "d2005a4005180a76ae70b329786efbd890c5175c0aec632aa22f73e71d36a585"
+    },
+    {
+      "file": "assets/images/scenes/batch-077.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 399934,
+      "sha256": "9e610c153a939e2986cccd9fe957c3f31d9c2568a53f3b22c7cf530c6107931b"
+    },
+    {
+      "file": "assets/images/scenes/batch-078.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 367702,
+      "sha256": "a41ba2712cf7b006d4ed284273b86ebf14ac5eb0a54d2c0342ae1cc2bfe8b778"
+    },
+    {
+      "file": "assets/images/scenes/batch-079.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 363494,
+      "sha256": "33b14f1697382a97c2d2985650b35ccefc6ccdcaf939720b3caa69109b976b9f"
+    },
+    {
+      "file": "assets/images/scenes/batch-080.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 349770,
+      "sha256": "9174f29c4ffa3f064ff9a39f78391aed4481d37625fb86044d6651ecfaed8ae4"
+    },
+    {
+      "file": "assets/images/scenes/batch-081.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 331712,
+      "sha256": "92e2e9abbb28d6df79131174d8f87ca24a8b4156c7be5175b4753b9f4e6dcca1"
+    },
+    {
+      "file": "assets/images/scenes/batch-082.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 445834,
+      "sha256": "de4becc86a3ea70c3383dbc0864e6d4746e532858219e3f22efd40c978d4a7f8"
+    },
+    {
+      "file": "assets/images/scenes/batch-083.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 387556,
+      "sha256": "0dac9012127148ce634a9859e2025ef5c49f76a5aceaaed24cde81d9fda5eb08"
+    },
+    {
+      "file": "assets/images/scenes/batch-084.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 488896,
+      "sha256": "4c53e59bcdd543039185aa2638455170be0ba7f194ae8d2f10270dcc9af9d98a"
+    },
+    {
+      "file": "assets/images/scenes/batch-085.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 419158,
+      "sha256": "29d7bfbc4288446492fb8c225db612f099390b975ceef5e70eb587b43fdca70e"
+    },
+    {
+      "file": "assets/images/scenes/batch-086.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 312494,
+      "sha256": "94713c0c2b2a6a44318d7bd5e689f55fda2a4c93dd81bbdee8b33bd64fe92e78"
+    },
+    {
+      "file": "assets/images/scenes/batch-093.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 214108,
+      "sha256": "9fba71f7dd3991a086c51a884a2b0467995e4598eee8995460d2662ab84a9662"
+    },
+    {
+      "file": "assets/images/scenes/batch-094.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 462670,
+      "sha256": "df7221df1b3a3d99069a3f186a1fef930e5c1f09513856fc0cd11ecebceab8ad"
+    },
+    {
+      "file": "assets/images/scenes/batch-095.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 257722,
+      "sha256": "8eed5e071b686ff9d3d4a0c1db3bbf224151c42dc44bc0bde9bbb661a06747d4"
+    },
+    {
+      "file": "assets/images/scenes/batch-097.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 381012,
+      "sha256": "7e0e6e41a12c0ae738824fdc4c425ef752d14f8eb2b687bf6591247b01c28b67"
+    },
+    {
+      "file": "assets/images/scenes/batch-098.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 272446,
+      "sha256": "2656e7f830ed388ffd7342604317cfafcf6cd973ef043dd95b0109313900efc8"
+    },
+    {
+      "file": "assets/images/scenes/batch-099.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 273622,
+      "sha256": "58cccbf16f07c018a951e8b62a46e3bf347717ade6f4e3e4b9abbacc3ed0ed1e"
+    },
+    {
+      "file": "assets/images/scenes/batch-100.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 298710,
+      "sha256": "9d86d54dae1c4837b91c65fd00a58b1e080aac6517ac7b438afa9f51ef55bbdf"
+    },
+    {
+      "file": "assets/images/scenes/batch-101.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 236870,
+      "sha256": "ef5ba495253706fe4251a80d297ae7c8e010518944c9a9245d5544a10436c39b"
+    },
+    {
+      "file": "assets/images/scenes/batch-102.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 214706,
+      "sha256": "4f89c640e0b603b2027a1e76061bf44e723b5e789c41185d3c0511469125fd0f"
+    },
+    {
+      "file": "assets/images/scenes/batch-103.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 281316,
+      "sha256": "221c73f8bb5d306ef1a7f564b5360efede8e8c5e8acdf46f910cc1347fa6e135"
+    },
+    {
+      "file": "assets/images/scenes/batch-104.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 268818,
+      "sha256": "aa32fd0bd23e62e3fffcca9ef77658208faf5b8f402a7dbd76af12ad632f6b6f"
+    },
+    {
+      "file": "assets/images/scenes/batch-105.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 307904,
+      "sha256": "000740c3bfc466e32e479f7bad249950f14041d3a484110bf2a8f94c54ac817e"
+    },
+    {
+      "file": "assets/images/scenes/batch-106.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 277756,
+      "sha256": "857ef7e239ec93ba6a3d413650909abd2661103cba65207425f2b75f983426d3"
+    },
+    {
+      "file": "assets/images/scenes/batch-107.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 211472,
+      "sha256": "bc7765b4245eac319e9e08a29d58f40a340099cc0e351859283a4c94ba64ded0"
+    },
+    {
+      "file": "assets/images/scenes/batch-108.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 252856,
+      "sha256": "5decc0010727c3c5d784247643ab3c58ff8ad6a8d76467013507b9f2a072732e"
+    },
+    {
+      "file": "assets/images/scenes/batch-109.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 322728,
+      "sha256": "a19ad787b34dabb23fc1b7b23a7d9830022e002990e76f2f674f0fd288535126"
+    },
+    {
+      "file": "assets/images/scenes/batch-111.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 334458,
+      "sha256": "654373824764a7935e1f6374202f9483b4dafbdb6fdcf37a0fca81f7b3ad20aa"
+    },
+    {
+      "file": "assets/images/cover.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 209320,
+      "sha256": "fed1c8f1efb44bc34c61341101c922a12639e31b05d4588d8c71ca16a76a3138"
+    },
+    {
+      "file": "assets/images/ending-leadership-sheet.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 233408,
+      "sha256": "c3650240a20c778c150d15ceb525f6804e30af651eaa64c26524205d64c5b2e3"
+    },
+    {
+      "file": "assets/images/ending-society-sheet.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 398110,
+      "sha256": "72eab8d06a5d8b688e77979717ee5184397084e9832f6bae7485c0a386d46d7c"
+    },
+    {
+      "file": "assets/images/ending-continuity-sheet.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 257256,
+      "sha256": "3dc7e88016c302a294d896768278c7b5f266704178ad08ebeabe179f15a80c9b"
+    },
+    {
+      "file": "assets/images/ending-rupture-sheet.webp",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 262560,
+      "sha256": "f1e7e1b029738343f77fbe1d6a3f538c81f5dc3c5b9a446cd86b52a52335cae5"
+    }
+  ]
+}

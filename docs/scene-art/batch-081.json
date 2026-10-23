@@ -1,0 +1,13 @@
+{
+  "batch": 81,
+  "path": "/workspace/generated_images/exec-c00e76fb-ad04-4fe1-9e06-954cf18bc729.png",
+  "file": "assets/images/scenes/batch-081.webp",
+  "approved": true,
+  "reviewIssues": [
+    {
+      "cell": 2,
+      "status": "open",
+      "reason": "近景门柱形成疑似拼接，需要仅重新生成左下格为明确连续镜头；其他三格保留。修正被图像服务429额度限制阻塞。"
+    }
+  ]
+}
