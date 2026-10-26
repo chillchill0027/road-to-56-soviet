@@ -1,0 +1,15 @@
+{
+  "batch": 46,
+  "path": "/workspace/generated_images/exec-6064599a-00fd-4c5c-aa8d-c0b53dfecb8e.png",
+  "originalPath": "/workspace/generated_images/exec-6a15e34c-993a-4f8a-8ba0-e2f2af614da9.png",
+  "file": "assets/images/scenes/batch-046.webp",
+  "approved": true,
+  "corrections": [
+    {
+      "reason": "Clarify prewar uniforms: remove ambiguous shoulder detailing from all 1938 army officers.",
+      "correctedPath": "/workspace/generated_images/exec-6064599a-00fd-4c5c-aa8d-c0b53dfecb8e.png",
+      "method": "image_gen edit; plain fabric shoulders with rank insignia confined to collar tabs."
+    }
+  ],
+  "reviewNotes": "All four final cells reviewed: 1956 final resource distribution; 1938 expanded discussion with Molotov and returning invitees; 1939 Beria alone presenting a slim delegation folder; 1938 General Staff personnel review. Prewar collar-tab uniforms, no weapons, distinct complete framing, player leader off-camera. Exact 1536x1024 seamless four 768x512 photographs. Original and corrected PNG preserved."
+}

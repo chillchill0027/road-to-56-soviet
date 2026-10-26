@@ -1,13 +1,15 @@
 {
   "batch": 80,
-  "path": "/workspace/generated_images/exec-7bd7d6fd-7d61-4bba-a625-dbc81133a3ca.png",
+  "path": "/workspace/generated_images/exec-11ff6eed-f031-410e-8c7d-e7bdc3bb3e9e.png",
   "file": "assets/images/scenes/batch-080.webp",
   "approved": true,
   "reviewIssues": [
     {
       "cell": 1,
-      "status": "open",
-      "reason": "厂区失守结果中，背景苏军背影朝带德军十字的坦克跑，撤收方向含混。保留前景女工交钥匙，仅将背景苏军改为向右前方或观众方向撤收，敌军坦克留在远后景；额度恢复后用ImageGen只修正此格。"
+      "status": "resolved",
+      "reason": "厂区失守结果中，背景苏军背影朝带德军十字的坦克跑，撤收方向含混。保留前景女工交钥匙，仅将背景苏军改为向右前方或观众方向撤收，敌军坦克留在远后景；额度恢复后用ImageGen只修正此格。",
+      "resolution": "2026-10-26 ImageGen仅修正右上格背景军队。苏军现在朝镜头及右前方撤收，远处德军坦克留在其后；前景女工交钥匙和其余三格保留，已实际查看通过。"
     }
-  ]
+  ],
+  "originalPath": "/workspace/generated_images/exec-7bd7d6fd-7d61-4bba-a625-dbc81133a3ca.png"
 }

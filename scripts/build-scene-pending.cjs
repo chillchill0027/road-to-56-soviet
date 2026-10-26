@@ -117,7 +117,7 @@ function buildPending() {
 
   return {
     source: batchesFile,
-    generationBlocker: quota,
+    generationBlocker: pending.length || reviewIssues.length ? quota : null,
     summary: {
       totalBatches: batches.length,
       approvedBatches,

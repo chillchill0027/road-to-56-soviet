@@ -118,7 +118,17 @@ const fixture = require('./fixtures/routes.json').routes[0];
       }
     }
     async function screenshot(name) {
-      await page.evaluate(async knownMissing=>{await document.fonts.ready;await Promise.all([...document.querySelectorAll('#stage img')].filter(image=>!knownMissing.includes(image.getAttribute('src'))).map(image=>image.decode()));window.scrollTo({top:0,behavior:'instant'});},report.skippedAssets);
+      await page.evaluate(async knownMissing=>{
+        await document.fonts.ready;
+        await Promise.all([...document.querySelectorAll('#stage img')].filter(image=>!knownMissing.includes(image.getAttribute('src'))).map(image=>image.decode()));
+        // Paint the whole long page after viewport changes before full-page capture.
+        const paint=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+        const bottom=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)-innerHeight;
+        const step=Math.max(1,Math.floor(innerHeight*.75));
+        for(let top=0;top<bottom;top+=step){window.scrollTo({top,behavior:'instant'});await paint();}
+        window.scrollTo({top:Math.max(0,bottom),behavior:'instant'});await paint();
+        window.scrollTo({top:0,behavior:'instant'});await paint();
+      },report.skippedAssets);
       await page.screenshot({path:path.join(path.dirname(out),name),fullPage:true});
     }
 
