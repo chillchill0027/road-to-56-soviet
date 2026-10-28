@@ -1,0 +1,266 @@
+✔ scene entry is applied once across redraws and continue-game (6.661334ms)
+✔ existing version-one saves do not replay an already granted entry bonus (2.67004ms)
+✔ older saves follow their scene ID when a decision phase moves the flow index (2.266621ms)
+✔ refreshing after a choice restores its saved result without applying the choice twice (2.594335ms)
+✔ returning to the title and continuing restores the current result and history (3.833757ms)
+✔ a saved battle result restores the same casualties, counters and formula snapshot (2.844623ms)
+✔ a saved defeat result preserves its jump to act five after continuing (2.22017ms)
+✔ invalid saves cannot resume into an undefined scene or nonnumeric resources (3.082973ms)
+✔ a high-paranoia purge applies one penalty and survives reload unchanged (2.481034ms)
+✔ a scientist purge removes nuclear progress as well as industry exactly once (2.252489ms)
+✔ the postwar decision table switches to reconstruction actions (2.717051ms)
+✔ the actual second-act decision table offers the new-border fortifications (2.366883ms)
+✔ the fifth-act phase offers its documented anti-personality-cult decision once (3.424979ms)
+✔ war preparations retain diplomatic fortifications and add completed defense lines once (2.200311ms)
+✔ unfinished new-border defenses contribute nothing (1.837493ms)
+✔ partisans reduce enemy strength below its baseline and improve the battle ratio (1.759295ms)
+✔ battle explanations retain the values used before casualties and rewards (1.905947ms)
+✔ manual purge decisions, story purges and automatic purges each count once (2.666324ms)
+✔ the assassination condition can be reached with six actual purge actions (2.741497ms)
+✔ older saves migrate logged manual purges without adding them again on later reloads (2.57073ms)
+✔ repeated or unavailable choices never spend resources twice (2.169224ms)
+✔ letter and number shortcuts preserve locked positions and support F/G (2.341023ms)
+✔ focused controls keep native activation and editable fields keep their typing keys (1.977755ms)
+✔ an entire first available playthrough reaches a recorded ending (11.678976ms)
+✔ an entire last available playthrough reaches a recorded ending (9.762524ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 89.500409
+✔ left-wing preparations require an opening and paid political investment (6.972713ms)
+✔ Beria grows through delegation and targeted purges rather than a circular unlock (3.928169ms)
+✔ inertia is an explicit eighth successor choice (2.546003ms)
+✔ the constitution discount is both displayed and charged exactly once (2.353802ms)
+✔ Comintern diplomacy doubles the actual lend-lease political cost (2.37145ms)
+✔ consumer goods have one transparent net industrial cost (2.30632ms)
+✔ decisions outside their phase and forged scene options never execute (2.118247ms)
+✔ guerrilla and diplomatic enemy modifiers affect later campaigns exactly once (3.355514ms)
+✔ enemy strength has a physical floor and never produces infinite ratios (1.956292ms)
+✔ coercive discipline improves defensive ratios by 25% and leaves attacks alone (1.97435ms)
+✔ battle costs apply on defeat while victory-only rewards do not (1.893518ms)
+✔ losing Berlin cannot claim the capture or print the victory story (2.343767ms)
+✔ a successful Berlin battle records its conditional capture flag (3.145808ms)
+✔ capped stats and absolute progress flags are reported as actual deltas (1.977955ms)
+✔ effect previews show remaining capacity rather than impossible gains (1.74883ms)
+✔ evacuated industry restores actual capacity and respects the industrial cap (2.11402ms)
+✔ leaving Leningrad within range has a visible one-time industrial and morale cost (2.565242ms)
+✔ destalinization unrest has a smaller impact after negotiated allied governments (4.370726ms)
+✔ partial military purges do not falsely kill the surviving marshal (2.147691ms)
+✔ retiring the marshal prevents a later automatic military takeover (2.294173ms)
+✔ postwar conference follows the war result and later events keep calendar order (2.302365ms)
+✔ hostile diplomacy creates a real trust deficit that later concessions must offset (1.707907ms)
+✔ old conference and nuclear-result saves keep their original next event (5.474923ms)
+✔ old out-of-range raw scores normalize once instead of rewarding a harmful action (2.264608ms)
+✔ ending text never invents a secret report that the player declined to publish (5.255712ms)
+✔ industrial investments cannot buy full projects with insufficient capacity (23.389301ms)
+✔ completed tank and nuclear programs stop accepting payments for no progress (2.302235ms)
+✔ numeric shortcuts resolve duplicate winter-war letters and the eighth successor (2.115473ms)
+✔ the one-option war settlement supports Enter without choosing arbitrary story options (1.791574ms)
+✔ Zhukov earns a complete independent political path from actual defensive victories (4.328133ms)
+✔ an interim military takeover can be confirmed without a previous coup (1.856372ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 118.570714
+✔ legal complete route route-1 reaches stalin-quiet (21.865901ms)
+✔ legal complete route route-2 reaches rome (15.510269ms)
+✔ legal complete route route-3 reaches mediocre (14.465382ms)
+✔ legal complete route route-4 reaches comecon (13.939368ms)
+✔ legal complete route route-5 reaches khrushchev (13.977535ms)
+✔ legal complete route route-6 reaches right (10.986371ms)
+✔ legal complete route route-7 reaches dusk (11.597373ms)
+✔ legal complete route route-12 reaches beria (11.935193ms)
+✔ legal complete route route-16 reaches detente (13.699326ms)
+✔ legal complete route route-18 reaches soviet (13.82783ms)
+✔ legal complete route route-27 reaches left (13.657763ms)
+✔ legal complete route route-55 reaches military (13.361135ms)
+✔ legal complete route route-162 reaches island (13.303879ms)
+✔ legal complete route route-165 reaches eternal (12.742131ms)
+✔ legal complete route route-203 reaches military (13.475929ms)
+✔ legal complete route route-234 reaches khrushchev (13.801621ms)
+✔ legal complete route route-795 reaches eternal (13.028173ms)
+✔ legal complete route route-19 reaches detente (20.238485ms)
+✔ legal complete route route-26 reaches stalin-quiet (13.478552ms)
+✔ legal complete route route-81 reaches mediocre (12.617263ms)
+✔ legal complete route route-82 reaches left (11.570984ms)
+✔ legal complete route route-88 reaches detente (13.742491ms)
+✔ legal complete route route-733 reaches military (13.037917ms)
+✔ legal complete route route-986 reaches detente (12.091159ms)
+✔ replayed routes cover every shipped scene, option, decision and ending (3.305619ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 343.567312
+✔ every genuine policy decision has a complete authored odd-length conversation (11.450212ms)
+✔ an early majority can prevail over a different final reply, without interim resource rewards (6.748706ms)
+✔ a multi-policy tie uses the latest stance among the tied leaders (3.827406ms)
+✔ stale events, invalid candidates and repeated final settlement cannot advance dialogue (4.283826ms)
+✔ a paid project cannot be promised through a locked reply (4.516186ms)
+✔ mid-conversation reload preserves answers and never repeats entry effects (5.50587ms)
+✔ agenda party-debate: approval charges once and deferral charges nothing (15.327353ms)
+✔ agenda nkvd-delegate: approval charges once and deferral charges nothing (12.471212ms)
+✔ agenda purge-army: approval charges once and deferral charges nothing (11.993132ms)
+✔ agenda purge-party: approval charges once and deferral charges nothing (10.915044ms)
+✔ agenda purge-nkvd: approval charges once and deferral charges nothing (12.166132ms)
+✔ agenda collectivize: approval charges once and deferral charges nothing (10.375369ms)
+✔ agenda fort-stalin: approval charges once and deferral charges nothing (11.678857ms)
+✔ agenda fort-molotov: approval charges once and deferral charges nothing (14.173652ms)
+✔ agenda tanks: approval charges once and deferral charges nothing (19.541594ms)
+✔ agenda relocate: approval charges once and deferral charges nothing (11.544423ms)
+✔ agenda lend: approval charges once and deferral charges nothing (12.447707ms)
+✔ agenda partisan: approval charges once and deferral charges nothing (13.278572ms)
+✔ agenda lessons: approval charges once and deferral charges nothing (12.401096ms)
+✔ agenda mobilize: approval charges once and deferral charges nothing (12.322087ms)
+✔ agenda religion: approval charges once and deferral charges nothing (14.014662ms)
+✔ agenda atheist: approval charges once and deferral charges nothing (11.518295ms)
+✔ agenda amnesty: approval charges once and deferral charges nothing (12.067763ms)
+✔ agenda rebuild: approval charges once and deferral charges nothing (13.037296ms)
+✔ agenda comintern: approval charges once and deferral charges nothing (13.621949ms)
+✔ agenda hydrogen: approval charges once and deferral charges nothing (12.64838ms)
+✔ agenda consumer: approval charges once and deferral charges nothing (16.155653ms)
+✔ agenda destalin: approval charges once and deferral charges nothing (10.49505ms)
+✔ agenda deport: approval charges once and deferral charges nothing (12.295507ms)
+✔ death creates an interregnum and every successor has a distinct playable seat (37.254748ms)
+✔ malformed dialogue save recovers the current scene without settling a policy (8.727823ms)
+✔ locked missing letters cannot fall through to a different numerical reply (2.149995ms)
+✔ legacy saves retain their direct policy flow while new journeys enable dialogue (4.065176ms)
+✔ a successor receives reports from a different person, never their own portrait (3.702588ms)
+✔ all 23 agendas have distinct authored places, introductions, replies and outcomes (3.504118ms)
+✔ an unfinished old multi-round agenda becomes one uncharged final decision and keeps prior discussion (4.502055ms)
+✔ deferring after an approval reports this deferral without a stale charged ledger (4.662027ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 409.185661
+✔ all events and agendas use real, distinct in-world sources, at least twenty types (14.010075ms)
+✔ messages are distributed through each conversation without repeating every round (3.718653ms)
+✔ opening establishes old news, current broadcasts and nearby conversation before a policy choice (4.992766ms)
+✔ an interlude resumes at its current message without applying entry gains again (5.048539ms)
+✔ news snapshots remain what was read, while a new report reflects the current war outcome (3.662678ms)
+✔ handover reports distinguish interim control from assassination or natural death (4.410557ms)
+✔ older dialogue saves acquire context without resetting answers or resources (4.802539ms)
+✔ all twelve new scene crops are backed by local generated image atlases (4.399731ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 50.479177
+✔ annual combined charts include all nine actual indicators and never mutate the ledger (35.08349ms)
+✔ statistics preserve route-1 and account for every year (33.522455ms)
+✔ statistics preserve route-2 and account for every year (28.872517ms)
+✔ statistics preserve route-3 and account for every year (34.926483ms)
+✔ statistics preserve route-4 and account for every year (33.57921ms)
+✔ statistics preserve route-5 and account for every year (33.780904ms)
+✔ statistics preserve route-6 and account for every year (27.394015ms)
+✔ statistics preserve route-7 and account for every year (27.813417ms)
+✔ statistics preserve route-12 and account for every year (26.157419ms)
+✔ statistics preserve route-16 and account for every year (37.152583ms)
+✔ statistics preserve route-18 and account for every year (37.583303ms)
+✔ statistics preserve route-27 and account for every year (34.210873ms)
+✔ statistics preserve route-55 and account for every year (34.143241ms)
+✔ statistics preserve route-162 and account for every year (32.281131ms)
+✔ statistics preserve route-165 and account for every year (33.867796ms)
+✔ statistics preserve route-203 and account for every year (38.556612ms)
+✔ statistics preserve route-234 and account for every year (37.946621ms)
+✔ statistics preserve route-795 and account for every year (33.047798ms)
+✔ statistics preserve route-19 and account for every year (35.640661ms)
+✔ statistics preserve route-26 and account for every year (34.534732ms)
+✔ statistics preserve route-81 and account for every year (26.870945ms)
+✔ statistics preserve route-82 and account for every year (28.533425ms)
+✔ statistics preserve route-88 and account for every year (32.826995ms)
+✔ statistics preserve route-733 and account for every year (30.56444ms)
+✔ statistics preserve route-986 and account for every year (33.157714ms)
+✔ actual capped values, baseline migration and restored ledger are stable (3.23327ms)
+✔ annual report follows the incumbent, includes actual decisions and never changes state (9.008656ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 842.691166
+✔ war archive preserves legal route route-1 (40.069646ms)
+✔ war archive preserves legal route route-2 (25.599276ms)
+✔ war archive preserves legal route route-3 (31.546232ms)
+✔ war archive preserves legal route route-4 (29.526394ms)
+✔ war archive preserves legal route route-5 (30.122062ms)
+✔ war archive preserves legal route route-6 (24.044771ms)
+✔ war archive preserves legal route route-7 (34.550797ms)
+✔ war archive preserves legal route route-12 (30.926205ms)
+✔ war archive preserves legal route route-16 (30.473693ms)
+✔ war archive preserves legal route route-18 (30.389916ms)
+✔ war archive preserves legal route route-27 (28.527055ms)
+✔ war archive preserves legal route route-55 (29.634106ms)
+✔ war archive preserves legal route route-162 (29.843953ms)
+✔ war archive preserves legal route route-165 (31.735047ms)
+✔ war archive preserves legal route route-203 (30.773767ms)
+✔ war archive preserves legal route route-234 (29.833176ms)
+✔ war archive preserves legal route route-795 (28.876483ms)
+✔ war archive preserves legal route route-19 (30.416817ms)
+✔ war archive preserves legal route route-26 (30.225108ms)
+✔ war archive preserves legal route route-81 (25.043027ms)
+✔ war archive preserves legal route route-82 (25.134204ms)
+✔ war archive preserves legal route route-88 (27.831405ms)
+✔ war archive preserves legal route route-733 (28.148154ms)
+✔ war archive preserves legal route route-986 (27.878696ms)
+✔ legal routes exercise all seven sectors and all five overall war results (0.177288ms)
+✔ all 35 battle report variants use stage-specific geography and actual outcome art (5.546843ms)
+✔ southward choice changes region, season and coordinates, not just the title (2.421665ms)
+✔ alternative war calendar keeps report dates aligned to the actual game year (2.362385ms)
+✔ old pending battles render a report without replaying or mutating the save (3.123594ms)
+✔ policy incidents retain their own outcomes without fabricated battle ratios (2.483228ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 735.216659
+✔ every completed route stores its own factual final ledger and a matching outcome illustration (541.819711ms)
+✔ restarting and later runs do not overwrite completed data; imports merge without duplication (27.236297ms)
+✔ reading an old ending is honest, and invalid backups cannot erase stored records (18.502625ms)
+✔ storage failures keep the unsaved run available and report the actual problem (19.116312ms)
+✔ a quota error on completion keeps an exportable in-memory copy without deleting prior runs (19.245377ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 631.853476
+✔ each conversation round, policy result and restored image selects its own scene without settling again (14.609089ms)
+✔ interlude pages and legacy scene views have deterministic dedicated photographs (9.100335ms)
+✔ approval and deferral photographs stay with their decision and do not leak into the next phase (7.688845ms)
+✔ war pictures distinguish tactics and all five ratings and work with existing archived reports (10.201296ms)
+✔ missing artwork falls back without changing the save, including older pages without the manifest (4.330075ms)
+✔ scene captions are escaped and image files stay inside the local artwork directory (0.855941ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51.781512

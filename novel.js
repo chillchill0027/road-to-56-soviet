@@ -206,12 +206,14 @@ const Novel = (() => {
       locked = enabled.filter((o) => !o.enabled);
     const text = sceneText(sc, r.line).replaceAll("{address}", address());
     const context = World.current(session, p);
+    const sceneKey = p.agenda ? `agenda/${session.decisionId}` : `event/${session.sceneId}/round/${session.round}`;
+    const dedicatedArt = typeof SceneArt !== 'undefined' ? SceneArt.html(sceneKey, S.year) : '';
     const stage = document.getElementById("stage");
     stage.innerHTML = `<div class="fade novel-layout">
       <div class="vn-heading"><div><div class="tag">${esc(sc.chapter)} · ${esc(S.year)}</div><h1 class="scene">${esc(title)}</h1></div>${seatHTML()}</div>
       <div class="vn-progress" aria-label="${p.agenda ? '本项决议一次批示' : `对话进度，第${session.round + 1}轮，共${p.rounds.length}轮`}"><span>${p.agenda ? '听取汇报 · 一次批示' : `第 ${session.round + 1} / ${p.rounds.length} 轮`}</span><div>${p.agenda ? '' : p.rounds.map((_, n) => `<span class="${n < session.round ? "done" : n === session.round ? "now" : ""}"></span>`).join("")}</div><button class="nav-button" id="vn-log">见闻档案</button></div>
       ${context?.show ? `<div class="vn-context">${World.card(context.record)}</div>` : ""}
-      <div class="vn-film">${artHTML(p.agenda ? p.art : context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(p.agenda ? r.place : context?.show ? context.record.from : r.place)}</span><span>${esc(context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
+      <div class="vn-film">${dedicatedArt || artHTML(p.agenda ? p.art : context?.show ? context.record.art : roundArt(r), S.year)}<div class="vn-location"><span>${esc(dedicatedArt ? r.place : p.agenda ? r.place : context?.show ? context.record.from : r.place)}</span><span>${esc(dedicatedArt ? sceneText(sc, r.time) : context?.show ? context.record.stamp : sceneText(sc, r.time))}</span></div></div>
       <div class="vn-body">
       ${session.round === 0 ? `<div class="vn-opening"><p>${esc(p.arrival)}</p>${!p.agenda && NOVEL_SCENE_MOMENTS[S.curId] ? `<p>${esc(NOVEL_SCENE_MOMENTS[S.curId][0])}</p>` : ''}</div>` : ''}
       ${previous ? `<div class="vn-echo"><span>你刚才的回应</span><p>“${esc(previous.text)}”</p></div>` : ''}

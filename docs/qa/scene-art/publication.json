@@ -1,0 +1,15 @@
+{
+  "status": "validated_ready_for_publication",
+  "scope": "full_game",
+  "version": "1.11.0",
+  "url": "https://road-to-56-soviet.chillchill0027.chatgpt.site/",
+  "github_pages_url": "https://chillchill0027.github.io/road-to-56-soviet/",
+  "github_push": "pending",
+  "validation": {
+    "assets": true,
+    "strict_scene_browser": true,
+    "unit_tests": 194,
+    "route_fixtures": 24,
+    "endings": 14
+  }
+}

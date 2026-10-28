@@ -1,0 +1,59 @@
+{
+  "passed": true,
+  "unitTests": 194,
+  "scenes": 488,
+  "newPhotos": 473,
+  "sourceFiles": 124,
+  "routeFixtures": 24,
+  "endings": 14,
+  "routeTargets": 250,
+  "routeScenes": 1211,
+  "dialogueRounds": 4358,
+  "paidDecisions": 429,
+  "suites": {
+    "endings": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/endings/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    },
+    "immersion": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/immersion/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    },
+    "novel": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/novel/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    },
+    "routes": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/routes/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    },
+    "smoke": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/smoke/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    },
+    "statistics": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/statistics/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    },
+    "war": {
+      "passed": true,
+      "file": "docs/qa/scene-art/regression/war/report.json",
+      "errors": 0,
+      "resourceFailures": 0
+    }
+  },
+  "strictReport": "docs/qa/scene-art/report.json",
+  "catalogReport": "docs/qa/scene-art/catalog-browser.json"
+}

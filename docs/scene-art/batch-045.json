@@ -1,0 +1,15 @@
+{
+  "batch": 45,
+  "path": "/workspace/generated_images/exec-2a394216-7597-4968-a873-6a530af17596.png",
+  "originalPath": "/workspace/generated_images/exec-b6393773-6b62-48a2-a198-780f0232dcdf.png",
+  "file": "assets/images/scenes/batch-045.webp",
+  "approved": true,
+  "corrections": [
+    {
+      "reason": "Original top-right showed a railway departure instead of the specified international working meeting.",
+      "correctedPath": "/workspace/generated_images/exec-2a394216-7597-4968-a873-6a530af17596.png",
+      "method": "image_gen image edit replacing only top-right with Moscow international working meeting; three approved cells retained."
+    }
+  ],
+  "reviewNotes": "All four final cells reviewed: Anna housing petition, advisers international working meeting, Mikoyan resource arithmetic, secretary reading past promises at presidium. Correct 1956 setting, consistent character anchors, no visible national leader. Exact 1536x1024 with four seamless 768x512 photographs. Both PNG versions preserved."
+}

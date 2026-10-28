@@ -65,6 +65,10 @@ function runtime(options = {}) {
     path.join(__dirname, "..", "..", "script.js"),
     "utf8",
   );
+  if (options.sceneArt) {
+    for (const file of ['scene-art-manifest.js', 'scene-art.js'])
+      vm.runInContext(fs.readFileSync(path.join(__dirname, '../..', file), 'utf8'), context);
+  }
   vm.runInContext(
     source + (options.war ? ['war-content.js','war.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') + (options.statistics ? fs.readFileSync(path.join(__dirname,'../../statistics.js'),'utf8') : '') + (options.novel ? ['novel-content.js','world-content.js','world.js','novel.js'].map(file=>fs.readFileSync(path.join(__dirname,'../..',file),'utf8')).join('\n') : '') +
       `
@@ -78,6 +82,7 @@ function runtime(options = {}) {
       saveGame, loadGame, hasSave, addRaw, battle, battleHTML, apply, executeDecision,
       decideEnding, decisionCost, effectTone, effectSnapshot, effectChanges, previewEffects, renderRealResult,
       optionHTML, effectsHTML, enterScene, enterDecisionPhase,
+      sceneArt:typeof SceneArt==='undefined'?null:SceneArt, currentArt:artForCurrent,
       meta:META, names:EFFECT_NAMES, limits:RAW_LIMITS, endings:ENDINGS, purgeTargets:PURGE_TARGETS, legacyFlow:FLOW_V1,
       scenes: SCENES, get flow(){ return FLOW; }, decisions: DECISIONS,
       war:typeof WarReports==='undefined'?null:WarReports,

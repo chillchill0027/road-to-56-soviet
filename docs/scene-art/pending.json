@@ -1,0 +1,13 @@
+{
+  "source": "docs/scene-art/batches.json",
+  "generationBlocker": null,
+  "summary": {
+    "totalBatches": 119,
+    "approvedBatches": 119,
+    "pendingBatches": 0,
+    "pendingScenes": 0,
+    "reviewIssues": 0
+  },
+  "pending": [],
+  "reviewIssues": []
+}

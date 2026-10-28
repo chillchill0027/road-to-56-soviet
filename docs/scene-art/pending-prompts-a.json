@@ -1,0 +1,187 @@
+{
+  "agent": "a",
+  "status": "blocked_by_image_generation_usage_limit",
+  "error": {
+    "batch": 18,
+    "code": 429,
+    "type": "usage_limit_reached",
+    "resets_at": 1792755904
+  },
+  "batches": [
+    {
+      "batch": 18,
+      "file": "assets/images/scenes/batch-018.webp",
+      "scenes": [
+        {
+          "sceneKey": "event/3-1/round/0",
+          "cell": 0,
+          "year": 1941,
+          "title": "边 境 战 役",
+          "place": "最高统帅部"
+        },
+        {
+          "sceneKey": "event/3-1/round/1",
+          "cell": 1,
+          "year": 1941,
+          "title": "边 境 战 役",
+          "place": "调度电话"
+        },
+        {
+          "sceneKey": "event/3-1/round/2",
+          "cell": 2,
+          "year": 1941,
+          "title": "边 境 战 役",
+          "place": "作战图前"
+        },
+        {
+          "sceneKey": "event/3-2/round/0",
+          "cell": 3,
+          "year": 1941,
+          "title": "列 宁 格 勒",
+          "place": "统帅部电话"
+        }
+      ],
+      "prompt": "Generate EXACTLY FOUR independent photorealistic historical cinema stills as a seamless 2x2 contact sheet, overall landscape 3:2, maximum resolution (1536x1024 or larger). Each quadrant is a complete landscape 3:2 photograph, no shared panorama and nothing crossing the exact midpoint boundaries. NO borders, labels, text, captions, watermarks, collage overlaps or typography. Treat these as four different commissioned scene illustrations, never a copied composition with weather changed. Serious literary Soviet visual novel art direction: charcoal shadows, warm paper-white light, muted burgundy or dusty olive accents, gently desaturated natural color, subtle 35mm film grain, believable light/materials/anatomy, high production value photography, no painting/CGI/comic style. Correct Soviet architecture, civilian and military clothing, vehicles and equipment for each date. Use historically accurate insignia only when appropriate; no modern objects, screens or invented readable writing. Recurring historical people must keep their documented facial features; anonymous clerks and soldiers must not resemble the leader. The player is the off-camera national leader; do not put Stalin in every image or in years after his death. Keep any route-dependent leader off-camera. War and civilian scenes should depict the concrete action, location and outcome, not generic portraits. Vary shot scale, camera angle, subject arrangement and indoor/outdoor space. Four cells in reading order:\nTOP LEFT: 1941. Topic: 边 境 战 役. Exact place: 最高统帅部. Time/moment: 第一批急电. Scene information: 电话铃没有停过。每一次接起来，地图上的同一条线都已经向东移动。 有一封电报只剩下半句话。 {address}，部队请求明确命令。阵地、建制、反击、工厂，先保哪一个？. Compose as medium three-quarter view at human eye level. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nTOP RIGHT: 1941. Topic: 边 境 战 役. Exact place: 调度电话. Time/moment: 当日稍后. Scene information: 空车皮和撤退队伍正在抢同一段铁路。 一旦下令，我们就不能同时完成所有任务。. Visible speaker identity: Lazar Kaganovich: sturdy, swept-back black hair, thick black moustache, dark high-collared tunic. Compose as wide establishing view with people in depth. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM LEFT: 1941. Topic: 边 境 战 役. Exact place: 作战图前. Time/moment: 命令发出前. Scene information: 参谋已经把电报纸装进打字机。 请给前线一句可以执行的话。. Compose as intimate side profile, hands and consequential object in focus. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM RIGHT: 1941. Topic: 列 宁 格 勒. Exact place: 统帅部电话. Time/moment: 封锁报告. Scene information: 粮食账本上的日期比任何战报都迫近。城里的灯一盏接一盏熄灭。 接线员把声音调到最大。 {address}，铁路断了。先争取湖上的通道，还是改变守城任务？. Compose as high oblique angle showing the spatial arrangement. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nPeriod corrections: in Moscow windows before 1949, no Seven Sisters or prefabricated housing, only Kremlin-era masonry, low-rise brick/wood, trees or blank sky. Military uniforms before 1943 have collar tabs, not shoulder boards. Any 1940–1941 vehicles must be period GAZ-AA/ZIS-5 trucks, steam trains or period staff cars. Office and archive scenes show peaceful administrative review. No injury, torture, detention, punishment or graphic violence. The wartime burden is shown through urgent calls, maps, queues, packed crates and work, not through harmed people."
+    },
+    {
+      "batch": 19,
+      "file": "assets/images/scenes/batch-019.webp",
+      "scenes": [
+        {
+          "sceneKey": "event/3-2/round/1",
+          "cell": 0,
+          "year": 1941,
+          "title": "列 宁 格 勒",
+          "place": "列宁格勒来电"
+        },
+        {
+          "sceneKey": "event/3-2/round/2",
+          "cell": 1,
+          "year": 1941,
+          "title": "列 宁 格 勒",
+          "place": "运输调度室"
+        },
+        {
+          "sceneKey": "event/3-3a/round/0",
+          "cell": 2,
+          "year": 1941,
+          "title": "远 东 的 师",
+          "place": "情报室"
+        },
+        {
+          "sceneKey": "event/3-3a/round/1",
+          "cell": 3,
+          "year": 1941,
+          "title": "远 东 的 师",
+          "place": "外交办公室"
+        }
+      ],
+      "prompt": "Generate EXACTLY FOUR independent photorealistic historical cinema stills as a seamless 2x2 contact sheet, overall landscape 3:2, maximum resolution (1536x1024 or larger). Each quadrant is a complete landscape 3:2 photograph, no shared panorama and nothing crossing the exact midpoint boundaries. NO borders, labels, text, captions, watermarks, collage overlaps or typography. Treat these as four different commissioned scene illustrations, never a copied composition with weather changed. Serious literary Soviet visual novel art direction: charcoal shadows, warm paper-white light, muted burgundy or dusty olive accents, gently desaturated natural color, subtle 35mm film grain, believable light/materials/anatomy, high production value photography, no painting/CGI/comic style. Correct Soviet architecture, civilian and military clothing, vehicles and equipment for each date. Use historically accurate insignia only when appropriate; no modern objects, screens or invented readable writing. Recurring historical people must keep their documented facial features; anonymous clerks and soldiers must not resemble the leader. The player is the off-camera national leader; do not put Stalin in every image or in years after his death. Keep any route-dependent leader off-camera. War and civilian scenes should depict the concrete action, location and outcome, not generic portraits. Vary shot scale, camera angle, subject arrangement and indoor/outdoor space. Four cells in reading order:\nTOP LEFT: 1941. Topic: 列 宁 格 勒. Exact place: 列宁格勒来电. Time/moment: 随后数小时. Scene information: 电话里能听见空袭警报。 工厂还在生产，可城里还有孩子。列车先装谁？. Visible speaker identity: Anna: the SAME fictional woman throughout, about 30, oval face, straight nose, light eyes, brown hair entirely tucked under an ivory work headscarf, faded grey collared work blouse. Compose as low eye-level view through an open doorway. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nTOP RIGHT: 1941. Topic: 列 宁 格 勒. Exact place: 运输调度室. Time/moment: 当夜. Scene information: 湖面运输和疏散计划摊在桌上。 车辆不足。今天必须给一个排在第一位的任务。. Visible speaker identity: Lazar Kaganovich: sturdy, swept-back black hair, thick black moustache, dark high-collared tunic. Compose as close foreground detail with a meaningful scene beyond. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM LEFT: 1941. Topic: 远 东 的 师. Exact place: 情报室. Time/moment: 报告送达. Scene information: 东京的报告被译成俄文。相信它，意味着把远方的防线搬到眼前。 密电上没有可以公开的署名。 {address}，情报说日本转向南方。调兵之前，是否还需要一张外交保证？. Compose as long-lens observation across a public space. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM RIGHT: 1941. Topic: 远 东 的 师. Exact place: 外交办公室. Time/moment: 对日接触. Scene information: 条约文本被翻到中立条款。 纸面承诺不能代替情报，但会改变对方公开行动的代价。. Visible speaker identity: Vyacheslav Molotov: slim middle-aged, receding slicked dark hair, neat dark moustache, oval wire spectacles, dark suit. Compose as candid diagonal composition, natural human movement. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nPeriod corrections: in Moscow windows before 1949, no Seven Sisters or prefabricated housing, only Kremlin-era masonry, low-rise brick/wood, trees or blank sky. Military uniforms before 1943 have collar tabs, not shoulder boards. Any 1940–1941 vehicles must be period GAZ-AA/ZIS-5 trucks, steam trains or period staff cars. Office and archive scenes show peaceful administrative review. No injury, torture, detention, punishment or graphic violence. The wartime burden is shown through urgent calls, maps, queues, packed crates and work, not through harmed people."
+    },
+    {
+      "batch": 20,
+      "file": "assets/images/scenes/batch-020.webp",
+      "scenes": [
+        {
+          "sceneKey": "event/3-3a/round/2",
+          "cell": 0,
+          "year": 1941,
+          "title": "远 东 的 师",
+          "place": "铁路部门"
+        },
+        {
+          "sceneKey": "event/3-3a/round/3",
+          "cell": 1,
+          "year": 1941,
+          "title": "远 东 的 师",
+          "place": "统帅部"
+        },
+        {
+          "sceneKey": "event/3-3a/round/4",
+          "cell": 2,
+          "year": 1941,
+          "title": "远 东 的 师",
+          "place": "书房"
+        },
+        {
+          "sceneKey": "event/3-3b/round/0",
+          "cell": 3,
+          "year": 1941,
+          "title": "莫 斯 科",
+          "place": "克里姆林宫"
+        }
+      ],
+      "prompt": "Generate EXACTLY FOUR independent photorealistic historical cinema stills as a seamless 2x2 contact sheet, overall landscape 3:2, maximum resolution (1536x1024 or larger). Each quadrant is a complete landscape 3:2 photograph, no shared panorama and nothing crossing the exact midpoint boundaries. NO borders, labels, text, captions, watermarks, collage overlaps or typography. Treat these as four different commissioned scene illustrations, never a copied composition with weather changed. Serious literary Soviet visual novel art direction: charcoal shadows, warm paper-white light, muted burgundy or dusty olive accents, gently desaturated natural color, subtle 35mm film grain, believable light/materials/anatomy, high production value photography, no painting/CGI/comic style. Correct Soviet architecture, civilian and military clothing, vehicles and equipment for each date. Use historically accurate insignia only when appropriate; no modern objects, screens or invented readable writing. Recurring historical people must keep their documented facial features; anonymous clerks and soldiers must not resemble the leader. The player is the off-camera national leader; do not put Stalin in every image or in years after his death. Keep any route-dependent leader off-camera. War and civilian scenes should depict the concrete action, location and outcome, not generic portraits. Vary shot scale, camera angle, subject arrangement and indoor/outdoor space. Four cells in reading order:\nTOP LEFT: 1941. Topic: 远 东 的 师. Exact place: 铁路部门. Time/moment: 运输排期. Scene information: 一条横跨大陆的线被涂成红色。 列车一旦出发，几周内无法原路补回。. Visible speaker identity: Lazar Kaganovich: sturdy, swept-back black hair, thick black moustache, dark high-collared tunic. Compose as medium three-quarter view at human eye level. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nTOP RIGHT: 1941. Topic: 远 东 的 师. Exact place: 统帅部. Time/moment: 风险复核. Scene information: 两张地图之间只放着一份情报。 若判断错了，远东将承担我们的下注。. Compose as wide establishing view with people in depth. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM LEFT: 1941. Topic: 远 东 的 师. Exact place: 书房. Time/moment: 调动授权. Scene information: 他等着决定先发哪一份电报。 是先办条约，还是让情报本身成为依据？. Visible speaker identity: Vyacheslav Molotov: slim middle-aged, receding slicked dark hair, neat dark moustache, oval wire spectacles, dark suit. Compose as intimate side profile, hands and consequential object in focus. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM RIGHT: 1941. Topic: 莫 斯 科. Exact place: 克里姆林宫. Time/moment: 危机会议. Scene information: 机关的箱子已经钉好，标签朝着古比雪夫。红场上，士兵还在练习怎样踏过结冰的路面。 所有人都在等你是否收起桌上的文件。 约瑟夫，最高领导人留在哪里，会比公告更早传遍全城。. Visible speaker identity: Vyacheslav Molotov: slim middle-aged, receding slicked dark hair, neat dark moustache, oval wire spectacles, dark suit. Compose as high oblique angle showing the spatial arrangement. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nPeriod corrections: in Moscow windows before 1949, no Seven Sisters or prefabricated housing, only Kremlin-era masonry, low-rise brick/wood, trees or blank sky. Military uniforms before 1943 have collar tabs, not shoulder boards. Any 1940–1941 vehicles must be period GAZ-AA/ZIS-5 trucks, steam trains or period staff cars. Office and archive scenes show peaceful administrative review. No injury, torture, detention, punishment or graphic violence. The wartime burden is shown through urgent calls, maps, queues, packed crates and work, not through harmed people."
+    },
+    {
+      "batch": 21,
+      "file": "assets/images/scenes/batch-021.webp",
+      "scenes": [
+        {
+          "sceneKey": "event/3-3b/round/1",
+          "cell": 0,
+          "year": 1941,
+          "title": "莫 斯 科",
+          "place": "统帅部"
+        },
+        {
+          "sceneKey": "event/3-3b/round/2",
+          "cell": 1,
+          "year": 1941,
+          "title": "莫 斯 科",
+          "place": "办公室"
+        },
+        {
+          "sceneKey": "event/3-5/round/0",
+          "cell": 2,
+          "year": 1941,
+          "title": "租 借 法 案",
+          "place": "外贸部门"
+        },
+        {
+          "sceneKey": "event/3-5/round/1",
+          "cell": 3,
+          "year": 1941,
+          "title": "租 借 法 案",
+          "place": "外交办公室"
+        }
+      ],
+      "prompt": "Generate EXACTLY FOUR independent photorealistic historical cinema stills as a seamless 2x2 contact sheet, overall landscape 3:2, maximum resolution (1536x1024 or larger). Each quadrant is a complete landscape 3:2 photograph, no shared panorama and nothing crossing the exact midpoint boundaries. NO borders, labels, text, captions, watermarks, collage overlaps or typography. Treat these as four different commissioned scene illustrations, never a copied composition with weather changed. Serious literary Soviet visual novel art direction: charcoal shadows, warm paper-white light, muted burgundy or dusty olive accents, gently desaturated natural color, subtle 35mm film grain, believable light/materials/anatomy, high production value photography, no painting/CGI/comic style. Correct Soviet architecture, civilian and military clothing, vehicles and equipment for each date. Use historically accurate insignia only when appropriate; no modern objects, screens or invented readable writing. Recurring historical people must keep their documented facial features; anonymous clerks and soldiers must not resemble the leader. The player is the off-camera national leader; do not put Stalin in every image or in years after his death. Keep any route-dependent leader off-camera. War and civilian scenes should depict the concrete action, location and outcome, not generic portraits. Vary shot scale, camera angle, subject arrangement and indoor/outdoor space. Four cells in reading order:\nTOP LEFT: 1941. Topic: 莫 斯 科. Exact place: 统帅部. Time/moment: 战况更新. Scene information: 朱可夫没有看装好的箱子。 {address}，我需要的是明确指挥权，不是更多同时到来的命令。. Visible speaker identity: Georgy Zhukov: stocky broad face, short receding military haircut, clean shaven, period Red Army uniform. Compose as low eye-level view through an open doorway. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nTOP RIGHT: 1941. Topic: 莫 斯 科. Exact place: 办公室. Time/moment: 当夜. Scene information: 行程表、阅兵安排、授权令摆在一起。 请给出今晚的安排。. Compose as close foreground detail with a meaningful scene beyond. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM LEFT: 1941. Topic: 租 借 法 案. Exact place: 外贸部门. Time/moment: 援助清单. Scene information: 清单上没有足够多的坦克，却有成千上万辆卡车。后勤军官看得比宣传员更久。 他指着轮胎和铝锭。 {address}，这些东西能让我们自己造的武器动起来。条件怎么答复？. Visible speaker identity: Anastas Mikoyan: slender, wavy dark side-parted hair, narrow prominent black moustache, dark suit. Compose as long-lens observation across a public space. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM RIGHT: 1941. Topic: 租 借 法 案. Exact place: 外交办公室. Time/moment: 条件审阅. Scene information: 条款没有写进报纸准备使用的稿子。 接受、拒绝，或另付代价，都会留下战后的账。. Visible speaker identity: Vyacheslav Molotov: slim middle-aged, receding slicked dark hair, neat dark moustache, oval wire spectacles, dark suit. Compose as candid diagonal composition, natural human movement. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nPeriod corrections: in Moscow windows before 1949, no Seven Sisters or prefabricated housing, only Kremlin-era masonry, low-rise brick/wood, trees or blank sky. Military uniforms before 1943 have collar tabs, not shoulder boards. Any 1940–1941 vehicles must be period GAZ-AA/ZIS-5 trucks, steam trains or period staff cars. Office and archive scenes show peaceful administrative review. No injury, torture, detention, punishment or graphic violence. The wartime burden is shown through urgent calls, maps, queues, packed crates and work, not through harmed people."
+    },
+    {
+      "batch": 22,
+      "file": "assets/images/scenes/batch-022.webp",
+      "scenes": [
+        {
+          "sceneKey": "event/3-5/round/2",
+          "cell": 0,
+          "year": 1941,
+          "title": "租 借 法 案",
+          "place": "后勤汇报"
+        },
+        {
+          "sceneKey": "event/3-5/round/3",
+          "cell": 1,
+          "year": 1941,
+          "title": "租 借 法 案",
+          "place": "预算会商"
+        },
+        {
+          "sceneKey": "event/3-5/round/4",
+          "cell": 2,
+          "year": 1941,
+          "title": "租 借 法 案",
+          "place": "中央会议室"
+        },
+        {
+          "sceneKey": "event/3-6/round/0",
+          "cell": 3,
+          "year": 1942,
+          "title": "斯 大 林 格 勒",
+          "place": "统帅部"
+        }
+      ],
+      "prompt": "Generate EXACTLY FOUR independent photorealistic historical cinema stills as a seamless 2x2 contact sheet, overall landscape 3:2, maximum resolution (1536x1024 or larger). Each quadrant is a complete landscape 3:2 photograph, no shared panorama and nothing crossing the exact midpoint boundaries. NO borders, labels, text, captions, watermarks, collage overlaps or typography. Treat these as four different commissioned scene illustrations, never a copied composition with weather changed. Serious literary Soviet visual novel art direction: charcoal shadows, warm paper-white light, muted burgundy or dusty olive accents, gently desaturated natural color, subtle 35mm film grain, believable light/materials/anatomy, high production value photography, no painting/CGI/comic style. Correct Soviet architecture, civilian and military clothing, vehicles and equipment for each date. Use historically accurate insignia only when appropriate; no modern objects, screens or invented readable writing. Recurring historical people must keep their documented facial features; anonymous clerks and soldiers must not resemble the leader. The player is the off-camera national leader; do not put Stalin in every image or in years after his death. Keep any route-dependent leader off-camera. War and civilian scenes should depict the concrete action, location and outcome, not generic portraits. Vary shot scale, camera angle, subject arrangement and indoor/outdoor space. Four cells in reading order:\nTOP LEFT: 1941. Topic: 租 借 法 案. Exact place: 后勤汇报. Time/moment: 运输测算. Scene information: 参谋把缺车的单位逐个念出来。 宣传可以不用卡车，军队不能。. Compose as medium three-quarter view at human eye level. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nTOP RIGHT: 1941. Topic: 租 借 法 案. Exact place: 预算会商. Time/moment: 付款方案. Scene information: 黄金出口的数字被写得很小。 若要结清账，我们拿到的物资就会少一些。. Visible speaker identity: Anastas Mikoyan: slender, wavy dark side-parted hair, narrow prominent black moustache, dark suit. Compose as wide establishing view with people in depth. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM LEFT: 1941. Topic: 租 借 法 案. Exact place: 中央会议室. Time/moment: 答复定稿. Scene information: 译员等在门外。 请把答复留给外交官。. Visible speaker identity: Vyacheslav Molotov: slim middle-aged, receding slicked dark hair, neat dark moustache, oval wire spectacles, dark suit. Compose as intimate side profile, hands and consequential object in focus. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nBOTTOM RIGHT: 1942. Topic: 斯 大 林 格 勒. Exact place: 统帅部. Time/moment: 战局汇报. Scene information: 伏尔加河对岸的火光照在玻璃上。名字属于一个人，废墟里却挤着整个国家。 参谋将敌军两翼和城区分开标注。 {address}，把预备队填进城区，还是留给两翼？. Compose as high oblique angle showing the spatial arrangement. Show the specific human action and environmental detail described. If the narrative only mentions documents or coordination, reflect it visually through distinct authentic locations and actions, not repetitive men sitting at desks.\nPeriod corrections: in Moscow windows before 1949, no Seven Sisters or prefabricated housing, only Kremlin-era masonry, low-rise brick/wood, trees or blank sky. Military uniforms before 1943 have collar tabs, not shoulder boards. Any 1940–1941 vehicles must be period GAZ-AA/ZIS-5 trucks, steam trains or period staff cars. Office and archive scenes show peaceful administrative review. No injury, torture, detention, punishment or graphic violence. The wartime burden is shown through urgent calls, maps, queues, packed crates and work, not through harmed people."
+    }
+  ]
+}

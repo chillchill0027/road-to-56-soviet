@@ -18,6 +18,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - run: npm run audit:scene-art
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
       - run: npm run test:browser:novel
@@ -25,6 +26,7 @@ jobs:
       - run: npm run test:browser:statistics
       - run: npm run test:browser:war
       - run: npm run test:browser:endings
+      - run: npm run test:browser:scene-art
       - run: npm run test:browser:routes
       - uses: actions/upload-artifact@v4
         if: always()
@@ -44,3 +46,4 @@ jobs:
             docs/qa/statistics/
             docs/qa/war/
             docs/qa/endings/
+            docs/qa/scene-art/
