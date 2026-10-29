@@ -18,6 +18,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Verify the published game
         run: node tests/live-page.cjs
+      - name: Verify the Island tutorial on the published page
+        run: TUTORIAL_OUTPUT=docs/qa/live/tutorial node tests/browser-tutorial.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - name: Verify battlefield photos, geography and archived results
         run: WAR_BROWSER_OUTPUT=docs/qa/live/war/report.json node tests/browser-war.cjs https://chillchill0027.github.io/road-to-56-soviet/
       - name: Replay every route on the published page

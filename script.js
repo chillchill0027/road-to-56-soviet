@@ -564,6 +564,7 @@ function renderTitle(){
         <h1 class="ts-title" aria-label="56之路：苏维埃"><span>56之路</span><span>苏维埃</span></h1>
         <p class="hero-quote">历史没有如果，直到你做出选择。</p>
         <div class="ts-actions">${hasSave()?`<button class="btn primary" id="ts-continue">继续上次进度 <span aria-hidden="true">↗</span></button><button class="btn ghost" id="ts-new">新的历史</button>`:`<button class="btn primary" id="ts-new">开启你的历史 <span aria-hidden="true">↗</span></button>`}</div>
+        <button class="tutorial-entry" id="ts-tutorial"><span class="tutorial-entry-kicker">入门讲解 · 约 3 分钟</span><strong>为什么重视军工，仍会战败？</strong><span>以「孤岛」路线读懂每一次数值变化 <b aria-hidden="true">→</b></span></button>
         ${hasSave()&&!store.get(SAVE_KEY)?.S?.novelVersion?'<p class="hint">此存档沿用旧版国策流程；新周目启用完整情景对话，结局图鉴保留。</p>':''}
         <button class="cover-archive" id="ts-gallery">结局图鉴 <small>${g.length} / ${ENDINGS.length}</small><span aria-hidden="true">→</span></button>
         <p class="cover-note">基于 Road to 56 的架空历史 · 非官方同人作品</p>
@@ -577,6 +578,8 @@ function renderTitle(){
   if (cc) cc.addEventListener('click', resume);
   const gg = document.getElementById('ts-gallery');
   if (gg) gg.addEventListener('click', renderGallery);
+  const tutorial = document.getElementById('ts-tutorial');
+  if (tutorial) tutorial.addEventListener('click', () => IslandTutorial.open());
   scrollToStart();
 }
 function renderGallery(){

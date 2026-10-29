@@ -26,6 +26,7 @@ jobs:
       - run: npm run test:browser:statistics
       - run: npm run test:browser:war
       - run: npm run test:browser:endings
+      - run: npm run test:browser:tutorial
       - run: npm run test:browser:scene-art
       - run: npm run test:browser:routes
       - uses: actions/upload-artifact@v4
@@ -46,4 +47,5 @@ jobs:
             docs/qa/statistics/
             docs/qa/war/
             docs/qa/endings/
+            docs/qa/tutorial/
             docs/qa/scene-art/

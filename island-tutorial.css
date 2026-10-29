@@ -1,0 +1,38 @@
+/* An introductory case study that lives outside the player's saved game. */
+body.is-cover .tutorial-entry { display:grid; gap:5px; width:min(100%,390px); margin:22px 0 0; padding:15px 18px; text-align:left; border:1px solid #efe0cb55; border-radius:9px; color:#f8efe0; background:#111617a8; cursor:pointer; }
+body.is-cover .tutorial-entry:hover { border-color:#ebd5b4; background:#171c1de8; }
+body.is-cover .tutorial-entry-kicker { color:#e4b0a8; font:600 10px/1.5 var(--sans); letter-spacing:.12em; }
+body.is-cover .tutorial-entry strong { font:600 15px/1.5 var(--sans); }
+body.is-cover .tutorial-entry > span:last-child { display:flex; justify-content:space-between; gap:12px; color:#d8cbbb; font:12px/1.6 var(--sans); }
+body.is-cover .tutorial-entry b { font-size:17px; }
+.island-tutorial { max-width:1040px; margin:0 auto; padding:clamp(22px,4vw,54px) clamp(20px,4vw,48px) 80px; color:#292820; }
+.tutorial-top { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px; }
+.tutorial-back { min-height:44px; padding:8px 0; border:0; background:none; color:#713a39; font:600 13px/1.5 var(--sans); cursor:pointer; }
+.tutorial-progress { color:#81766a; font:600 11px/1.5 var(--sans); letter-spacing:.08em; }
+.tutorial-heading { max-width:780px; margin:0 0 22px; }
+.tutorial-kicker { margin:0 0 12px; color:#9c3738; font:700 11px/1.5 var(--sans); letter-spacing:.12em; }
+.tutorial-heading h1 { margin:0; color:#22211f; font:700 clamp(30px,5vw,52px)/1.2 var(--sans); letter-spacing:-.035em; }
+.tutorial-deck { max-width:680px; margin:14px 0 0; color:#6c6157; font:15px/1.8 var(--sans); }
+.tutorial-art { margin:24px 0 0; }
+.tutorial-art .scene-art { margin:0; }
+.tutorial-art .art-window { max-height:480px; }
+.tutorial-body { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr); gap:clamp(22px,4vw,48px); padding:28px 0; border-bottom:1px solid #d5cbbb; }
+.tutorial-body h2 { margin:0 0 14px; color:#25231f; font:700 clamp(22px,3vw,30px)/1.3 var(--sans); }
+.tutorial-explanation { margin:0; color:#413b34; font:16px/2 var(--serif); }
+.tutorial-ledger { padding:21px; border:1px solid #dbcebb; border-radius:12px; background:#f4eadb; }
+.tutorial-ledger h3 { margin:0 0 14px; color:#8b3939; font:700 11px/1.5 var(--sans); letter-spacing:.1em; }
+.tutorial-metric { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:11px 0; border-top:1px solid #d8cbbb; font:13px/1.5 var(--sans); }
+.tutorial-metric span:last-child { color:#29251f; text-align:right; font-weight:700; font-variant-numeric:tabular-nums; }
+.tutorial-note { margin:14px 0 0; color:#746659; font:12px/1.7 var(--sans); }
+.tutorial-actions { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; margin-top:24px; }
+.tutorial-actions .btn { min-height:48px; }
+.tutorial-actions .btn.primary { margin-left:auto; }
+.tutorial-source { margin:22px 0 0; color:#766d63; font:12px/1.8 var(--sans); }
+.island-tutorial :focus-visible { outline:2px solid #9c3738; outline-offset:3px; }
+@media (max-width:700px) {
+  body.is-cover .tutorial-entry { margin-top:17px; }
+  .island-tutorial { padding-inline:20px; }
+  .tutorial-body { grid-template-columns:1fr; }
+  .tutorial-explanation { font-size:15px; }
+  .tutorial-art .scene-art { border-radius:8px; overflow:hidden; }
+}
