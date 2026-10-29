@@ -1,0 +1,2562 @@
+{
+  "route": {
+    "id": "case-10",
+    "seed": 10,
+    "eventSeed": 2654435763,
+    "ending": "island",
+    "steps": [
+      [
+        "p0-intro"
+      ],
+      [
+        "0-1",
+        0
+      ],
+      [
+        "0-2",
+        2
+      ],
+      [
+        "0-3",
+        1
+      ],
+      [
+        "dec-prologue",
+        []
+      ],
+      [
+        "a1-intro"
+      ],
+      [
+        "1-1",
+        0
+      ],
+      [
+        "1-2",
+        0
+      ],
+      [
+        "1-3",
+        1
+      ],
+      [
+        "1-4",
+        2
+      ],
+      [
+        "1-5",
+        3
+      ],
+      [
+        "a1-end"
+      ],
+      [
+        "dec-act1",
+        []
+      ],
+      [
+        "a2-intro"
+      ],
+      [
+        "2-1",
+        1
+      ],
+      [
+        "2-2",
+        4
+      ],
+      [
+        "2-3",
+        0
+      ],
+      [
+        "2-4",
+        1
+      ],
+      [
+        "2-5",
+        [
+          "purge-army"
+        ]
+      ],
+      [
+        "a2-end"
+      ],
+      [
+        "a3-intro"
+      ],
+      [
+        "3-1",
+        2
+      ],
+      [
+        "dec-mid3",
+        [
+          "relocate"
+        ]
+      ],
+      [
+        "3-2",
+        2
+      ],
+      [
+        "3-3a",
+        0
+      ],
+      [
+        "3-3b",
+        0
+      ],
+      [
+        "3-5",
+        1
+      ],
+      [
+        "3-6",
+        0
+      ],
+      [
+        "3-7",
+        2
+      ],
+      [
+        "dec-mid3b",
+        [
+          "lessons"
+        ]
+      ],
+      [
+        "3-9",
+        1
+      ],
+      [
+        "3-10",
+        1
+      ],
+      [
+        "3-11",
+        1
+      ],
+      [
+        "3-12",
+        0
+      ],
+      [
+        "a3-end",
+        0
+      ],
+      [
+        "a5-intro"
+      ],
+      [
+        "5-0"
+      ],
+      [
+        "5-1",
+        7
+      ],
+      [
+        "dec-act5",
+        [
+          "rebuild",
+          "comintern",
+          "destalin"
+        ]
+      ],
+      [
+        "5-2",
+        0
+      ],
+      [
+        "5-3",
+        1
+      ],
+      [
+        "5-4",
+        2
+      ]
+    ]
+  },
+  "trace": [
+    {
+      "id": "p0-intro",
+      "year": 1936,
+      "title": "遗 产",
+      "before": {
+        "PP": 140,
+        "PAR": 10,
+        "IND": 95,
+        "ARMY": 62,
+        "MOR": 68,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 25,
+        "RIGHT": 25,
+        "purgeCount": 0,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "0-1",
+      "year": 1936,
+      "title": "两 个 纵 队",
+      "option": "铁腕 —— 两个纵队一起划掉",
+      "before": {
+        "PP": 140,
+        "PAR": 10,
+        "IND": 95,
+        "ARMY": 62,
+        "MOR": 68,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 25,
+        "RIGHT": 25,
+        "purgeCount": 0,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PAR",
+          "d": 20
+        },
+        {
+          "k": "IND",
+          "d": -5
+        },
+        {
+          "k": "ARMY",
+          "d": -8
+        },
+        {
+          "k": "MOR",
+          "d": -5
+        },
+        {
+          "k": "LEFT",
+          "d": -25
+        },
+        {
+          "k": "RIGHT",
+          "d": -25
+        },
+        {
+          "k": "purgeCount",
+          "d": 1
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 140,
+        "PAR": 30,
+        "IND": 90,
+        "ARMY": 54,
+        "MOR": 63,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "0-2",
+      "year": 1936,
+      "title": "第 二 个 五 年 计 划",
+      "option": "转军工 —— 战争比所有人想的都近",
+      "before": {
+        "PP": 140,
+        "PAR": 30,
+        "IND": 90,
+        "ARMY": 54,
+        "MOR": 63,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": 15
+        },
+        {
+          "k": "ARMY",
+          "d": 15
+        },
+        {
+          "k": "MOR",
+          "d": -8
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 140,
+        "PAR": 30,
+        "IND": 105,
+        "ARMY": 69,
+        "MOR": 55,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "0-3",
+      "year": 1936,
+      "title": "那 份 宪 法",
+      "option": "推迟 —— 再放一放",
+      "before": {
+        "PP": 140,
+        "PAR": 30,
+        "IND": 105,
+        "ARMY": 69,
+        "MOR": 55,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PAR",
+          "d": 15
+        },
+        {
+          "k": "MOR",
+          "d": -8
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 140,
+        "PAR": 45,
+        "IND": 105,
+        "ARMY": 69,
+        "MOR": 47,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a1-intro",
+      "year": 1937,
+      "title": "钢 铁 与 血",
+      "before": {
+        "PP": 200,
+        "PAR": 45,
+        "IND": 105,
+        "ARMY": 69,
+        "MOR": 47,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "1-1",
+      "year": 1937,
+      "title": "图 哈 切 夫 斯 基 案",
+      "option": "批准 —— 清洗军方高层",
+      "before": {
+        "PP": 200,
+        "PAR": 45,
+        "IND": 105,
+        "ARMY": 69,
+        "MOR": 47,
+        "COM": 45,
+        "STAL": 60,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 1,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PAR",
+          "d": -15
+        },
+        {
+          "k": "ARMY",
+          "d": -22
+        },
+        {
+          "k": "MOR",
+          "d": -6
+        },
+        {
+          "k": "STAL",
+          "d": 8
+        },
+        {
+          "k": "purgeCount",
+          "d": 1
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 200,
+        "PAR": 30,
+        "IND": 105,
+        "ARMY": 47,
+        "MOR": 41,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "1-2",
+      "year": 1937,
+      "title": "集 体 化 的 代 价",
+      "option": "全速推进 —— 富农作为一个阶级被消灭",
+      "before": {
+        "PP": 200,
+        "PAR": 30,
+        "IND": 105,
+        "ARMY": 47,
+        "MOR": 41,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": 20
+        },
+        {
+          "k": "MOR",
+          "d": -25
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 200,
+        "PAR": 30,
+        "IND": 125,
+        "ARMY": 47,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "1-3",
+      "year": 1938,
+      "title": "叶 若 夫 还 是 贝 利 亚",
+      "option": "换上贝利亚",
+      "before": {
+        "PP": 200,
+        "PAR": 30,
+        "IND": 125,
+        "ARMY": 47,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PAR",
+          "d": -10
+        },
+        {
+          "k": "beria",
+          "d": 15
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 200,
+        "PAR": 20,
+        "IND": 125,
+        "ARMY": 47,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "1-4",
+      "year": 1938,
+      "title": "原 子 弹 工 程",
+      "option": "暂缓",
+      "before": {
+        "PP": 200,
+        "PAR": 20,
+        "IND": 125,
+        "ARMY": 47,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": 10
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 200,
+        "PAR": 20,
+        "IND": 135,
+        "ARMY": 47,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "1-5",
+      "year": 1938,
+      "title": "军 队 的 形 态",
+      "option": "炮兵至上 —— 大炮兵主义",
+      "before": {
+        "PP": 200,
+        "PAR": 20,
+        "IND": 135,
+        "ARMY": 47,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": -10
+        },
+        {
+          "k": "ARMY",
+          "d": 12
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 200,
+        "PAR": 20,
+        "IND": 125,
+        "ARMY": 59,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a1-end",
+      "year": 1938,
+      "title": "第 一 幕 结 算",
+      "before": {
+        "PP": 200,
+        "PAR": 20,
+        "IND": 125,
+        "ARMY": 59,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a2-intro",
+      "year": 1939,
+      "title": "魔 鬼 的 交 易",
+      "before": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 125,
+        "ARMY": 59,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "2-1",
+      "year": 1939,
+      "title": "1939 年 的 选 择",
+      "option": "集体安全 —— 与英法结盟",
+      "before": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 125,
+        "ARMY": 59,
+        "MOR": 16,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 1,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": 10
+        },
+        {
+          "k": "MOR",
+          "d": 5
+        },
+        {
+          "k": "COM",
+          "d": 25
+        },
+        {
+          "k": "westTrust",
+          "d": 10
+        },
+        {
+          "k": "warning",
+          "d": -0.3
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 135,
+        "ARMY": 59,
+        "MOR": 21,
+        "COM": 70,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 0.7,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "2-2",
+      "year": 1939,
+      "title": "冬 季 战 争",
+      "option": "全面吞并 —— 走波罗的海那套流程",
+      "before": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 135,
+        "ARMY": 59,
+        "MOR": 21,
+        "COM": 70,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 0.7,
+        "enemyMod": 0,
+        "nationalQ": 0,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": 15
+        },
+        {
+          "k": "MOR",
+          "d": -10
+        },
+        {
+          "k": "COM",
+          "d": -25
+        },
+        {
+          "k": "enemyMod",
+          "d": 8
+        },
+        {
+          "k": "nationalQ",
+          "d": 10
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 150,
+        "ARMY": 59,
+        "MOR": 11,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 10,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "2-3",
+      "year": 1940,
+      "title": "波 罗 的 海 与 比 萨 拉 比 亚",
+      "option": "最后通牒 —— 三国与比萨拉比亚一起解决",
+      "before": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 150,
+        "ARMY": 59,
+        "MOR": 11,
+        "COM": 45,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 0,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 10,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": 20
+        },
+        {
+          "k": "MOR",
+          "d": -5
+        },
+        {
+          "k": "COM",
+          "d": -10
+        },
+        {
+          "k": "fort",
+          "d": 10
+        },
+        {
+          "k": "nationalQ",
+          "d": 20
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 170,
+        "ARMY": 59,
+        "MOR": 6,
+        "COM": 35,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "2-4",
+      "year": 1940,
+      "title": "军 队 整 顿",
+      "option": "强化政治控制 —— 每个师部都坐一个人",
+      "before": {
+        "PP": 260,
+        "PAR": 20,
+        "IND": 170,
+        "ARMY": 59,
+        "MOR": 6,
+        "COM": 35,
+        "STAL": 68,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PAR",
+          "d": -12
+        },
+        {
+          "k": "ARMY",
+          "d": -5
+        },
+        {
+          "k": "STAL",
+          "d": 12
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 260,
+        "PAR": 8,
+        "IND": 170,
+        "ARMY": 54,
+        "MOR": 6,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "2-5",
+      "year": 1942,
+      "decision": "purge-army",
+      "name": "清洗军队",
+      "before": {
+        "PP": 260,
+        "PAR": 8,
+        "IND": 170,
+        "ARMY": 54,
+        "MOR": 6,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 2,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PP",
+          "d": -30
+        },
+        {
+          "k": "PAR",
+          "d": -8
+        },
+        {
+          "k": "ARMY",
+          "d": -5
+        },
+        {
+          "k": "MOR",
+          "d": -3
+        },
+        {
+          "k": "purgeCount",
+          "d": 1
+        }
+      ],
+      "after": {
+        "PP": 230,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 49,
+        "MOR": 3,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a2-end",
+      "year": 1942,
+      "title": "1941 年 6 月 22 日",
+      "before": {
+        "PP": 230,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 49,
+        "MOR": 3,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a3-intro",
+      "year": 1942,
+      "title": "伟 大 的 卫 国 战 争",
+      "before": {
+        "PP": 290,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 49,
+        "MOR": 3,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-1",
+      "year": 1942,
+      "title": "边 境 战 役",
+      "option": "全线反击 —— 把敌人赶回去",
+      "before": {
+        "PP": 290,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 49,
+        "MOR": 3,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 0,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "ARMY",
+          "d": -26
+        },
+        {
+          "k": "MOR",
+          "d": -3
+        }
+      ],
+      "battles": [
+        {
+          "name": "边境战役",
+          "enemy": 118,
+          "baseEnemy": 110,
+          "enemyMod": 8,
+          "level": 0,
+          "success": false,
+          "R": "0.25",
+          "baseR": "0.42",
+          "tier": "崩溃",
+          "cls": "cat",
+          "fx": {
+            "ARMY": -26,
+            "MOR": -32
+          },
+          "factors": {
+            "army": 49,
+            "fortValue": 10,
+            "effectiveFort": 10,
+            "fort": 1.0625,
+            "morale": 3,
+            "mor": 0.665,
+            "warning": 0.7,
+            "tactic": 1.65,
+            "discipline": 1
+          }
+        }
+      ],
+      "after": {
+        "PP": 290,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 23,
+        "MOR": 0,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "dec-mid3",
+      "year": 1942,
+      "decision": "relocate",
+      "name": "工业东迁",
+      "before": {
+        "PP": 290,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 23,
+        "MOR": 0,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PP",
+          "d": -40
+        },
+        {
+          "k": "indSaved",
+          "d": 25
+        }
+      ],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 23,
+        "MOR": 0,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-2",
+      "year": 1942,
+      "title": "列 宁 格 勒",
+      "option": "优先疏散平民",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 170,
+        "ARMY": 38,
+        "MOR": 0,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": -15
+        },
+        {
+          "k": "MOR",
+          "d": 6
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 38,
+        "MOR": 6,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-3a",
+      "year": 1942,
+      "title": "远 东 的 师",
+      "option": "与日本签中立条约，然后调兵",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 38,
+        "MOR": 6,
+        "COM": 35,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "ARMY",
+          "d": 15
+        },
+        {
+          "k": "COM",
+          "d": -10
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 53,
+        "MOR": 6,
+        "COM": 25,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-3b",
+      "year": 1942,
+      "title": "莫 斯 科",
+      "option": "留在莫斯科，红场阅兵",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 53,
+        "MOR": 6,
+        "COM": 25,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": -3
+        }
+      ],
+      "battles": [
+        {
+          "name": "莫斯科保卫战",
+          "enemy": 86,
+          "baseEnemy": 78,
+          "enemyMod": 8,
+          "level": 2,
+          "success": false,
+          "R": "0.71",
+          "baseR": "0.64",
+          "tier": "僵持",
+          "cls": "hold",
+          "fx": {
+            "MOR": -3
+          },
+          "factors": {
+            "army": 53,
+            "fortValue": 10,
+            "effectiveFort": 10,
+            "fort": 1.0625,
+            "morale": 6,
+            "mor": 0.68,
+            "warning": 0.7,
+            "tactic": 0.9,
+            "discipline": 1
+          }
+        }
+      ],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 53,
+        "MOR": 3,
+        "COM": 25,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-5",
+      "year": 1942,
+      "title": "租 借 法 案",
+      "option": "拒绝 —— 我们不需要施舍",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 53,
+        "MOR": 3,
+        "COM": 25,
+        "STAL": 80,
+        "LEFT": 0,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 8,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": 6
+        },
+        {
+          "k": "COM",
+          "d": 5
+        },
+        {
+          "k": "LEFT",
+          "d": 12
+        },
+        {
+          "k": "enemyMod",
+          "d": 10
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 53,
+        "MOR": 9,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-6",
+      "year": 1943,
+      "title": "斯 大 林 格 勒",
+      "option": "巷战死守，同时准备两翼合围",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 53,
+        "MOR": 9,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 0,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "ARMY",
+          "d": -4
+        },
+        {
+          "k": "MOR",
+          "d": -8
+        }
+      ],
+      "battles": [
+        {
+          "name": "斯大林格勒战役",
+          "enemy": 113,
+          "baseEnemy": 95,
+          "enemyMod": 18,
+          "level": 1,
+          "success": false,
+          "R": "0.55",
+          "baseR": "0.49",
+          "tier": "失守",
+          "cls": "lose",
+          "fx": {
+            "ARMY": -4,
+            "MOR": -8
+          },
+          "factors": {
+            "army": 53,
+            "fortValue": 10,
+            "effectiveFort": 10,
+            "fort": 1.0625,
+            "morale": 9,
+            "mor": 0.6950000000000001,
+            "warning": 0.7,
+            "tactic": 0.9,
+            "discipline": 1
+          }
+        }
+      ],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 49,
+        "MOR": 1,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 1,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-7",
+      "year": 1944,
+      "title": "库 尔 斯 克",
+      "option": "后撤诱敌，拉长德军补给线",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 54,
+        "MOR": 1,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 1,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "ARMY",
+          "d": -4
+        },
+        {
+          "k": "MOR",
+          "d": -1
+        }
+      ],
+      "battles": [
+        {
+          "name": "库尔斯克战役",
+          "enemy": 94,
+          "baseEnemy": 76,
+          "enemyMod": 18,
+          "level": 1,
+          "success": false,
+          "R": "0.60",
+          "baseR": "0.57",
+          "tier": "失守",
+          "cls": "lose",
+          "fx": {
+            "ARMY": -4,
+            "MOR": -16
+          },
+          "factors": {
+            "army": 54,
+            "fortValue": 10,
+            "effectiveFort": 10,
+            "fort": 1.0625,
+            "morale": 1,
+            "mor": 0.655,
+            "warning": 0.7,
+            "tactic": 0.95,
+            "discipline": 1
+          }
+        }
+      ],
+      "after": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 50,
+        "MOR": 0,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "dec-mid3b",
+      "year": 1944,
+      "decision": "lessons",
+      "name": "战争教训 —— 恢复军官团",
+      "before": {
+        "PP": 250,
+        "PAR": 0,
+        "IND": 155,
+        "ARMY": 50,
+        "MOR": 0,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PP",
+          "d": -40
+        },
+        {
+          "k": "PAR",
+          "d": 5
+        },
+        {
+          "k": "ARMY",
+          "d": 12
+        }
+      ],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 0,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-9",
+      "year": 1944,
+      "title": "第 二 战 场 的 外 交 战",
+      "option": "威胁单独媾和",
+      "before": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 0,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 18,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": 5
+        },
+        {
+          "k": "COM",
+          "d": -15
+        },
+        {
+          "k": "enemyMod",
+          "d": -15
+        },
+        {
+          "k": "westTrust",
+          "d": -15
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 5,
+        "COM": 15,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-10",
+      "year": 1945,
+      "title": "巴 格 拉 季 昂",
+      "option": "主攻南线，抢先进入巴尔干",
+      "before": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 5,
+        "COM": 15,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 30,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": -3
+        },
+        {
+          "k": "COM",
+          "d": 15
+        },
+        {
+          "k": "nationalQ",
+          "d": 15
+        }
+      ],
+      "battles": [
+        {
+          "name": "雅西-基什尼奥夫",
+          "enemy": 91,
+          "baseEnemy": 88,
+          "enemyMod": 3,
+          "level": 2,
+          "success": false,
+          "R": "0.73",
+          "baseR": "0.70",
+          "tier": "僵持",
+          "cls": "hold",
+          "fx": {
+            "MOR": -3
+          },
+          "factors": {
+            "army": 62,
+            "fortValue": 10,
+            "effectiveFort": 10,
+            "fort": 1.0625,
+            "morale": 5,
+            "mor": 0.675,
+            "warning": 0.7,
+            "tactic": 0.95,
+            "discipline": 1
+          }
+        }
+      ],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 2,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 45,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-11",
+      "year": 1945,
+      "title": "华 沙 起 义",
+      "option": "按兵不动，扶持另一个委员会",
+      "before": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 2,
+        "COM": 30,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 45,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": -2
+        },
+        {
+          "k": "COM",
+          "d": -10
+        },
+        {
+          "k": "nationalQ",
+          "d": 20
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 0,
+        "COM": 20,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "3-12",
+      "year": 1946,
+      "title": "柏 林",
+      "option": "全速抢在盟军之前",
+      "before": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 62,
+        "MOR": 0,
+        "COM": 20,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "ARMY",
+          "d": -12
+        }
+      ],
+      "battles": [
+        {
+          "name": "柏林战役",
+          "enemy": 87,
+          "baseEnemy": 84,
+          "enemyMod": 3,
+          "level": 2,
+          "success": false,
+          "R": "0.74",
+          "baseR": "0.70",
+          "tier": "僵持",
+          "cls": "hold",
+          "fx": {
+            "MOR": -3,
+            "ARMY": -12
+          },
+          "factors": {
+            "army": 62,
+            "fortValue": 10,
+            "effectiveFort": 10,
+            "fort": 1.0625,
+            "morale": 0,
+            "mor": 0.65,
+            "warning": 0.7,
+            "tactic": 0.95,
+            "discipline": 1
+          }
+        }
+      ],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 155,
+        "ARMY": 50,
+        "MOR": 0,
+        "COM": 20,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a3-end",
+      "year": 1946,
+      "title": "战 争 结 算",
+      "option": "战败 · 第二个布列斯特",
+      "before": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 160,
+        "ARMY": 50,
+        "MOR": 0,
+        "COM": 20,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": -30
+        },
+        {
+          "k": "ARMY",
+          "d": -20
+        },
+        {
+          "k": "MOR",
+          "d": 12
+        },
+        {
+          "k": "COM",
+          "d": -20
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 130,
+        "ARMY": 30,
+        "MOR": 12,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "a5-intro",
+      "year": 1953,
+      "title": "走 向 56",
+      "before": {
+        "PP": 270,
+        "PAR": 5,
+        "IND": 130,
+        "ARMY": 30,
+        "MOR": 12,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "5-0",
+      "year": 1953,
+      "title": "那 个 夜 晚",
+      "before": {
+        "PP": 270,
+        "PAR": 5,
+        "IND": 130,
+        "ARMY": 30,
+        "MOR": 12,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "5-1",
+      "year": 1953,
+      "title": "继 承 人 之 战",
+      "option": "临时委员会留任 —— 搁置路线争论",
+      "before": {
+        "PP": 270,
+        "PAR": 5,
+        "IND": 130,
+        "ARMY": 30,
+        "MOR": 12,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": -5
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 270,
+        "PAR": 5,
+        "IND": 130,
+        "ARMY": 30,
+        "MOR": 7,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "dec-act5",
+      "year": 1953,
+      "decision": "rebuild",
+      "name": "战后重建",
+      "before": {
+        "PP": 270,
+        "PAR": 5,
+        "IND": 130,
+        "ARMY": 30,
+        "MOR": 7,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PP",
+          "d": -30
+        },
+        {
+          "k": "IND",
+          "d": 6
+        },
+        {
+          "k": "MOR",
+          "d": 10
+        }
+      ],
+      "after": {
+        "PP": 240,
+        "PAR": 5,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 17,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "dec-act5",
+      "year": 1953,
+      "decision": "comintern",
+      "name": "扩大阵营",
+      "before": {
+        "PP": 240,
+        "PAR": 5,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 17,
+        "COM": 0,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PP",
+          "d": -30
+        },
+        {
+          "k": "MOR",
+          "d": -3
+        },
+        {
+          "k": "COM",
+          "d": 12
+        }
+      ],
+      "after": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 14,
+        "COM": 12,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "dec-act5",
+      "year": 1953,
+      "decision": "destalin",
+      "name": "反个人崇拜",
+      "before": {
+        "PP": 210,
+        "PAR": 5,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 14,
+        "COM": 12,
+        "STAL": 80,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "PP",
+          "d": -40
+        },
+        {
+          "k": "PAR",
+          "d": -5
+        },
+        {
+          "k": "MOR",
+          "d": 5
+        },
+        {
+          "k": "STAL",
+          "d": -15
+        }
+      ],
+      "after": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 19,
+        "COM": 12,
+        "STAL": 65,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "5-2",
+      "year": 1956,
+      "title": "去 斯 大 林 化 与 否",
+      "option": "念出来 —— 全面批判",
+      "before": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 19,
+        "COM": 12,
+        "STAL": 65,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": 20
+        },
+        {
+          "k": "STAL",
+          "d": -30
+        },
+        {
+          "k": "destalinUnrest",
+          "d": 30
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 39,
+        "COM": 12,
+        "STAL": 35,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "5-3",
+      "year": 1956,
+      "title": "1956 · 布 达 佩 斯 与 华 沙",
+      "option": "政治解决，撤军",
+      "before": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 39,
+        "COM": 4,
+        "STAL": 35,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "MOR",
+          "d": 8
+        },
+        {
+          "k": "COM",
+          "d": -4
+        },
+        {
+          "k": "destalinUnrest",
+          "d": 10
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 47,
+        "COM": 0,
+        "STAL": 35,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "id": "5-4",
+      "year": 1956,
+      "title": "遗 产",
+      "option": "世界革命与阵营扩张",
+      "before": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 136,
+        "ARMY": 30,
+        "MOR": 47,
+        "COM": 0,
+        "STAL": 35,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      },
+      "deltas": [
+        {
+          "k": "IND",
+          "d": -5
+        },
+        {
+          "k": "MOR",
+          "d": -5
+        },
+        {
+          "k": "COM",
+          "d": 15
+        }
+      ],
+      "battles": [],
+      "after": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 131,
+        "ARMY": 30,
+        "MOR": 42,
+        "COM": 15,
+        "STAL": 35,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    },
+    {
+      "ending": "island",
+      "final": {
+        "PP": 170,
+        "PAR": 0,
+        "IND": 131,
+        "ARMY": 30,
+        "MOR": 42,
+        "COM": 15,
+        "STAL": 35,
+        "LEFT": 12,
+        "RIGHT": 0,
+        "purgeCount": 3,
+        "fort": 10,
+        "warning": 0.7,
+        "enemyMod": 3,
+        "nationalQ": 65,
+        "collapses": 1,
+        "loses": 2,
+        "holds": 0
+      }
+    }
+  ]
+}

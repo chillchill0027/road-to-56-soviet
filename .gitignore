@@ -4,4 +4,5 @@ playwright-report/
 test-results/
 
 docs/qa/live/
+docs/qa/tutorial/
 docs/qa/scene-art/regression/
